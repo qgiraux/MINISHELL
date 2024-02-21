@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 13:28:06 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/21 16:39:33 by qgiraux          ###   ########.fr       */
+/*   Created: 2023/11/06 12:41:32 by qgiraux           #+#    #+#             */
+/*   Updated: 2024/01/16 15:34:28 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "../includes/pipex_bonus.h"
 
-# include "token.h"
+int	ft_strncmp(const char *s1, const char *s2, size_t len)
+{
+	size_t			n;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-# define MS_PARSE_CMD 10
-# define MS_PARSE_PIPE 11
-# define MS_PARSE_LIST 12
-# define MS_PARSE_CMP 13
-
-
-t_dlist	*ms_cmd_list(t_dlist *token);
-t_dlist	*ms_pipeline(t_dlist *cmd);
-t_dlist	*ms_list(t_dlist *cmd);
-t_dlist	*ms_compound(t_dlist *list);
-
-#endif
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	n = 0;
+	if (len == 0)
+		return (0);
+	while (str1[n] == str2[n] && str1[n] && n + 1 < len)
+		n++;
+	return (str1[n] - str2[n]);
+}

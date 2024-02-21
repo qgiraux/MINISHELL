@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 13:28:06 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/21 16:39:33 by qgiraux          ###   ########.fr       */
+/*   Created: 2024/01/16 12:04:19 by qgiraux           #+#    #+#             */
+/*   Updated: 2024/01/16 18:07:06 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "../includes/pipex_bonus.h"
 
-# include "token.h"
+char	*ft_strdup(const char *str)
+{
+	int		n;
+	char	*dest;
 
-# define MS_PARSE_CMD 10
-# define MS_PARSE_PIPE 11
-# define MS_PARSE_LIST 12
-# define MS_PARSE_CMP 13
-
-
-t_dlist	*ms_cmd_list(t_dlist *token);
-t_dlist	*ms_pipeline(t_dlist *cmd);
-t_dlist	*ms_list(t_dlist *cmd);
-t_dlist	*ms_compound(t_dlist *list);
-
-#endif
+	dest = (char *) malloc (ft_strlen(str) + 1 * sizeof(char));
+	if (!dest)
+		return (NULL);
+	n = 0;
+	while (str[n])
+	{
+		dest[n] = str[n];
+		n++;
+	}
+	dest[n] = 0;
+	return (dest);
+}

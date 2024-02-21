@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:40:30 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/20 18:46:25 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/21 16:20:00 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ t_dlist	*ms_cmd_list(t_dlist *token)
 	if (NULL == token)
 		return (NULL);
 	cmd_list = NULL;
-	cmd_list = ms_dlstnew(token);
+	cmd_list = ms_dlstnew(token, MS_PARSE_CMD);
 	token = token->next;
 	while (token)
 	{
 		if (1 == ms_end_command(token) || 1 == ms_end_command(token->prev))
 		{
 			if (1 == ms_check_doubles(token))
-				return (printf("error  "), cmd_list);
+				return (printf("error  in cmd\n"), NULL);
 			ms_dlstcut(token);
-			ms_dlstadd_back(&cmd_list, ms_dlstnew(token));
+			ms_dlstadd_back(&cmd_list, ms_dlstnew(token, MS_PARSE_CMD));
 		}
 		token = token->next ;
 	}

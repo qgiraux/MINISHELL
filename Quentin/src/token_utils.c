@@ -6,11 +6,12 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:17 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/20 18:03:50 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/21 14:40:59 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/token_utils.h"
+#include "../includes/parser.h"
 
 void	ms_token_error(void *arg, int errnum, int fd_error)
 {
@@ -56,10 +57,10 @@ int	ms_token_add_word(\
 	ft_strlcpy(word, *input, size_word + 1);
 	*input += size_word;
 	content->word = word;
-	new = ms_dlstnew(content);
+	new = ms_dlstnew(content, -1);
 	if (NULL == new)
 		return (free(word), free(content), \
-			ms_token_error(NULL, errno, 2), 1);
+			ms_token_error(NULL, errno, 2), -1);
 	return (ms_dlstadd_back(tokens, new), 0);
 }
 
@@ -78,7 +79,7 @@ int	ms_token_add_operator(\
 		return (ms_token_error(NULL, errno, 2), 1);
 	content->operator = op_num;
 	content->word = NULL;
-	new = ms_dlstnew(content);
+	new = ms_dlstnew(content, -1);
 	if (NULL == new)
 		return (free(content), ms_token_error(NULL, errno, 2), 1);
 	ms_dlstadd_back(tokens, new);

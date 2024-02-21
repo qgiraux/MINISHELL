@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 13:28:06 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/21 16:39:33 by qgiraux          ###   ########.fr       */
+/*   Created: 2023/11/06 11:46:56 by qgiraux           #+#    #+#             */
+/*   Updated: 2024/01/16 15:34:28 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "../includes/pipex_bonus.h"
 
-# include "token.h"
+size_t	ft_strlen(const char *str)
+{
+	int	len;
 
-# define MS_PARSE_CMD 10
-# define MS_PARSE_PIPE 11
-# define MS_PARSE_LIST 12
-# define MS_PARSE_CMP 13
-
-
-t_dlist	*ms_cmd_list(t_dlist *token);
-t_dlist	*ms_pipeline(t_dlist *cmd);
-t_dlist	*ms_list(t_dlist *cmd);
-t_dlist	*ms_compound(t_dlist *list);
-
-#endif
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
+}

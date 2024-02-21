@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_pipelines.c                                 :+:      :+:    :+:   */
+/*   parser_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 18:33:47 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/21 15:47:48 by qgiraux          ###   ########.fr       */
+/*   Created: 2024/02/21 14:00:24 by qgiraux           #+#    #+#             */
+/*   Updated: 2024/02/21 16:36:56 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ms_end_pipeline(t_dlist *cmd)
+int	ms_end_list(t_dlist *cmd)
 {
 	int		op;
 	t_dlist	*token;
@@ -23,36 +23,34 @@ int	ms_end_pipeline(t_dlist *cmd)
 	if (token == NULL)
 		return (0);
 	op = ((t_token *)(token->content))->operator;
-	if (op == MS_TOKEN_AND || op == MS_TOKEN_OR
-		|| op == MS_TOKEN_OPEN || op == MS_TOKEN_CLOSE)
+	if (op == MS_TOKEN_OPEN || op == MS_TOKEN_CLOSE || op == MS_TOKEN_PIPE)
 		return (1);
-	if (op == MS_TOKEN_PIPE)
+	if (op == MS_TOKEN_AND || op == MS_TOKEN_OR)
 		return (2);
 	return (0);
 }
 
-t_dlist	*ms_pipeline(t_dlist *cmd)
+t_dlist	*ms_list(t_dlist *pipe)
 {
-	t_dlist	*pipes_list;
+	t_dlist	*list;
 
-	if (NULL == cmd)
+	if (NULL == pipe)
 		return (NULL);
-	pipes_list = NULL;
-	pipes_list = ms_dlstnew(cmd, MS_PARSE_PIPE);
-	cmd = cmd->next;
-	while (cmd)
+	list = NULL;
+	list = ms_dlstnew(pipe, MS_PARSE_LIST);
+	pipe = pipe->next;
+	while (pipe)
 	{
-		if (1 == ms_end_pipeline(cmd) || 1 == ms_end_pipeline(cmd->prev))
+		if (1 == ms_end_list(pipe->content) || 1 == ms_end_list(pipe->prev->content))
 		{
-			ms_dlstcut(cmd);
-			ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, MS_PARSE_PIPE));
+			ms_dlstcut(pipe);
+			ms_dlstadd_back(&list, ms_dlstnew(pipe, MS_PARSE_LIST));
 		}
-		else if (2 == ms_end_pipeline(cmd) && 1 == ms_end_pipeline(cmd->next))
-		{
-			ms_dlstcut(cmd);
-			ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, MS_PARSE_PIPE));
-		}
-		cmd = cmd->next ;
+		
+		else if (2 == ms_end_list(pipe->content) && 2 == ms_end_list(pipe->next->content))
+			return (printf("error  in list\n"), NULL);
+		pipe = pipe->next ;
 	}
-	return (pipes_list);
+	return (list);
 }
+

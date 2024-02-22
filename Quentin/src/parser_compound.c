@@ -6,11 +6,11 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:48:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/21 16:21:58 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/22 10:40:20 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+/*
 #include "../includes/minishell.h"
 
 int	ms_end_list(t_dlist *cmd)
@@ -53,4 +53,4 @@ t_dlist	*ms_list(t_dlist *pipe)
 		pipe = pipe->next ;
 	}
 	return (list);
-}
+}*/

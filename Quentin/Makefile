@@ -6,7 +6,7 @@
 #    By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 12:12:56 by qgiraux           #+#    #+#              #
-#    Updated: 2024/02/14 19:24:09 by qgiraux          ###   ########.fr        #
+#    Updated: 2024/02/22 10:44:37 by qgiraux          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ $(NAME): $(OBJ) libft
 	
 # Rule to build object files for pipex
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR) libft
-	$(CC) $(FLAG) -c $< -o $@
+	@$(CC) $(FLAG) -c $< -o $@
 
 libft :
 	@make all -sC ./Libft/
@@ -40,13 +40,14 @@ $(OBJDIR):
 
 # Clean rule to remove object files
 clean:
-	@rm -f $(OBJ)
-	@make clean -sC ./Libft/
+	rm -f $(OBJDIR)/*.o
+	make fclean -sC ./Libft/
 
 # Full clean rule to remove object files and executables
 fclean: clean
-	@rm -f $(NAME)
-	@make fclean -sC ./Libft/
+	make clean
+	rm $(NAME)
+	make fclean -sC ./Libft/
 
 
 

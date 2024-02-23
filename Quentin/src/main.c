@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/23 14:17:39 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/23 15:49:40 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,42 +41,65 @@ int	main(void)
 	t_dlist		*pipe_head;
 	t_dlist		*list_head;
 	t_dlist		*list;
-	t_dlist		*cmp_head;
+//	t_dlist		*cmp_head;
 	int			status = 0;
 
 	
-	while (0 != ft_strncmp(input, "exit", 4) && input)
+	while (0 != ft_strncmp(input, "exit", 4) && input != NULL)
 	{
 		input = readline(ms_main_prompt());
 		add_history(input);
 		token_head = ms_token_list(input, data);
 		if (token_head == NULL)
 			return (printf("error\n"), 1);
-		cmd_head = ms_dlstnew(token_head, 99);
+		
+		cmd_head = ms_dlstnew(token_head, 101);
 		status = ms_cmd_list(cmd_head);
-		
-		pipe_head = ms_dlstnew(cmd_head, 99);
-		status = ms_pipeline(pipe_head);
-		
-		list_head = ms_dlstnew(pipe_head, 99);
-		status = ms_list(list_head);
-
-		cmp_head = ms_dlstnew(list_head, 99);
-		status = ms_compound(cmp_head);
 		if (status != 0)
 			return (printf("error\n"), 1);
-		list = list_head;
+		
+		list = cmd_head;
+		printf ("\nCOMMAND LIST :\n");
 		while (list)
 		{
 			print_input((t_dlist *)list->content, data);
 			list = list->next;
 			printf("\n");
+		}
+		
+		pipe_head = ms_dlstnew(cmd_head, 102);
+		status = ms_pipeline(pipe_head);
+		
+
+		list = pipe_head;
+		printf ("\n PIPE LIST :\n");
+		while (list)
+		{
+			print_input((t_dlist *)list->content, data);
+			list = list->next;
+			printf("\n");
+		}
+		
+		list_head = ms_dlstnew(pipe_head, 103);
+		status = ms_list(list_head);
+
+		//cmp_head = ms_dlstnew(list_head, 104);
+		//status = ms_compound(cmp_head);
+		//if (status != 0)
+		//	return (printf("error\n"), 1);
 			
+		list = list_head;
+		printf ("\n LISTE LIST :\n");
+		while (list)
+		{
+			
+			print_input((t_dlist *)list->content, data);
+			list = list->next;
+			printf("\n");
 		}
 		free_input(list);
 		
 	}
-	//free_input(list);
 	rl_clear_history();
 	free(input);
 	return (0);
@@ -89,21 +112,21 @@ void 	print_input(t_dlist *list, const char **data)
 	const char		**operator_arr = ms_token_get_operator_arr(data);
 	
 
-	if (list == NULL || list->next == NULL)
+	if (list == NULL)
 		return ;
-	if (list->type == -1 || list->next->type == -1 )
+	if (1 == ms_dlist_istype_token(list))
 	{
 	token = list;
-			while (token)
-			{
-				operator = (token->type);
-				if (MS_TOKEN_WORD == operator)
-					ft_putstr_fd((char *)(token->content), 1);
-				else
-					ft_putstr_fd((char *)operator_arr[operator], 1);
-				ft_putstr_fd(" ", 1);
-				token = token->next;
-			}
+		while (token)
+		{
+			operator = (token->type);
+			if (MS_TOKEN_WORD == operator)
+				ft_putstr_fd((char *)(token->content), 1);
+			else
+				ft_putstr_fd((char *)operator_arr[operator], 1);
+			ft_putstr_fd(" ", 1);
+			token = token->next;
+		}
 			return ;
 	}
 	while (list)
@@ -116,23 +139,22 @@ void 	print_input(t_dlist *list, const char **data)
 void 	free_input(t_dlist *list)
 {
 	t_dlist			*token;
-	if (list == NULL || list->next == NULL)
-	return;
-		if (list->type == -1 || list->next->type == -1)
-		{
+
+	if (list == NULL)
+		return ;
+	if (list->type == -1)
+	{
 			while (list)
 			{
-				token = list->next;
+				token = list->next;	
 				free (list->content);
-				free (list);
 				list = token;
-				list = list->next;
 			}
 			return ;
-		}
-		while (list)
-		{
-			free_input((t_dlist *)list->content);
-			list = list->next;
-		}
+	}
+	while (list)
+	{
+		free_input(list->content);
+		list = list->next;
+	}
 }

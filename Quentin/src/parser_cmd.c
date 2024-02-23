@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:40:30 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/23 13:17:41 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/23 15:48:17 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 #include "../includes/parser.h"
 
 
-int	ms_end_command(t_dlist *token)
+int	ms_end_command(t_dlist *token_list)
 {
 	int	op;
 
-	if (token == NULL)
+	if (token_list == NULL)
 		return (0);
-	op = token->type;
+	op = token_list->type;
 	if (op == MS_TOKEN_AND || op == MS_TOKEN_OR || op == MS_TOKEN_PIPE
 		|| op == MS_TOKEN_OPEN || op == MS_TOKEN_CLOSE)
 		return (1);
@@ -30,18 +30,18 @@ int	ms_end_command(t_dlist *token)
 
 int	ms_cmd_list(t_dlist *cmd_list)
 {
-	t_dlist	*token;
+	t_dlist	*token_list;
 
-	token = cmd_list;
-	token = token->next;
-	while (token)
+	token_list = (t_dlist *)cmd_list->content;
+	token_list = token_list->next;
+	while (token_list != NULL)
 	{
-		if (1 == ms_end_command(token) || 1 == ms_end_command(token->prev))
+		if (1 == ms_end_command(token_list) || 1 == ms_end_command(token_list->prev))
 		{
-			ms_dlstcut(token);
-			ms_dlstadd_back(&cmd_list, ms_dlstnew(token, MS_PARSE_CMD));
+			ms_dlstcut(token_list);
+			ms_dlstadd_back(&cmd_list, ms_dlstnew(token_list, 101));
 		}
-		token = token->next ;
+		token_list = token_list->next ;
 	}
 	return (0);
 }

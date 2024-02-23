@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:33:47 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/23 11:31:15 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/23 17:28:55 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	ms_end_pipeline(t_dlist *cmd)
 	if (op == MS_TOKEN_AND || op == MS_TOKEN_OR
 		|| op == MS_TOKEN_OPEN || op == MS_TOKEN_CLOSE)
 		return (1);
-	if (op == MS_TOKEN_PIPE)
-		return (2);
 	return (0);
 }
 
@@ -41,12 +39,12 @@ int	ms_pipeline(t_dlist *pipes_list)
 	cmd = cmd->next;
 	while (cmd)
 	{
-		if (1 == ms_end_pipeline(cmd) || 1 == ms_end_pipeline(cmd->prev))
+		if (1 == ms_end_pipeline(cmd->prev))
 		{
 			ms_dlstcut(cmd);
-			ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, MS_PARSE_PIPE));
+			ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, cmd->type));
 		}
-		else if (2 == ms_end_pipeline(cmd) && 1 == ms_end_pipeline(cmd->next))
+		else if (1 == ms_end_pipeline(cmd))
 		{
 			ms_dlstcut(cmd);
 			ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, MS_PARSE_PIPE));

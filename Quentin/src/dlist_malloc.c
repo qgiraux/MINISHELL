@@ -6,11 +6,12 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:27:04 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/23 11:19:35 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/23 18:34:34 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/dlist.h"
+#include "../includes/minishell.h"
 
 void	ms_dlstclear(t_dlist **lst)
 {
@@ -44,4 +45,23 @@ t_dlist	*ms_dlstnew(void *content, int type)
 	node->type = type;
 	node->next = NULL;
 	return (node);
+}
+
+t_dlist	*ms_dlst_free_link(t_dlist *lst)
+{
+	t_dlist *previous;
+	t_dlist	*next;
+
+	previous = lst->prev;
+	next = lst->next;
+	if (previous != NULL)
+		previous->next = next;
+	else
+	if (next != NULL)
+		next->prev = previous;
+	free_input(lst->content);
+	free (lst);
+	return (next);	
+
+
 }

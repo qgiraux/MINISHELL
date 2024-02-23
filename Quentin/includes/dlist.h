@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dlist.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 14:48:23 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/22 13:28:09 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/02/23 18:31:16 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ void		ms_dlstadd_back(t_dlist **lst, t_dlist *new);
 void		ms_dlstclear(t_dlist **lst);
 void		ms_dlstcut(t_dlist *cut);
 t_dlist		*ms_dlstfirst(t_dlist *lst);
-t_dlist		*ms_dlstlast(t_dlist *lst);
+t_dlist		*ms_dlst_free_link(t_dlist *lst);
 //
 int			ms_dlist_istype_word(t_dlist *list);
 int			ms_dlist_istype_word_only(t_dlist *list);
 int			ms_dlist_istype_redir(t_dlist *list);
 int			ms_dlist_istype_token(t_dlist *list);
 int			ms_dlist_istype_operator(t_dlist *list);
+int			ms_dlist_istype_pipe_and_or(t_dlist *list);
 
 #endif

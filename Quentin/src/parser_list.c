@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:00:24 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/21 16:20:05 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/23 11:31:05 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ms_end_list(t_dlist *cmd)
 	token = ((t_dlist *)(cmd->content));
 	if (token == NULL)
 		return (0);
-	op = ((t_token *)(token->content))->operator;
+	op = token->type;
 	if (op == MS_TOKEN_OPEN || op == MS_TOKEN_CLOSE || op == MS_TOKEN_PIPE)
 		return (1);
 	if (op == MS_TOKEN_AND || op == MS_TOKEN_OR)
@@ -30,14 +30,13 @@ int	ms_end_list(t_dlist *cmd)
 	return (0);
 }
 
-t_dlist	*ms_list(t_dlist *pipe)
+int	ms_list(t_dlist *list)
 {
-	t_dlist	*list;
+	t_dlist	*pipe;
 
-	if (NULL == pipe)
-		return (NULL);
-	list = NULL;
-	list = ms_dlstnew(pipe, MS_PARSE_LIST);
+	if (NULL == list)
+		return (1);
+	pipe = (t_dlist *)list->content;
 	pipe = pipe->next;
 	while (pipe)
 	{
@@ -48,9 +47,9 @@ t_dlist	*ms_list(t_dlist *pipe)
 		}
 		
 		else if (2 == ms_end_list(pipe->content) && 2 == ms_end_list(pipe->next->content))
-			return (printf("error  in list\n"), NULL);
+			return (printf("error  in list\n"), 1);
 		pipe = pipe->next ;
 	}
-	return (list);
+	return (0);
 }
 

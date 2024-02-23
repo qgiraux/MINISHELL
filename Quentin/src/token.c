@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 12:53:27 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/20 18:04:01 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/23 13:14:53 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_dlist	*ms_token_list_return(t_dlist **token_list, int quote)
 {
 	if (quote)
 	{
-		ms_dlstclear(token_list, &ms_token_delete);
+		ms_dlstclear(token_list);
 		ms_token_error((char *)&quote, MS_EQUOTE, 2);
 		return (NULL);
 	}
@@ -31,22 +31,6 @@ static t_dlist	*ms_token_list_return(t_dlist **token_list, int quote)
 const char	**ms_token_get_operator_arr(void *data)
 {
 	return ((const char **)data);
-}
-
-/* ms_token_delete:
- * Free memory used by t_token
- */
-
-void	ms_token_delete(void *content)
-{
-	t_token	*token;
-
-	if (NULL == content)
-		return ;
-	token = (t_token *)content;
-	if (MS_TOKEN_WORD == token->operator && token->word)
-		free(token->word);
-	free(token);
 }
 
 /* ms_token_list:
@@ -68,14 +52,14 @@ t_dlist	*ms_token_list(char *input, void *data)
 		if (NULL == ms_token_strchr(MS_METACHAR, *input, NULL))
 		{
 			if (ms_token_add_word(&token_list, &input, &quote))
-				return (ms_dlstclear(&token_list, &ms_token_delete), NULL);
+				return (ms_dlstclear(&token_list), NULL);
 		}
 		else
 		{
 			if (NULL == ft_strchr(MS_BLANK, *input))
 			{
 				if (ms_token_add_operator(&token_list, &input, data))
-					return (ms_dlstclear(&token_list, &ms_token_delete), NULL);
+					return (ms_dlstclear(&token_list), NULL);
 			}
 			else
 				input++;

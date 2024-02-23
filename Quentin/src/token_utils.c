@@ -6,12 +6,11 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:17 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/21 14:40:59 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/23 11:32:31 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/token_utils.h"
-#include "../includes/parser.h"
 
 void	ms_token_error(void *arg, int errnum, int fd_error)
 {
@@ -40,27 +39,20 @@ int	ms_token_add_word(\
 {
 	size_t	size_word;
 	char	*word;
-	t_token	*content;
 	t_dlist	*new;
 
 	size_word = 0;
 	while ((*input)[size_word] && \
 		NULL == ms_token_strchr(MS_METACHAR, (*input)[size_word], quote))
 		size_word++;
-	content = (t_token *)malloc(sizeof(t_token));
-	if (NULL == content)
-		return (ms_token_error(NULL, errno, 2), 1);
-	content->operator = -1;
 	word = (char *)malloc(sizeof(char) * (size_word + 1));
 	if (NULL == word)
-		return (free(content), ms_token_error(NULL, errno, 2), 1);
+		return (ms_token_error(NULL, errno, 2), 1);
 	ft_strlcpy(word, *input, size_word + 1);
-	*input += size_word;
-	content->word = word;
-	new = ms_dlstnew(content, -1);
+	new = ms_dlstnew(word, MS_TOKEN_WORD);
 	if (NULL == new)
-		return (free(word), free(content), \
-			ms_token_error(NULL, errno, 2), -1);
+		return (free(word), ms_token_error(NULL, errno, 2), 1);
+	*input += size_word;
 	return (ms_dlstadd_back(tokens, new), 0);
 }
 
@@ -68,20 +60,14 @@ int	ms_token_add_operator(\
 	t_dlist **tokens, char **input, void *data)
 {
 	int		op_num;
-	t_token	*content;
 	t_dlist	*new;
 
 	op_num = ms_token_get_operator(input, data);
 	if (-1 == op_num)
 		return (ms_token_error(*input, MS_ETOKEN, 2), 1);
-	content = (t_token *)malloc(sizeof(t_token));
-	if (NULL == content)
-		return (ms_token_error(NULL, errno, 2), 1);
-	content->operator = op_num;
-	content->word = NULL;
-	new = ms_dlstnew(content, -1);
+	new = ms_dlstnew(NULL, op_num);
 	if (NULL == new)
-		return (free(content), ms_token_error(NULL, errno, 2), 1);
+		return (ms_token_error(NULL, errno, 2), 1);
 	ms_dlstadd_back(tokens, new);
 	return (0);
 }

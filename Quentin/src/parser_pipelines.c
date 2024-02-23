@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:33:47 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/21 15:47:48 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/23 11:31:15 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ms_end_pipeline(t_dlist *cmd)
 	token = ((t_dlist *)(cmd->content));
 	if (token == NULL)
 		return (0);
-	op = ((t_token *)(token->content))->operator;
+	op = token->type;
 	if (op == MS_TOKEN_AND || op == MS_TOKEN_OR
 		|| op == MS_TOKEN_OPEN || op == MS_TOKEN_CLOSE)
 		return (1);
@@ -31,14 +31,13 @@ int	ms_end_pipeline(t_dlist *cmd)
 	return (0);
 }
 
-t_dlist	*ms_pipeline(t_dlist *cmd)
+int	ms_pipeline(t_dlist *pipes_list)
 {
-	t_dlist	*pipes_list;
+	t_dlist	*cmd;
 
-	if (NULL == cmd)
-		return (NULL);
-	pipes_list = NULL;
-	pipes_list = ms_dlstnew(cmd, MS_PARSE_PIPE);
+	if (NULL == pipes_list)
+		return (1);
+	cmd = (t_dlist *)pipes_list->content;
 	cmd = cmd->next;
 	while (cmd)
 	{
@@ -54,5 +53,5 @@ t_dlist	*ms_pipeline(t_dlist *cmd)
 		}
 		cmd = cmd->next ;
 	}
-	return (pipes_list);
+	return (0);
 }

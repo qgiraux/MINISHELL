@@ -6,14 +6,16 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:48:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/22 10:40:20 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/23 14:10:04 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-#include "../includes/minishell.h"
 
-int	ms_end_list(t_dlist *cmd)
+#include "../includes/minishell.h"
+#include "../includes/dlist.h"
+#include "../includes/parser.h"
+
+int	ms_end_compound(t_dlist *cmd)
 {
 	int		op;
 	t_dlist	*token;
@@ -23,7 +25,7 @@ int	ms_end_list(t_dlist *cmd)
 	token = ((t_dlist *)(cmd->content));
 	if (token == NULL)
 		return (0);
-	op = ((t_token *)(token->content))->operator;
+	op = token->type;
 	if (op == MS_TOKEN_OPEN || op == MS_TOKEN_CLOSE || op == MS_TOKEN_PIPE)
 		return (1);
 	if (op == MS_TOKEN_AND || op == MS_TOKEN_OR)
@@ -31,26 +33,38 @@ int	ms_end_list(t_dlist *cmd)
 	return (0);
 }
 
-t_dlist	*ms_list(t_dlist *pipe)
+int	ms_compound(t_dlist *cmp)
 {
 	t_dlist	*list;
+	int		count;
 
-	if (NULL == pipe)
-		return (NULL);
-	list = NULL;
-	list = ms_dlstnew(pipe, MS_PARSE_LIST);
-	pipe = pipe->next;
-	while (pipe)
+	count = 0;
+	if (NULL == cmp)
+		return (1);
+	list = (t_dlist *)cmp->content;
+	while (list)
 	{
-		if (1 == ms_end_list(pipe->content) || 1 == ms_end_list(pipe->prev->content))
+		if (list->type == MS_TOKEN_OPEN)
 		{
-			ms_dlstcut(pipe);
-			ms_dlstadd_back(&list, ms_dlstnew(pipe, MS_PARSE_LIST));
+			if (count == 0)
+			{
+				ms_dlstcut(list);
+				ms_dlstadd_back(&list, ms_dlstnew(list, MS_PARSE_CMP));
+
+			}
+			count++;
 		}
-		
-		else if (2 == ms_end_list(pipe->content) && 2 == ms_end_list(pipe->next->content))
-			return (printf("error  in list\n"), NULL);
-		pipe = pipe->next ;
+		if (list->type == MS_TOKEN_CLOSE)
+		{
+			if (count == 1)
+			{
+				ms_dlstcut(list->next);
+				ms_dlstadd_back(&cmp, ms_dlstnew(list, MS_PARSE_CMP));
+			}
+			if (count == 0)
+				return (printf ("error parenthesis"), 1);
+		}
+		list = list->next;
 	}
-	return (list);
-}*/
+	return (0);
+}

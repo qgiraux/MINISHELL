@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/20 14:31:30 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/23 11:18:18 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,7 @@
 # define MS_QUOTE_1 39
 # define MS_QUOTE_2 '"'
 
-typedef struct s_token {
-	int		operator;
-	char	*word;
-}	t_token;
-
 t_dlist		*ms_token_list(char *input, void *data);
-void		ms_token_delete(void *content);
 const char	**ms_token_get_operator_arr(void *data);
 
 #endif

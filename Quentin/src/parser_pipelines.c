@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:33:47 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/23 17:28:55 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/24 12:45:07 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,29 @@ int	ms_end_pipeline(t_dlist *cmd)
 	return (0);
 }
 
+t_dlist	*ms_pipelines_isitpipe(t_dlist *pipes_list, t_dlist *cmd)
+{
+	if (1 == ms_end_pipeline(cmd->prev))
+	{
+		ms_dlstcut(cmd);
+		ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, cmd->type));
+	}
+	else if (1 == ms_end_pipeline(cmd))
+	{
+		if (1 == ms_dlist_istype_operator(cmd))
+		{
+			ms_dlstcut(cmd);
+			ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, cmd->type));
+		}
+		else
+		{
+			ms_dlstcut(cmd);
+			ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, MS_PARSE_PIPE));
+		}
+	}
+	return (cmd->next) ;
+}
+
 int	ms_pipeline(t_dlist *pipes_list)
 {
 	t_dlist	*cmd;
@@ -38,18 +61,6 @@ int	ms_pipeline(t_dlist *pipes_list)
 	cmd = (t_dlist *)pipes_list->content;
 	cmd = cmd->next;
 	while (cmd)
-	{
-		if (1 == ms_end_pipeline(cmd->prev))
-		{
-			ms_dlstcut(cmd);
-			ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, cmd->type));
-		}
-		else if (1 == ms_end_pipeline(cmd))
-		{
-			ms_dlstcut(cmd);
-			ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, MS_PARSE_PIPE));
-		}
-		cmd = cmd->next ;
-	}
+		cmd = ms_pipelines_isitpipe(pipes_list, cmd);
 	return (0);
 }

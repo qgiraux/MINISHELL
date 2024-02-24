@@ -6,14 +6,13 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:40:30 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/23 18:23:22 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/24 12:34:36 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/dlist.h"
 #include "../includes/parser.h"
-
 
 int	ms_end_command(t_dlist *token_list)
 {
@@ -39,14 +38,14 @@ int	ms_cmd_list(t_dlist *cmd_list)
 		if (1 == ms_end_command(token_list))
 		{
 			ms_dlstcut(token_list);
-			ms_dlstadd_back(&cmd_list, ms_dlstnew(token_list, token_list->type));
+			ms_dlstadd_back(&cmd_list, \
+			ms_dlstnew(token_list, token_list->type));
 		}
 		else if (1 == ms_end_command(token_list->prev))
 		{
 			ms_dlstcut(token_list);
 			ms_dlstadd_back(&cmd_list, ms_dlstnew(token_list, MS_PARSE_CMD));
 		}
-		
 		token_list = token_list->next ;
 	}
 	return (0);

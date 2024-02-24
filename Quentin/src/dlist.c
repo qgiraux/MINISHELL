@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:27:04 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/23 11:19:38 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/24 11:13:00 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ms_dlstadd_back(t_dlist **lst, t_dlist *new)
 
 void	ms_dlstcut(t_dlist *new_head)
 {
-	if (new_head->prev)
+	if (new_head->prev != NULL)
 	{
 		new_head->prev->next = NULL;
 		new_head->prev = NULL;

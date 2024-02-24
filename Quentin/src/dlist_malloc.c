@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:27:04 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/23 18:34:34 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/24 12:35:31 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,19 @@ t_dlist	*ms_dlstnew(void *content, int type)
 
 t_dlist	*ms_dlst_free_link(t_dlist *lst)
 {
-	t_dlist *previous;
+	t_dlist	*previous;
 	t_dlist	*next;
+	t_dlist	*tmp;
 
-	previous = lst->prev;
-	next = lst->next;
+	tmp = lst;
+	previous = tmp->prev;
+	next = tmp->next;
 	if (previous != NULL)
 		previous->next = next;
-	else
-	if (next != NULL)
+	else if (next != NULL)
 		next->prev = previous;
-	free_input(lst->content);
-	free (lst);
-	return (next);	
-
-
+	free_input(tmp->content);
+	free (tmp);
+	tmp = NULL;
+	return (next);
 }

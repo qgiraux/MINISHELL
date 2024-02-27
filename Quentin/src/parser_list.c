@@ -6,50 +6,44 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:00:24 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/24 12:44:30 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 14:12:21 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ms_end_list(t_dlist *cmd)
+static t_dlist	*ms_list_isitlist(t_dlist *pipe, t_dlist *list)
 {
-	int		op;
-	t_dlist	*token;
-
-	if (cmd == NULL)
-		return (0);
-	token = ((t_dlist *)(cmd->content));
-	if (token == NULL)
-		return (0);
-	op = token->type;
-	if (op == MS_TOKEN_OPEN || op == MS_TOKEN_CLOSE || op == MS_TOKEN_PIPE)
-		return (1);
-	return (0);
-}
-
-t_dlist	*ms_list_isitlist(t_dlist *pipe, t_dlist *list)
-{
-	if (1 == ms_end_list(pipe->content))
+	if (1 == ms_dlist_istype_parenthesis(pipe))
 	{
-		ms_dlstcut(pipe);
-		ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));
-	}
-	else if (1 == ms_end_list(pipe->prev->content))
-	{
-		if (1 == ms_dlist_istype_operator(pipe))
+		if (NULL != pipe->prev)
 		{
 			ms_dlstcut(pipe);
 			ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));
 		}
 		else
+			list->type = pipe->type;
+	}
+	if (pipe->prev && 1 == ms_dlist_istype_parenthesis(pipe->prev))
+	{
+		ms_dlstcut(pipe);
+		ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));
+	}
+	if (1 == ms_dlist_istype_pipe_and_or(pipe))
+	{
+		if (NULL == pipe->prev)
+		{
+			pipe = pipe->next;
+			ms_dlstcut(pipe);
+			ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));
+		}
+		if (1 == ms_dlist_istype_parenthesis(pipe->next))
 		{
 			ms_dlstcut(pipe);
-			ms_dlstadd_back(&list, ms_dlstnew(pipe, MS_PARSE_LIST));
+			ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));
 		}
 	}
-	return (pipe->next) ;
-
+	return (pipe->next);
 }
 
 int	ms_list(t_dlist *list)
@@ -59,7 +53,6 @@ int	ms_list(t_dlist *list)
 	if (NULL == list)
 		return (1);
 	pipe = (t_dlist *)list->content;
-	pipe = pipe->next;
 	while (pipe)
 		pipe = ms_list_isitlist(pipe, list);
 	return (0);

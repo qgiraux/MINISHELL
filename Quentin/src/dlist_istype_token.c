@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:24:31 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/24 12:35:54 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 12:18:45 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ int	ms_dlist_istype_pipe_and_or(t_dlist *list)
 	if (MS_TOKEN_PIPE == list->type \
 		|| MS_TOKEN_AND == list->type || MS_TOKEN_OR == list->type \
 		|| MS_TOKEN_PIPE == list->type)
+		return (1);
+	return (0);
+}
+
+int	ms_dlist_istype_parenthesis(t_dlist *list)
+{
+	if (MS_TOKEN_OPEN == list->type || MS_TOKEN_CLOSE == list->type)
 		return (1);
 	return (0);
 }

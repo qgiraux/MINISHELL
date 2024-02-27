@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/24 12:43:48 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 13:13:09 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	main(void)
 	t_dlist		*pipe_head;
 	t_dlist		*list_head;
 	t_dlist		*list;
-	t_dlist		*cmp_head;
-	int			status = 0;
+	int			status;
 
+	status = 0;
 	input = "";
 	while (1)
 	{
@@ -55,7 +55,7 @@ int	main(void)
 		if (status == 0)
 		{
 			cmd_head = ms_dlstnew(token_head, MS_PARSE_CMD);
-			status = ms_cmd_list(cmd_head);
+			status = ms_cmd(cmd_head);
 			if (status != 0)
 				return (printf("error\n"), 1);
 			list = cmd_head;
@@ -63,6 +63,7 @@ int	main(void)
 			while (list)
 			{
 				print_input((t_dlist *)list->content, data);
+				printf("\t%d", list->type);
 				list = list->next;
 				printf("\n");
 			}
@@ -73,6 +74,7 @@ int	main(void)
 			while (list)
 			{
 				print_input((t_dlist *)list->content, data);
+				printf("\t%d", list->type);
 				list = list->next;
 				printf("\n");
 			}
@@ -83,23 +85,23 @@ int	main(void)
 			while (list)
 			{
 				print_input((t_dlist *)list->content, data);
+				printf("\t%d", list->type);
 				list = list->next;
 				printf("\n");
 			}
-			cmp_head = ms_dlstnew(list_head, MS_PARSE_CMP0);
-			status = ms_compound(cmp_head);
-			if (status != 0)
-				return (1);
-			list = cmp_head;
+			cmd_head = ms_dlstnew(list_head, MS_PARSE_CMP0);
+			status = ms_compound(cmd_head);
+			list = cmd_head;
 			printf ("\n COMPOUND LIST :\n");
-			while (list != NULL)
+			while (list)
 			{
 				print_input((t_dlist *)list->content, data);
+				printf("\t%d", list->type);
 				list = list->next;
 				printf("\n");
 			}
 		}
-		free_input(cmp_head);
+		free_input(cmd_head);
 	}
 	rl_clear_history();
 	free(input);
@@ -118,7 +120,7 @@ void	print_input(t_dlist *list, const char **data)
 			ft_putstr_fd((char *)operator_arr[list->type], 1);
 		else
 			print_input(list->content, data);
-		ft_putstr_fd(" ", 1);
+		ft_putstr_fd("", 1);
 		list = list->next;
 	}
 }

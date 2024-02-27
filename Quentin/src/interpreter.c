@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:37:44 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/22 13:29:50 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/24 15:10:42 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	ms_interpreter(char *input)
 	status = 0;	
 	token_head = ms_token_list(input, data);
 	cmd_head = ms_dlstnew(token_head, MS_PARSE_CMD);
-	status = ms_cmd_list(cmd_head);
+	status = ms_cmd(cmd_head);
 	pipe_head = ms_dlstnew(cmd_head, MS_PARSE_CMD);
 	status = ms_pipeline(pipe_head);
 	list_head = ms_dlstnew(pipe_head, MS_PARSE_CMD);
-	status = ms_cmd_list(list_head);
+	status = ms_cmd(list_head);
 			
 	list = list_head;
 	while (list)

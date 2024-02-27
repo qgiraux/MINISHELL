@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:00:24 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 14:58:38 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 15:35:37 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_dlist	*ms_list_isitlist(t_dlist *pipe, t_dlist *list)
 			ms_dlstadd_back(&list, ms_dlstnew(pipe, MS_PARSE_LIST));
 		
 	}
-	if (1 == ms_dlist_istype_pipe_and_or(pipe))
+	if (1 == ms_dlist_istype_pipe_and_or(pipe) && NULL != pipe->prev)
 	{
 		if (1 == ms_dlist_istype_parenthesis(pipe->next))
 		{

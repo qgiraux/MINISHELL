@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:48:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 15:07:45 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 15:48:03 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ int	ms_compound(t_dlist *cmp)
 			}
 		}
 		if (MS_TOKEN_OPEN == list->type && 1 == check_next_open_parenthesis(list))
-		{
-			check++;
-		}
+			check = -1;
 		list = list->next;
 	}
 	return (check);

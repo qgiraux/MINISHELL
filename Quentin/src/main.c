@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 15:09:37 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 15:49:34 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,9 @@ int	main(void)
 	MS_REDIR_HERE_DOC, \
 	NULL};
 	char		*input;
-	t_dlist		*token_head;
-	t_dlist		*cmd_head;
-	t_dlist		*pipe_head;
-	t_dlist		*list_head;
-	t_dlist		*list;
-	int			status;
 
-	status = 0;
+	t_dlist		*list;
+
 	input = "";
 	while (1)
 	{
@@ -48,70 +43,26 @@ int	main(void)
 		add_history(input);
 		if (input == NULL || ft_strncmp(input, "exit", 4) == 0)
 			break ;
-		token_head = ms_token_list(input, data);
-		if (token_head == NULL)
-			return (printf("error\n"), 1);
-		status = parser_error(token_head, data);
-		if (status == 0)
-		{
-			cmd_head = ms_dlstnew(token_head, MS_PARSE_CMD);
-			status = ms_cmd(cmd_head);
-			if (status != 0)
-				return (printf("error\n"), 1);
-			list = cmd_head;
-			printf ("\nCOMMAND LIST :\n");
-			while (list)
+		list = ms_interpreter(input, data);
+		
+		while (list)
 			{
 				print_input((t_dlist *)list->content, data);
 				printf("\t%d", list->type);
 				list = list->next;
 				printf("\n");
 			}
-			pipe_head = ms_dlstnew(cmd_head, MS_PARSE_PIPE0);
-			status = ms_pipeline(pipe_head);
-			list = pipe_head;
-			printf ("\n PIPE LIST :\n");
-			while (list)
-			{
-				print_input((t_dlist *)list->content, data);
-				printf("\t%d", list->type);
-				list = list->next;
-				printf("\n");
-			}
-			list_head = ms_dlstnew(pipe_head, MS_PARSE_LIST);
-			status = ms_list(list_head);
-			list = list_head;
-			printf ("\n LISTE LIST :\n");
-			while (list)
-			{
-				print_input((t_dlist *)list->content, data);
-				printf("\t%d", list->type);
-				list = list->next;
-				printf("\n");
-			}
-			status = 1;
-			while (status != 0)
-			{
-				cmd_head = ms_dlstnew(list_head, MS_PARSE_CMP0);
-				status = ms_compound(cmd_head);
-				list_head = cmd_head;
-			}
-			list = cmd_head;
-			printf ("\n COMPOUND LIST :\n");
-			while (list)
-			{
-				print_input((t_dlist *)list->content, data);
-				printf("\t%d", list->type);
-				list = list->next;
-				printf("\n");
-			}
-		}
-		free_input(cmd_head);
+		free_input(list);
 	}
 	rl_clear_history();
 	free(input);
 	return (0);
 }
+
+
+
+
+
 
 void	print_input(t_dlist *list, const char **data)
 {

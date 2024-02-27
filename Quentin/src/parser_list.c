@@ -6,11 +6,12 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:00:24 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 14:48:54 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 14:58:38 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
 
 static t_dlist	*ms_list_isitlist(t_dlist *pipe, t_dlist *list)
 {

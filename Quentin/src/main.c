@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 13:13:09 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 15:09:37 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,13 @@ int	main(void)
 				list = list->next;
 				printf("\n");
 			}
-			cmd_head = ms_dlstnew(list_head, MS_PARSE_CMP0);
-			status = ms_compound(cmd_head);
+			status = 1;
+			while (status != 0)
+			{
+				cmd_head = ms_dlstnew(list_head, MS_PARSE_CMP0);
+				status = ms_compound(cmd_head);
+				list_head = cmd_head;
+			}
 			list = cmd_head;
 			printf ("\n COMPOUND LIST :\n");
 			while (list)

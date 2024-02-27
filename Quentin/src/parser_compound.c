@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:48:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 14:16:50 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 15:07:45 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,56 +14,46 @@
 #include "../includes/dlist.h"
 #include "../includes/parser.h"
 
-
+int	check_next_open_parenthesis(t_dlist *list)
+{
+	t_dlist *tmp;
+	tmp = list->next;
+	while (tmp)
+	{
+		if (MS_TOKEN_OPEN == tmp->type)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
 int	ms_compound(t_dlist *cmp)
 {
 	t_dlist	*list;
-	int		count;
-	int		max_count;
+	int		check;
 
-	count = 0;
-	max_count = 0;
+	check = 0;
 	list = (t_dlist *)cmp->content;
-	while (list != NULL)
+
+	while (list)
 	{
-		if (NULL != list->next && 1 == ms_dlist_istype_parenthesis(list->next) \
-		&& 1 == ms_dlist_istype_pipe_and_or(list) && max_count == 0)
+		if (MS_TOKEN_OPEN == list->type && 0 == check_next_open_parenthesis(list))
 		{
 			ms_dlstcut(list);
-			ms_dlstadd_back(&cmp, ms_dlstnew(list, list->type));
-		}
-			
-		if (MS_TOKEN_OPEN == list->type)
-		{
-			if (0 == count)
-			{
-				if (NULL == list->prev)
-					cmp->type = MS_PARSE_CMP;
-					
-				if (NULL != list->prev)
-				{
-					ms_dlstcut(list);
-					ms_dlstadd_back(&cmp, ms_dlstnew(list, MS_PARSE_CMP));
-				}
-			}
-			count++;
-			max_count++;
-		}
-		if (MS_TOKEN_CLOSE == list->type)
-		{
+			ms_dlstadd_back(&cmp, ms_dlstnew(list, MS_PARSE_CMP));
+			while (MS_TOKEN_CLOSE != list->type)
+				list = list->next;
 			list = list->next;
-			count--;
-			if (0 == count && NULL != list)
+			if (list)
 			{
 				ms_dlstcut(list);
-				if (1 == ms_dlist_istype_pipe_and_or(list))
-					ms_dlstadd_back(&cmp, ms_dlstnew(list, list->type));
-				if (0 == ms_dlist_istype_pipe_and_or(list))
-					ms_dlstadd_back(&cmp, ms_dlstnew(list, MS_PARSE_LIST));
+				ms_dlstadd_back(&cmp, ms_dlstnew(list, MS_PARSE_LIST));
 			}
 		}
-		else
-			list = list->next;
+		if (MS_TOKEN_OPEN == list->type && 1 == check_next_open_parenthesis(list))
+		{
+			check++;
+		}
+		list = list->next;
 	}
-	return (max_count);
+	return (check);
 }

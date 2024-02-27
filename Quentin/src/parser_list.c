@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:00:24 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 14:12:21 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 14:48:54 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static t_dlist	*ms_list_isitlist(t_dlist *pipe, t_dlist *list)
 {
 	if (1 == ms_dlist_istype_parenthesis(pipe))
 	{
-		if (NULL != pipe->prev)
+		if (pipe->prev)
 		{
 			ms_dlstcut(pipe);
-			ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));
+			ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));				
 		}
 		else
 			list->type = pipe->type;
@@ -27,16 +27,14 @@ static t_dlist	*ms_list_isitlist(t_dlist *pipe, t_dlist *list)
 	if (pipe->prev && 1 == ms_dlist_istype_parenthesis(pipe->prev))
 	{
 		ms_dlstcut(pipe);
-		ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));
+		if (1 == ms_dlist_istype_pipe_and_or(pipe))
+			ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));
+		else
+			ms_dlstadd_back(&list, ms_dlstnew(pipe, MS_PARSE_LIST));
+		
 	}
 	if (1 == ms_dlist_istype_pipe_and_or(pipe))
 	{
-		if (NULL == pipe->prev)
-		{
-			pipe = pipe->next;
-			ms_dlstcut(pipe);
-			ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));
-		}
 		if (1 == ms_dlist_istype_parenthesis(pipe->next))
 		{
 			ms_dlstcut(pipe);

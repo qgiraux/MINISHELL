@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 14:48:23 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 12:19:31 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 16:33:22 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void		ms_dlstclear(t_dlist **lst);
 void		ms_dlstcut(t_dlist *cut);
 t_dlist		*ms_dlstfirst(t_dlist *lst);
 t_dlist		*ms_dlst_free_link(t_dlist *lst);
+void		ms_dlst_break_chain(t_dlist *list, t_dlist *arg_list, int type);
 //
 int			ms_dlist_istype_word(t_dlist *list);
 int			ms_dlist_istype_word_only(t_dlist *list);

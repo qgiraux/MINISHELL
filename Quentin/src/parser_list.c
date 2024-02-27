@@ -6,22 +6,18 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:00:24 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 15:35:37 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 16:32:22 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 static t_dlist	*ms_list_isitlist(t_dlist *pipe, t_dlist *list)
 {
 	if (1 == ms_dlist_istype_parenthesis(pipe))
 	{
 		if (pipe->prev)
-		{
-			ms_dlstcut(pipe);
-			ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));				
-		}
+			ms_dlst_break_chain(list, pipe, pipe->type);
 		else
 			list->type = pipe->type;
 	}
@@ -32,15 +28,11 @@ static t_dlist	*ms_list_isitlist(t_dlist *pipe, t_dlist *list)
 			ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));
 		else
 			ms_dlstadd_back(&list, ms_dlstnew(pipe, MS_PARSE_LIST));
-		
 	}
 	if (1 == ms_dlist_istype_pipe_and_or(pipe) && NULL != pipe->prev)
 	{
 		if (1 == ms_dlist_istype_parenthesis(pipe->next))
-		{
-			ms_dlstcut(pipe);
-			ms_dlstadd_back(&list, ms_dlstnew(pipe, pipe->type));
-		}
+			ms_dlst_break_chain(list, pipe, pipe->type);
 	}
 	return (pipe->next);
 }

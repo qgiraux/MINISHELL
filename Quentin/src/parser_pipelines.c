@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:33:47 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 12:45:50 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 16:12:14 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,9 @@ int	ms_pipeline(t_dlist *pipes_list)
 			pipe_type(pipes_list, MS_PARSE_PIPE);
 		else if (1 == ms_end(cmd))
 		{
-			if (NULL != cmd->prev)
-			{
-				ms_dlstcut(cmd);
-				ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, cmd->type));
-			}
-			else
-				pipe_type(pipes_list, cmd->type);
+			ms_dlstcut(cmd);
+			ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, cmd->type));
+			pipe_type(pipes_list, cmd->type);
 		}
 		else if (1 == ms_end(cmd->prev))
 		{

@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 15:49:34 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 16:24:56 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	main(void)
 	MS_REDIR_HERE_DOC, \
 	NULL};
 	char		*input;
-
 	t_dlist		*list;
 
 	input = "";
@@ -41,28 +40,22 @@ int	main(void)
 	{
 		input = readline(ms_main_prompt());
 		add_history(input);
-		if (input == NULL || ft_strncmp(input, "exit", 4) == 0)
+		if (NULL == input || ft_strncmp(input, "exit", 4) == 0)
 			break ;
 		list = ms_interpreter(input, data);
-		
 		while (list)
-			{
-				print_input((t_dlist *)list->content, data);
-				printf("\t%d", list->type);
-				list = list->next;
-				printf("\n");
-			}
+		{
+			print_input((t_dlist *)list->content, data);
+			printf("\t%d", list->type);
+			list = list->next;
+			printf("\n");
+		}
 		free_input(list);
+		free(input);
 	}
 	rl_clear_history();
-	free(input);
 	return (0);
 }
-
-
-
-
-
 
 void	print_input(t_dlist *list, const char **data)
 {
@@ -85,20 +78,19 @@ void	free_input(t_dlist *list)
 {
 	t_dlist	*tmp;
 
-	while (list != NULL)
+	while (NULL != list)
 	{
-		if (list->content == NULL || list->type == -1)
+		tmp = list->next;
+		if (NULL == list->content || MS_TOKEN_WORD == list->type)
 		{
-			tmp = list->next;
-			if (list->type == -1)
+			if (MS_TOKEN_WORD == list->type)
 				free(list->content);
-			free(list);
-			list = tmp;
 		}
 		else
-		{
 			free_input(list->content);
-			list = list->next;
-		}
+
+		free(list);
+		list = tmp;
 	}
+	
 }

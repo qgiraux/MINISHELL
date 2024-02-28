@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:28:06 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 16:49:31 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/28 15:57:15 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define MS_PARSE_CMP 105
 # define MS_PARSE_CMP0 104
 
-int		parser_error(t_dlist *list, const char **data);
+int		ms_parser_error(t_dlist *list, const char **data);
 t_dlist	*ms_interpreter(char *input, const char **data);
 int		ms_cmd(t_dlist *token);
 int		ms_pipeline(t_dlist *cmd);

@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/23 11:31:50 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/28 16:14:50 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define MS_BLANK " \t"
 # define MS_METACHAR_NOT_BLANK "|&()<>"
 
-# define MS_TOKEN_ESOURCE "bash"
+# define MS_TOKEN_ESOURCE "MSH"
 
 # define MS_EQUOTE 256
 # define MS_EQUOTE_MSG "syntax error unclosed quote"

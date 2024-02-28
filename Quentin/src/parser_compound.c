@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:48:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/28 15:27:37 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/28 15:53:02 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ms_compound(t_dlist *cmp)
 
 	status = 0;
 	list = cmp->content;
-	if ( MS_PARSE_LIST == list->type || 1 != check_next_parenth(list))
+	if (MS_PARSE_LIST == list->type || 1 != check_next_parenth(list))
 		cmp->type = list->type;
 	while (list)
 	{
@@ -64,7 +64,6 @@ int	ms_compound(t_dlist *cmp)
 			ms_dlst_break_chain(cmp, list, list->type);
 		if (NULL != list)
 			list = list->next;
-		
 	}
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:00:24 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 16:32:22 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 17:12:36 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ static t_dlist	*ms_list_isitlist(t_dlist *pipe, t_dlist *list)
 	}
 	return (pipe->next);
 }
+
+/*liste est une serie de PIPES separes de ET ou OU*/
+/* les ET et OU qui ne separent pas 2 PIPES ne font pas partie de LISTE*/
+
 
 int	ms_list(t_dlist *list)
 {

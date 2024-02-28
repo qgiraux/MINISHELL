@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:33:47 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 16:12:14 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 17:09:40 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ static int	ms_end(t_dlist *cmd)
 		return (1);
 	return (0);
 }
+/* au lieu de delimiter les pipes par AND OR OPEN CLOSE, les regouper par commandes simples separees de pipes*/
+/* degager le type CMD, ne faire que des PIPES a ce niveau*/
+
 
 static void	pipe_type(t_dlist *pipes_list, int type)
 {

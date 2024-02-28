@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:48:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 16:30:29 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 17:17:19 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 int	check_open_parenth(t_dlist *list)
 {
 	t_dlist	*tmp;
-
+	
+	
 	tmp = list->next;
 	while (tmp)
 	{
@@ -27,7 +28,7 @@ int	check_open_parenth(t_dlist *list)
 	}
 	return (0);
 }
-
+/*refaire en separeant l'acte de creer COMPOUND et le  re-LISTE-AGE*/
 int	ms_compound(t_dlist *cmp)
 {
 	t_dlist	*list;

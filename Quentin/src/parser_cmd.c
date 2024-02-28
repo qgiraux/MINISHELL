@@ -6,13 +6,17 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:40:30 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/24 16:24:39 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/27 16:56:42 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/dlist.h"
 #include "../includes/parser.h"
+
+
+/*	regroupe les tokens par groupes separes de  '&&', '||', '|', '(' ou ')'
+* 	laisse ces operateurs dans leurs propre groupes, hors des commandes simples */
 
 static int	ms_end_command(t_dlist *token)
 {

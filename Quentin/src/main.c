@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 16:47:39 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/28 11:02:10 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(void)
 	char		*input;
 	t_dlist		*list;
 	
-	(void *)data;
 	input = "";
 	while (1)
 	{

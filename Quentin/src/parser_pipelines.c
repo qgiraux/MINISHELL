@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:33:47 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 17:09:40 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/28 13:17:50 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,18 @@
 static int	ms_end(t_dlist *cmd)
 {
 	int		op;
-	t_dlist	*token;
 
 	if (cmd == NULL)
-		return (0);
-	token = ((t_dlist *)(cmd->content));
-	if (token == NULL)
-		return (0);
-	op = token->type;
-	if (op == MS_TOKEN_AND || op == MS_TOKEN_OR \
-		|| op == MS_TOKEN_OPEN || op == MS_TOKEN_CLOSE)
+		return (-1);
+	op = cmd->type;
+	if (op == MS_TOKEN_PIPE)
 		return (1);
+	if (op == MS_PARSE_CMD)
+		return (2);
 	return (0);
 }
 /* au lieu de delimiter les pipes par AND OR OPEN CLOSE, les regouper par commandes simples separees de pipes*/
 /* degager le type CMD, ne faire que des PIPES a ce niveau*/
-
-
-static void	pipe_type(t_dlist *pipes_list, int type)
-{
-	t_dlist	*tmp;
-
-	tmp = pipes_list;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	tmp->type = type;
-}
 
 int	ms_pipeline(t_dlist *pipes_list)
 {
@@ -49,22 +35,19 @@ int	ms_pipeline(t_dlist *pipes_list)
 	if (NULL == pipes_list)
 		return (1);
 	cmd = (t_dlist *)pipes_list->content;
+
 	while (NULL != cmd)
 	{
-		if (MS_TOKEN_PIPE == cmd->type)
-			pipe_type(pipes_list, MS_PARSE_PIPE);
-		else if (1 == ms_end(cmd))
-		{
-			ms_dlstcut(cmd);
-			ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, cmd->type));
-			pipe_type(pipes_list, cmd->type);
-		}
-		else if (1 == ms_end(cmd->prev))
-		{
-			ms_dlstcut(cmd);
-			ms_dlstadd_back(&pipes_list, ms_dlstnew(cmd, MS_PARSE_CMD));
-		}
+		if (1 == ms_end(cmd))
+			if (0 == ms_end(cmd->prev) || 0 == ms_end(cmd->next))
+				ms_dlst_break_chain(pipes_list, cmd, cmd->type);
+		if (2 == ms_end(cmd))
+			if (0 == ms_end(cmd->prev))
+				ms_dlst_break_chain(pipes_list, cmd, MS_PARSE_PIPE);
+		if (0 == ms_end(cmd))
+			ms_dlst_break_chain(pipes_list, cmd, cmd->type);
 		cmd = cmd->next;
 	}
 	return (0);
 }
+

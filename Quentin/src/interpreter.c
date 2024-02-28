@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:37:44 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 16:49:16 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/28 14:33:24 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,57 @@
 
 t_dlist	*ms_interpreter(char *input, const char **data)
 {
-	t_dlist		*token_head;
-	t_dlist		*cmd_head;
-	t_dlist		*pipe_head;
-	t_dlist		*list_head;
+	t_dlist		*toprint;
+	t_dlist		*list;
 	int			status;
 
-	token_head = ms_token_list(input, data);
-	status = parser_error(token_head, data);
+	list = ms_token_list(input, data);
+	status = parser_error(list, data);
 	if (status == 0)
 	{
-		cmd_head = ms_dlstnew(token_head, MS_PARSE_CMD);
-		status = ms_cmd(cmd_head);
-		pipe_head = ms_dlstnew(cmd_head, MS_PARSE_PIPE0);
-		status = ms_pipeline(pipe_head);
-		list_head = ms_dlstnew(pipe_head, MS_PARSE_LIST);
-		status = ms_list(list_head);
-		status = -1;
-		while (status < 0)
+		list = ms_dlstnew(list, MS_PARSE_CMD);
+		status = ms_cmd(list);
+		toprint = list;
+		printf("\nCOMMAND\n");
+		while (toprint)
 		{
-			cmd_head = ms_dlstnew(list_head, MS_PARSE_CMP0);
-			status = ms_compound(cmd_head);
-			list_head = cmd_head;
+			print_input(toprint->content, data);
+			printf ("\t%d\n", toprint->type);
+			toprint = toprint->next;
 		}
+		list = ms_dlstnew(list, MS_PARSE_PIPE);
+			status = ms_pipeline(list);
+			toprint = list;
+			printf("\nPIPELINE\n");
+			while (toprint)
+			{
+				print_input(toprint->content, data);
+				printf ("\t%d\n", toprint->type);
+				toprint = toprint->next;
+			}
+			while (NULL != list->next)
+			{
+				list = ms_dlstnew(list, MS_PARSE_LIST);
+				status = ms_list(list);
+				toprint = list;
+				printf("\nLIST\n");
+				while (toprint)
+				{
+					print_input(toprint->content, data);
+					printf ("\t%d\n", toprint->type);
+					toprint = toprint->next;
+				}
+				list = ms_dlstnew(list, MS_PARSE_CMP);
+				status = ms_compound(list);
+				printf("\nCOMPOUND\n");
+				toprint = list;
+				while (toprint)
+				{
+					print_input(toprint->content, data);
+					printf ("\t%d\n", toprint->type);
+					toprint = toprint->next;
+				}
+			}
 	}
-	return (list_head);
+	return (list);
 }

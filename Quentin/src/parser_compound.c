@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:48:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 17:17:19 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/28 14:34:57 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,59 @@
 #include "../includes/dlist.h"
 #include "../includes/parser.h"
 
-int	check_open_parenth(t_dlist *list)
+static int	check_next_parenth(t_dlist *list)
 {
 	t_dlist	*tmp;
 	
-	
 	tmp = list->next;
-	while (tmp)
+	while (NULL != tmp)
 	{
-		if (MS_TOKEN_OPEN == tmp->type)
+		if (MS_TOKEN_CLOSE == tmp->type)
 			return (1);
+		if (MS_TOKEN_OPEN == tmp->type)
+			return (0);
 		tmp = tmp->next;
 	}
 	return (0);
 }
-/*refaire en separeant l'acte de creer COMPOUND et le  re-LISTE-AGE*/
+
+static t_dlist	*ms_is_it_cmp(t_dlist *list, t_dlist *cmp)
+{
+	if (1 == check_next_parenth(list))
+	{
+		if (NULL != list->prev)
+			ms_dlst_break_chain(cmp, list, MS_PARSE_CMP);
+
+		while (MS_TOKEN_CLOSE != list->type)
+			list = list->next;
+		list = list->next;
+		if (NULL != list)
+			ms_dlst_break_chain(cmp, list, list->type);			
+	}
+	else if (NULL != list->prev)
+		ms_dlst_break_chain(cmp, list, list->type);
+	return (list);
+}
+
 int	ms_compound(t_dlist *cmp)
 {
 	t_dlist	*list;
-	int		check;
+	int	status;
 
-	check = 0;
-	list = (t_dlist *)cmp->content;
+	status = 0;
+	list = cmp->content;
+
+
 	while (list)
 	{
-		if (MS_TOKEN_OPEN == list->type && 0 == check_open_parenth(list))
+		if (MS_TOKEN_OPEN == list->type)
 		{
-			ms_dlst_break_chain(cmp, list, MS_PARSE_CMP);
-			while (MS_TOKEN_CLOSE != list->type)
-				list = list->next;
-			list = list->next;
-			if (list)
-				ms_dlst_break_chain(cmp, list, MS_PARSE_LIST);
+			list = ms_is_it_cmp(list, cmp);
 		}
-		if (MS_TOKEN_OPEN == list->type && 1 == check_open_parenth(list))
-			check = -1;
-		list = list->next;
+		else if (NULL != list->prev)
+			ms_dlst_break_chain(cmp, list, list->type);
+		if (NULL != list)
+			list = list->next;
 	}
-	return (check);
+	return (status);	
 }

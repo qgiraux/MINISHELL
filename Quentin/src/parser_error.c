@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:29:30 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 13:11:56 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/28 15:50:18 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,25 @@
 int	parser_error(t_dlist *list, const char **data)
 {
 	const char		**operator_arr = ms_token_get_operator_arr(data);
+	int				i;
+
+	i = 0;
 
 	if (list == NULL)
 		return (1);
+	if (1 == ms_dlist_istype_not_first(list))
+	{
+		ft_putstr_fd("msh: parse error near '", 2);
+		ft_putstr_fd((char *)operator_arr[list->type], 2);
+				ft_putstr_fd("'\n", 2);
+		return (1);
+	}
 	while (list != NULL)
 	{
+		if (MS_TOKEN_OPEN == list->type)
+			i++;
+		if (MS_TOKEN_CLOSE == list->type)
+			i--;
 		if (1 == ms_dlist_istype_operator(list) && list->type != MS_TOKEN_CLOSE)
 		{
 			if (list->next == NULL)
@@ -70,5 +84,7 @@ int	parser_error(t_dlist *list, const char **data)
 		}
 		list = list->next;
 	}
+	if (0 != i)
+		return (ft_putstr_fd("msh: parse error near ')'\n", 2), 1);
 	return (0);
 }

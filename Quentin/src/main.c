@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/28 11:02:10 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/28 15:36:21 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,24 @@ char	*ms_main_prompt(void)
 int	main(void)
 {
 	const char	*data[10] = {\
-	MS_CONTROL_PIPE,
-	MS_CONTROL_AND, \
-	MS_CONTROL_OR, \
-	MS_CONTROL_OPEN, \
-	MS_CONTROL_CLOSE, \
-	MS_REDIR_INTPUT, \
-	MS_REDIR_OUTPUT, \
-	MS_REDIR_APPEND, \
-	MS_REDIR_HERE_DOC, \
+	MS_CONTROL_PIPE, MS_CONTROL_AND, MS_CONTROL_OR, \
+	MS_CONTROL_OPEN, MS_CONTROL_CLOSE, MS_REDIR_INTPUT, \
+	MS_REDIR_OUTPUT, MS_REDIR_APPEND, MS_REDIR_HERE_DOC, \
 	NULL};
 	char		*input;
 	t_dlist		*list;
-	
+
 	input = "";
 	while (1)
 	{
 		input = readline(ms_main_prompt());
 		add_history(input);
 		if (NULL == input || ft_strncmp(input, "exit", 4) == 0)
-			break ;
-		list = ms_interpreter(input, data);
-		while (list)
 		{
-			print_input((t_dlist *)list->content, data);
-			printf("\t%d", list->type);
-			list = list->next;
-			printf("\n");
+			free(input);
+			break ;
 		}
+		list = ms_interpreter(input, data);
 		free_input(list);
 		free(input);
 	}
@@ -88,9 +78,7 @@ void	free_input(t_dlist *list)
 		}
 		else
 			free_input(list->content);
-
 		free(list);
 		list = tmp;
 	}
-	
 }

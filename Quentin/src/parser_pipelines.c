@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:33:47 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/28 13:17:50 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/28 15:21:58 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static int	ms_end(t_dlist *cmd)
 		return (2);
 	return (0);
 }
-/* au lieu de delimiter les pipes par AND OR OPEN CLOSE, les regouper par commandes simples separees de pipes*/
-/* degager le type CMD, ne faire que des PIPES a ce niveau*/
 
 int	ms_pipeline(t_dlist *pipes_list)
 {
@@ -35,7 +33,8 @@ int	ms_pipeline(t_dlist *pipes_list)
 	if (NULL == pipes_list)
 		return (1);
 	cmd = (t_dlist *)pipes_list->content;
-
+	if (0 == ms_end(cmd))
+		pipes_list->type = cmd->type;
 	while (NULL != cmd)
 	{
 		if (1 == ms_end(cmd))
@@ -44,10 +43,9 @@ int	ms_pipeline(t_dlist *pipes_list)
 		if (2 == ms_end(cmd))
 			if (0 == ms_end(cmd->prev))
 				ms_dlst_break_chain(pipes_list, cmd, MS_PARSE_PIPE);
-		if (0 == ms_end(cmd))
+		if (0 == ms_end(cmd) && NULL != cmd->prev)
 			ms_dlst_break_chain(pipes_list, cmd, cmd->type);
 		cmd = cmd->next;
 	}
 	return (0);
 }
-

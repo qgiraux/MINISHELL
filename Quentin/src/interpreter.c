@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:37:44 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/29 11:07:22 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/29 14:22:35 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,17 @@ t_dlist	*ms_interpreter(char *input, const char **data)
 {
 	t_dlist		*list;
 	int			status;
-	t_dlist		*toprint;
+	//t_dlist		*toprint;
 
 	status = 0;
 	list = ms_token_list(input, data);
 	if (0 == ms_parser_error(list, data))
 	{
 		list = ms_dlstnew(list, MS_PARSE_CMD);
+		if (NULL == list)
+			return (NULL);
 		status += ms_cmd(list);
-		toprint = list;
+		/*toprint = list;
 		printf("\nCMD\n");
 		while (toprint)
 		{
@@ -33,10 +35,12 @@ t_dlist	*ms_interpreter(char *input, const char **data)
 			printf("\t%d", toprint->type);
 			toprint = toprint->next;
 			printf("\n");
-		}
+		}*/
 		list = ms_dlstnew(list, MS_PARSE_PIPE);
+		if (NULL == list)
+			return (NULL);
 		status += ms_pipeline(list);
-		toprint = list;
+		/*toprint = list;
 		printf("\nPIPE\n");
 		while (toprint)
 		{
@@ -44,12 +48,14 @@ t_dlist	*ms_interpreter(char *input, const char **data)
 			printf("\t%d", toprint->type);
 			toprint = toprint->next;
 			printf("\n");
-		}
+		}*/
 		while (NULL != list->next || 0 != status)
 		{
 			list = ms_dlstnew(list, MS_PARSE_LIST);
+			if (NULL == list)
+			return (NULL);
 			status += ms_list(list);
-			toprint = list;
+			/*toprint = list;
 			printf("\nLIST\n");
 			while (toprint)
 			{
@@ -57,12 +63,14 @@ t_dlist	*ms_interpreter(char *input, const char **data)
 				printf("\t%d", toprint->type);
 				toprint = toprint->next;
 				printf("\n");
-			}
+			}*/
 			if (NULL == list->next || 0 != status)
 				return (list);
 			list = ms_dlstnew(list, MS_PARSE_CMP);
+			if (NULL == list)
+			return (NULL);
 			status += ms_compound(list);
-			toprint = list;
+			/*toprint = list;
 			printf("\nCOMPOUND\n");
 			while (toprint)
 			{
@@ -71,7 +79,7 @@ t_dlist	*ms_interpreter(char *input, const char **data)
 				toprint = toprint->next;
 				printf("\n");
 			}
-			usleep(100000);
+			usleep(100000);*/
 		}
 	}
 	return (list);

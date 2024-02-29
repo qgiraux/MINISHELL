@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:29:30 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/28 16:16:25 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/29 11:06:23 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	ms_error_pipe(t_dlist *list, const char **data)
 	const char		**operator_arr = ms_token_get_operator_arr(data);
 
 	if (MS_TOKEN_PIPE == list->type \
-	&& 1 == ms_dlist_istype_parenthesis(list->prev))
+	&& (1 == ms_dlist_istype_parenthesis(list->prev) || NULL == list->next))
 	{
 		ft_putstr_fd("MSH: syntax error near unexpected token '", 2);
 		ft_putstr_fd((char *)operator_arr[list->type], 2);
@@ -99,7 +99,8 @@ static int	ms_error_nb_parenthesis(t_dlist *list)
 	if (0 > i)
 		return (ft_putstr_fd("MSH: parse error near ')'\n", 2), 1);
 	if (0 < i)
-		return (ft_putstr_fd("MSH: syntax error unclosed parenthesis:(\n", 2), 1);
+		return \
+		(ft_putstr_fd("MSH: syntax error unclosed parenthesis:(\n", 2), 1);
 	return (0);
 }
 

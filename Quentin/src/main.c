@@ -6,13 +6,14 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/28 15:36:21 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/01 13:12:15 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/token.h"
 #include "../includes/dlist.h"
+#include "../includes/node_type.h"
 
 char	*ms_main_prompt(void)
 {
@@ -40,6 +41,7 @@ int	main(void)
 			break ;
 		}
 		list = ms_interpreter(input, data);
+		node_type(list, 0, data);
 		free_input(list);
 		free(input);
 	}

@@ -6,13 +6,13 @@
 #    By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 12:12:56 by qgiraux           #+#    #+#              #
-#    Updated: 2024/02/23 11:34:49 by qgiraux          ###   ########.fr        #
+#    Updated: 2024/03/01 17:45:03 by qgiraux          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 CC			= gcc
-FLAG		= -Wall -Wextra -Werror -lreadline -g3
+FLAG		= -Wall -Wextra -Werror -lreadline -g3 #-pthread -fsanitize=thread
 SRCDIR		= src
 OBJDIR		= obj
 SRC			= $(wildcard $(SRCDIR)/*.c)

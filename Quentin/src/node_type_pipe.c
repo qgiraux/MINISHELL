@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:53:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/01 17:44:55 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/02 13:45:42 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,94 +15,124 @@
 #include "../includes/token.h"
 
 
-t_pipe	init_pipe(int i)
+t_pipe	init_pipe(int nb_pipe)
 {
 	t_pipe	p;
 	int		count;
 
-	count = 0;
-	p.i = 0;
-	p.pid = malloc(i * sizeof(int));
+	p.count = 0;
+	p.pid = malloc(nb_pipe * sizeof(int));
 	if (!p.pid)
 		return (p);
-	p.pipefd = malloc(i * sizeof(int *));
+	p.pipefd = malloc(nb_pipe * sizeof(int *));
 	if (!p.pipefd)
 	{
 		free(p.pid);
 		return (p);
 	}
-	p.status = malloc(i * sizeof(int));
+	p.status = malloc(nb_pipe * sizeof(int));
 	if (!p.status)
 	{
 		free(p.pid);
 		free(p.pipefd);
 		return (p);
 	}
-	while (count < i)
+	count = 0;
+	while (count < nb_pipe)
 	{
 		p.pipefd[count] = malloc(2 * sizeof(int));
+		if (!p.pipefd[count])
+			{
+				while (count >=0)
+					free(p.pipefd[count--]);
+				free(p.pid);
+				free(p.pipefd);
+				free(p.status);
+				return (p);
+			}
 		count++;
 	}
 	return (p);	
 }
 
-int	pipe_fork(t_pipe p, int i, t_dlist *list, const char **data)
+void	free_p(t_pipe p, int nb_pipe)
 {
-	if (p.i > 0)
+	int	count;
+
+	count = 0;
+	while (count < nb_pipe)
 	{
-		close (p.pipefd[p.i - 1][1]);
-		dup2 (p.pipefd[p.i - 1][0], 0);
+		free(p.pipefd[count]);
+		count++;
 	}
-	if (p.i < i)
-	{
-		close (p.pipefd[p.i][0]);
-		dup2 (p.pipefd[p.i][1], 1);
-	}
-	return (node_type(list, p.status[p.i], data));
+	free (p.pid);
+	free (p.status);
+	free (p.pipefd);
 }
 
-int	pipe_loop(t_pipe p, int i, t_dlist *list, const char **data)
+int	pipe_fork(t_pipe p, t_dlist *list, int nb_pipe, const char **data)
 {
-	while (p.i < i)
+	if (p.count > 0)
 	{
-		p.status[p.i] = 0;
-		pipe(p.pipefd[p.i]);
-		p.pid[i] = fork();
-		if (-1 == p.pid[p.i])
-			p.status[p.i] = 28;
-		if (p.pid[p.i] == 0)
-			p.status[p.i] = pipe_fork(p, i, list, data);
-		while (list->next == MS_TOKEN_PIPE)
-			list = list->next;
-		p.i++;
-		close (p.pipefd[p.i][1]);
+		close (p.pipefd[p.count - 1][1]);
+		dup2 (p.pipefd[p.count - 1][0], 0);
 	}
-	while (--p.i >= 0)
-		waitpid(p.pid[p.i], &p.status[i], 0);
-	return (WEXITSTATUS(p.status[i]));
+	if (p.count < nb_pipe - 1)
+	{
+		close (p.pipefd[p.count][0]);
+		dup2 (p.pipefd[p.count][1], 1);
+	}
+	exit (p.status[p.count] = node_type(list, 0, data));
+}
+
+int	pipe_loop(t_pipe p, int nb_pipe, t_dlist *list, const char **data)
+{
+	p.count = 0;
+	while (p.count < nb_pipe)
+	{
+		p.status[p.count] = 0;
+		pipe(p.pipefd[p.count]);
+		p.pid[p.count] = fork();
+		if (-1 == p.pid[p.count])
+			p.status[p.count] = 28;
+		if (p.pid[p.count] == 0)
+			p.status[p.count] = pipe_fork(p, list, nb_pipe, data);
+		list = list->next;
+		while (list != NULL && list->type == MS_TOKEN_PIPE)
+			list = list->next;
+		close (p.pipefd[p.count][0]);
+		p.count++;
+	}
+	p.count = 0;
+	while (p.count < nb_pipe)
+	{
+		waitpid(p.pid[p.count], &p.status[p.count], 0);
+		p.count++;
+	}
+	return (WEXITSTATUS(p.status[--p.count]));
 }
 
 
 int	node_type_pipe(t_dlist *node, int status, const char **data)
 {
 	t_dlist	*list;
-	int		i;
+	int		nb_pipe;
 	t_pipe	p;
 	
 	list = node->content;
 	if (NULL == list->next)
 		return(node_type(list, status, data));
-	i = 0;
+	nb_pipe = 0;
 	while (NULL != list)
 	{
 		if (MS_TOKEN_PIPE != list->type)
-			i++;
+			nb_pipe++;
 		list = list->next;		
 	}
-	list = node->content;
-	p = init_pipe(i);
-	if (!p.pid)
+	p = init_pipe(nb_pipe);
+	if (p.pipefd == NULL)
 		return (1);
-	status = pipe_loop(p, i, list, data);
+	status = pipe_loop(p, nb_pipe, node->content, data);
+	free_p(p, nb_pipe);
 	return (status);
 }

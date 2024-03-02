@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:04:57 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/01 16:41:29 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/02 12:14:27 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 typedef struct s_pipe
 {
-	int		i;
+	int		count;
 	int		*pid;
 	int		**pipefd;
 	int		*status;

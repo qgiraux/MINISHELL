@@ -6,7 +6,7 @@
 #    By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 12:12:56 by qgiraux           #+#    #+#              #
-#    Updated: 2024/03/01 17:45:03 by qgiraux          ###   ########.fr        #
+#    Updated: 2024/03/02 14:14:34 by qgiraux          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ $(OBJDIR):
 # Clean rule to remove object files
 clean:
 	rm -f $(OBJDIR)/*.o
+	rm -rf $(OBJDIR)
 	make fclean -sC ./Libft/
 
 # Full clean rule to remove object files and executables

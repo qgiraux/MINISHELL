@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/28 16:14:50 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/02 14:39:54 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define MS_ETOKEN_MSG "syntax error near unexpected token"
 
 char	*ms_token_strchr(const char *s, int c, int *quote);
-void	ms_token_error(void *arg, int errnum, int fd_error);
+void	ms_token_error(void *arg, int errnum, int fd_error, void *data);
 int		ms_token_get_operator(char **input, void *data);
 int		ms_token_add_operator(\
 			t_dlist **tokens, char **input, void *data);

@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/02 13:26:21 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/02 14:59:06 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(void)
 	input = "";
 	while (1)
 	{
-		input = readline(ms_main_prompt());
+		input = readline(NULL);
 		add_history(input);
 		if (NULL == input || ft_strncmp(input, "exit", 4) == 0)
 		{

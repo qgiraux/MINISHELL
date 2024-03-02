@@ -11,6 +11,10 @@
 		"libft.h": "c",
 		"algorithm": "c",
 		"random": "c",
-		"parser.h": "c"
+		"parser.h": "c",
+		"exec_utils.h": "c",
+		"bltin.h": "c",
+		"redir.h": "c",
+		"redir_utils.h": "c"
 	}
 }

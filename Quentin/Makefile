@@ -6,13 +6,13 @@
 #    By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 12:12:56 by qgiraux           #+#    #+#              #
-#    Updated: 2024/03/02 14:14:34 by qgiraux          ###   ########.fr        #
+#    Updated: 2024/03/02 14:47:41 by qgiraux          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 CC			= gcc
-FLAG		= -Wall -Wextra -Werror -lreadline -g3 #-pthread -fsanitize=thread
+FLAG		= -lreadline -g3 #-Wall -Wextra -Werror  #-pthread -fsanitize=thread 
 SRCDIR		= src
 OBJDIR		= obj
 SRC			= $(wildcard $(SRCDIR)/*.c)
@@ -21,12 +21,12 @@ OBJ			= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 # Default target
 all: $(NAME)
 
-# Rule to build the pipex executable
-$(NAME): $(OBJ) libft
+# Rule to build the executable
+$(NAME): $(OBJ)
 	$(CC) $(OBJ) $(FLAG) ./Libft/libft.a -o $(NAME)
 
 	
-# Rule to build object files for pipex
+# Rule to build object files
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR) libft
 	@$(CC) $(FLAG) -c $< -o $@
 
@@ -38,7 +38,7 @@ $(OBJDIR):
 	@mkdir -p $(OBJDIR)
 
 
-# Clean rule to remove object files
+# Clean rule to remove object files and directory, plus libft
 clean:
 	rm -f $(OBJDIR)/*.o
 	rm -rf $(OBJDIR)

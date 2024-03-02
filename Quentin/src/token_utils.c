@@ -6,13 +6,13 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:17 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/23 11:32:31 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/02 14:38:06 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/token_utils.h"
 
-void	ms_token_error(void *arg, int errnum, int fd_error)
+void	ms_token_error(void *arg, int errnum, int fd_error, void *data)
 {
 	if (errno == errnum)
 		return (perror(MS_TOKEN_ESOURCE));
@@ -38,6 +38,7 @@ int	ms_token_add_word(\
 	t_dlist **tokens, char **input, int *quote)
 {
 	size_t	size_word;
+	size_t	i;
 	char	*word;
 	t_dlist	*new;
 
@@ -47,11 +48,11 @@ int	ms_token_add_word(\
 		size_word++;
 	word = (char *)malloc(sizeof(char) * (size_word + 1));
 	if (NULL == word)
-		return (ms_token_error(NULL, errno, 2), 1);
+		return (ms_token_error(NULL, errno, 2, NULL), 1);
 	ft_strlcpy(word, *input, size_word + 1);
 	new = ms_dlstnew(word, MS_TOKEN_WORD);
 	if (NULL == new)
-		return (free(word), ms_token_error(NULL, errno, 2), 1);
+		return (free(word), ms_token_error(NULL, errno, 2, NULL), 1);
 	*input += size_word;
 	return (ms_dlstadd_back(tokens, new), 0);
 }
@@ -64,10 +65,10 @@ int	ms_token_add_operator(\
 
 	op_num = ms_token_get_operator(input, data);
 	if (-1 == op_num)
-		return (ms_token_error(*input, MS_ETOKEN, 2), 1);
+		return (ms_token_error(*input, MS_ETOKEN, 2, data), 1);
 	new = ms_dlstnew(NULL, op_num);
 	if (NULL == new)
-		return (ms_token_error(NULL, errno, 2), 1);
+		return (ms_token_error(NULL, errno, 2, NULL), 1);
 	ms_dlstadd_back(tokens, new);
 	return (0);
 }

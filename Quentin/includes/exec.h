@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test2                                              :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/24 15:42:44 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/24 16:23:40 by qgiraux          ###   ########.fr       */
+/*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
+/*   Updated: 2024/02/24 13:04:50 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef EXEC_H
+# define EXEC_H
 
+# include "dlist.h"
 
-input =    a | (b && c | X) && d | e
+int	ms_exec_cmd(t_dlist *cmd, void *data);
 
-cmd1 	| (cmd2 && cmd3) 		&& cmd4 | cmd5
-PIPE0_1 | (PIPE0_2  && PIPE1) 	&& PIPE2
-LIST1 	| (LIST2) 				&& LIST3
-LIST1	| CMP1					&& LIST3
-PIPE1
+#endif

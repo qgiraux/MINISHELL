@@ -6,54 +6,13 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:53:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/02 14:54:32 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/06 12:06:56 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/node_type.h"
 #include "../includes/parser.h"
 #include "../includes/token.h"
-
-
-t_pipe	init_pipe(int nb_pipe)
-{
-	t_pipe	p;
-	int		count;
-
-	p.count = 0;
-	p.pid = malloc(nb_pipe * sizeof(int));
-	if (!p.pid)
-		return (p);
-	p.pipefd = malloc(nb_pipe * sizeof(int *));
-	if (!p.pipefd)
-	{
-		free(p.pid);
-		return (p);
-	}
-	p.status = malloc(nb_pipe * sizeof(int));
-	if (!p.status)
-	{
-		free(p.pid);
-		free(p.pipefd);
-		return (p);
-	}
-	count = 0;
-	while (count < nb_pipe)
-	{
-		p.pipefd[count] = malloc(2 * sizeof(int));
-		if (!p.pipefd[count])
-			{
-				while (count >=0)
-					free(p.pipefd[count--]);
-				free(p.pid);
-				free(p.pipefd);
-				free(p.status);
-				return (p);
-			}
-		count++;
-	}
-	return (p);	
-}
 
 void	free_p(t_pipe p, int nb_pipe)
 {
@@ -68,6 +27,32 @@ void	free_p(t_pipe p, int nb_pipe)
 	free (p.pid);
 	free (p.status);
 	free (p.pipefd);
+}
+
+t_pipe	init_pipe(int nb_pipe)
+{
+	t_pipe	p;
+	int		count;
+
+	p.count = 0;
+	p.pid = malloc(nb_pipe * sizeof(int));
+	if (!p.pid)
+		return (p);
+	p.pipefd = malloc(nb_pipe * sizeof(int *));
+	if (!p.pipefd)
+		return (free(p.pid), p);
+	p.status = malloc(nb_pipe * sizeof(int));
+	if (!p.status)
+		return (free(p.pid), free(p.pipefd), p);
+	count = 0;
+	while (count < nb_pipe)
+	{
+		p.pipefd[count] = malloc(2 * sizeof(int));
+		if (!p.pipefd[count])
+			return (free_p(p, nb_pipe), p);
+		count++;
+	}
+	return (p);
 }
 
 int	pipe_fork(t_pipe p, t_dlist *list, int nb_pipe, const char **data)
@@ -100,7 +85,7 @@ int	pipe_loop(t_pipe p, int nb_pipe, t_dlist *list, const char **data)
 		list = list->next;
 		while (list != NULL && list->type == MS_TOKEN_PIPE)
 			list = list->next;
-		close (p.pipefd[p.count][0]);
+		close (p.pipefd[p.count][1]);
 		p.count++;
 	}
 	p.count = 0;
@@ -112,22 +97,21 @@ int	pipe_loop(t_pipe p, int nb_pipe, t_dlist *list, const char **data)
 	return (WEXITSTATUS(p.status[--p.count]));
 }
 
-
 int	node_type_pipe(t_dlist *node, int status, const char **data)
 {
 	t_dlist	*list;
 	int		nb_pipe;
 	t_pipe	p;
-	
+
 	list = node->content;
 	if (NULL == list->next)
-		return(node_type(list, status, data));
+		return (node_type(list, status, data));
 	nb_pipe = 0;
 	while (NULL != list)
 	{
 		if (MS_TOKEN_PIPE != list->type)
 			nb_pipe++;
-		list = list->next;		
+		list = list->next;
 	}
 	p = init_pipe(nb_pipe);
 	if (p.pipefd == NULL)

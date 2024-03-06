@@ -6,13 +6,13 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:17 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/02 14:36:50 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/06 11:15:28 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec_utils.h"
 
-void	ms_exec_error(void *arg, int errnum, int fd_error, void *data)
+void	ms_exec_error(void *arg, int errnum, int fd_error)//, void *data)
 {
 	if (errno == errnum)
 		return (perror(MS_EXEC_ESOURCE));

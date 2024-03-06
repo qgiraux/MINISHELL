@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/02 14:36:48 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/06 11:14:08 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ static char	*ms_exec_env_get_value(const char *env_line, const char *var)
 
 char	*ms_exec_env_get_str(const char **env, const char *var)
 {
-	char		*value;
-	size_t		len_value;
 	const char	*line;
 
 	line = ms_exec_env_get_line(env, var);
 	if (NULL == line)
+	{
 		;
+	}
 	return (ms_exec_env_get_value(line, var));
 }
 

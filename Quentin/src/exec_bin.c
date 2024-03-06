@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/02 14:36:35 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/02 15:09:04 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	ms_exec_bin(char **av, char **env, void *data)
 	pid_t	pid;
 
 	//(void)data;
+	printf("\n%s\n", av[0]);
 	abs_path = ms_exec_bin_path(av[0], (const char **)env);
 	if (NULL == abs_path)
 		return (1); //

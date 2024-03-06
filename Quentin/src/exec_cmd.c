@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:58:56 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/02 14:36:43 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/06 11:13:04 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ int	ms_exec_expand(t_dlist *token)
 	while (token)
 	{
 		if (MS_TOKEN_WORD == token->type)
+		{
 			;
+		}
 		token = token->next;
 	}
 	return (0);
 }
 
-int	ms_exec_locate(char **av, char **env)
+int	ms_exec_locate()//char **av, char **env)
 {
 	return (0);
 }
@@ -34,7 +36,7 @@ int	ms_exec_av(char **av, char **env, void *data)
 	int		builtin_id;
 
 	if (NULL != ft_strchr(av[0], MS_EXEC_BACKSLASH))
-		return (ms_exec_locate(av, env)); //
+		return (ms_exec_locate());//av, env)); //
 	builtin_id =  ms_exec_builtin_id(av[0]);
 	if (MS_N_BUILTIN != builtin_id)
 		return (ms_exec_builtin(builtin_id, av, env, data)); //

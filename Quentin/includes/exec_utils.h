@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/29 13:59:32 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/06 11:17:15 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		ms_exec_builtin_id(char *cmd_name);
 //
 char	**ms_exec_dlist_to_av(t_dlist *list);
 //
-void	ms_exec_error(void *arg, int errnum, int fd_error, void *data);
+void	ms_exec_error(void *arg, int errnum, int fd_error);//, void *data);
 //
 int		ms_exec_av(char **av, char **env, void *data);
 //

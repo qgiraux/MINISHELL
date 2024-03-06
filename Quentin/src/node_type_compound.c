@@ -6,17 +6,16 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:21:52 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/01 13:29:47 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/06 11:43:49 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/node_type.h"
 #include "../includes/parser.h"
 
-
 int	node_type_compound(t_dlist *node, int status, const char **data)
-{	
-	t_dlist *list;
+{
+	t_dlist	*list;
 
 	list = node->content;
 	while (NULL != list)
@@ -25,5 +24,5 @@ int	node_type_compound(t_dlist *node, int status, const char **data)
 			list = list->next;
 		return (node_type(list, status, data));
 	}
-	return (status);	
+	return (status);
 }

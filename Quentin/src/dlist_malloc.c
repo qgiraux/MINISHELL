@@ -6,12 +6,68 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:27:04 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/27 16:33:10 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:22:20 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/dlist.h"
-#include "../includes/minishell.h"
+#include "dlist.h"
+
+t_dlist	*ms_dlstremove(t_dlist **head, t_dlist *curr)
+{
+	t_dlist	*tmp;
+
+	if (NULL == head || NULL == *head || NULL == curr)
+		return (NULL);
+	tmp = curr->next;
+	if (NULL == curr->prev)
+		*head = curr->next;
+	else
+		curr->prev->next = curr->next;
+	ms_dlstdelone(curr);
+	return (tmp);
+}
+
+t_dlist	*ms_dlstreplace(t_dlist **head, t_dlist **curr, t_dlist *new)
+{
+	t_dlist	*next;
+	t_dlist	*new_last;
+
+	if (NULL == head || NULL == *head || NULL == curr || NULL == *curr)
+		return (NULL);
+	next = (*curr)->next;
+	if (NULL == new)
+		*curr = ms_dlstremove(head, *curr);
+	else
+	{
+		new->prev = (*curr)->prev;
+		if (NULL == (*curr)->prev)
+			*head = new;
+		else
+			(*curr)->prev->next = new;
+		new_last = ms_dlstlast(new);
+		new_last->next = (*curr)->next;
+		if (NULL != (*curr)->next)
+			(*curr)->next->prev = new_last;
+		ms_dlstdelone((*curr));
+		(*curr) = new_last;
+	}
+	return (next);
+}
+
+void	ms_dlstdelone(t_dlist *curr)
+{
+	if (NULL == curr)
+		return ;
+	if (ms_dlist_istype_operator(curr))
+		;
+	else if (ms_dlist_istype_word(curr))
+	{
+		if (curr->content)
+			free(curr->content);
+	}
+	free(curr);
+	return ;
+}
 
 void	ms_dlstclear(t_dlist **lst)
 {
@@ -46,21 +102,6 @@ t_dlist	*ms_dlstnew(void *content, int type)
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);
-}
-
-t_dlist	*ms_dlst_free_link(t_dlist *lst)
-{
-	t_dlist	*next;
-	t_dlist	*tmp;
-
-	lst = lst->next;
-	tmp = lst;
-	next = tmp->next;
-	if (next != NULL)
-		next->prev = NULL;
-	free (tmp);
-	tmp = NULL;
-	return (next);
 }
 
 void	ms_dlst_break_chain(t_dlist *list, t_dlist *arg_list, int type)

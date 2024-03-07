@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_env.c                                         :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/07 13:12:58 by qgiraux          ###   ########.fr       */
+/*   Created: 2024/03/02 10:51:44 by jerperez          #+#    #+#             */
+/*   Updated: 2024/03/06 11:26:56 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/exec_utils.h"
+#include "libft.h"
 
 extern char	**environ;
 
-const char	*ms_exec_env_get_line(const char **env, const char *var)
+const char	*ms_env_get_line(const char **env, const char *var)
 {
 	int		line;
 	size_t	i;
@@ -32,7 +32,7 @@ const char	*ms_exec_env_get_line(const char **env, const char *var)
 	return (NULL);
 }
 
-static char	*ms_exec_env_get_value(const char *env_line, const char *var)
+static char	*ms_env_get_value(const char *env_line, const char *var)
 {
 	char	*val;
 	size_t	len_val;
@@ -57,19 +57,21 @@ static char	*ms_exec_env_get_value(const char *env_line, const char *var)
 	return (val);
 }
 
-char	*ms_exec_env_get_str(const char **env, const char *var)
+int	ms_env_get_str(const char **env, const char *var, char **value)
 {
 	const char	*line;
 
-	line = ms_exec_env_get_line(env, var);
+	*value = NULL;
+	line = ms_env_get_line(env, var);
 	if (NULL == line)
-	{
-		;
-	}
-	return (ms_exec_env_get_value(line, var));
+		return (0);
+	*value = ms_env_get_value(line, var);
+	if (NULL == *value)
+		return (1);
+	return (0);
 }
 
-char	**ms_exec_env(void *data)
+char	**ms_env(void *data)
 {
 	(void)data;
 	return (environ);

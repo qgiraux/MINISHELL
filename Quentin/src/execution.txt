@@ -1,4 +1,0 @@
-Execution environment:
-*open files, modified by redirections
-*cwd (current workin directory)
-/ tranfert during non builtin Execution

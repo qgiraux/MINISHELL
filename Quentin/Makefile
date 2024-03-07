@@ -6,7 +6,7 @@
 #    By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 12:12:56 by qgiraux           #+#    #+#              #
-#    Updated: 2024/03/06 11:39:20 by qgiraux          ###   ########.fr        #
+#    Updated: 2024/03/07 16:08:07 by qgiraux          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ $(NAME): $(OBJ)
 	
 # Rule to build object files
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR) libft
-	@$(CC) $(FLAG) -c $< -o $@
+	@$(CC) $(FLAG) -c $< -o $@ -Iincludes -ILibft
 
 libft :
 	@make all -sC ./Libft/

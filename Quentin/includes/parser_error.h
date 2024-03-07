@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 12:54:40 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 13:12:01 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 15:02:40 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define MS_OPEN_PARENTH_MSG "syntax error near unexpected token '('\n"
 # define MS_CLOSE_PARENTH_MSG "syntax error near unexpected token ')'\n"
 
-int		ms_parser_error(t_dlist *list, const char **data);
-void	ms_error_write(int type, const char **data);
+int		ms_parser_error(t_dlist *list, void *data);
+void	ms_error_write(int type, void *data);
 
 #endif

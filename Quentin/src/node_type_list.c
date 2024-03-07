@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:09:41 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/06 11:59:20 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 14:45:24 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_dlist	*list_and_or(t_dlist *list, int status)
 	return (list);
 }
 
-int	node_type_list(t_dlist *node, int status, const char **data)
+int	node_type_list(t_dlist *node, int status, void *data)
 {
 	t_dlist	*list;
 

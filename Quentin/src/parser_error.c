@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:29:30 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 12:56:39 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 15:24:52 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../includes/token.h"
 #include "../includes/token_utils.h"
 
-static int	ms_error_start(t_dlist *list, const char **data)
+static int	ms_error_start(t_dlist *list, void *data)
 {
 	if (list == NULL)
 		return (1);
@@ -25,7 +25,7 @@ static int	ms_error_start(t_dlist *list, const char **data)
 	return (0);
 }
 
-static int	ms_error_pipe(t_dlist *list, const char **data)
+static int	ms_error_pipe(t_dlist *list, void *data)
 {
 	if (MS_TOKEN_PIPE == list->type \
 	&& (1 == ms_dlist_istype_parenthesis(list->prev) || NULL == list->next))
@@ -36,17 +36,13 @@ static int	ms_error_pipe(t_dlist *list, const char **data)
 	return (0);
 }
 
-static int	ms_error_parenthesis(t_dlist *list, const char **data)
+static int	ms_error_parenthesis(t_dlist *list, void *data)
 {
-	const char		**operator_arr = ms_token_get_operator_arr(data);
-
 	if (1 == ms_dlist_istype_operator(list) && MS_TOKEN_CLOSE != list->type)
 	{
 		if (list->next == NULL)
 		{
-			ft_putstr_fd("MSH: syntax error - line ends on '", 2);
-			ft_putstr_fd((char *)operator_arr[list->type], 2);
-			ft_putstr_fd("'\n", 2);
+			ms_error_write(list->type, data);
 			return (1);
 		}
 	}
@@ -84,7 +80,7 @@ static int	ms_error_nb_parenthesis(t_dlist *list)
 	return (0);
 }
 
-int	ms_parser_error(t_dlist *list, const char **data)
+int	ms_parser_error(t_dlist *list, void *data)
 {
 	if (0 != ms_error_start(list, data) \
 	|| 0 != ms_error_nb_parenthesis(list))

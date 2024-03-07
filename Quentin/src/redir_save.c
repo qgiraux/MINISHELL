@@ -6,11 +6,12 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:58:56 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/02 14:37:34 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:15:21 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/redir_utils.h"
+#include "exp.h"
+#include "redir_utils.h"
 
 static int	ms_dlist_sep_redir(t_dlist **head, t_dlist **curr, t_dlist **redir)
 {
@@ -39,7 +40,7 @@ static int	ms_dlist_sep_redir(t_dlist **head, t_dlist **curr, t_dlist **redir)
 	return (0);
 }
 
-static int	ms_redir_dlist_open(t_dlist **redir, void *data)
+static int	ms_redir_dlist_open(t_dlist **r, void *data)
 {
 	int		fid_in;
 	int		fid_out;
@@ -48,21 +49,21 @@ static int	ms_redir_dlist_open(t_dlist **redir, void *data)
 
 	errnum = MS_EREDIR;
 	ms_redir_data_get(&fid_in, &fid_out, data);
-	if (NULL == *redir || NULL == (*redir)->next)
+	if (NULL == *r || NULL == (*r)->next || NULL != (*r)->next->next)
 		pathname = NULL;
 	else
-		pathname = (*redir)->next->content;
-	if (NULL == pathname)
-		;
-	else if (MS_TOKEN_INTPUT == (*redir)->type)
+		pathname = (*r)->next->content;
+	if (NULL == pathname || '\0' == *pathname)
+		return (1); //ambiguous
+	else if (MS_TOKEN_INTPUT == (*r)->type)
 		errnum = ms_redir_file_in(&fid_in, data, pathname);
-	else if (MS_TOKEN_OUTPUT == (*redir)->type)
+	else if (MS_TOKEN_OUTPUT == (*r)->type)
 		errnum = ms_redir_file_out(&fid_out, data, pathname, 0);
-	else if (MS_TOKEN_APPEND == (*redir)->type)
+	else if (MS_TOKEN_APPEND == (*r)->type)
 		errnum = ms_redir_file_out(&fid_in, data, pathname, 1);
-	else if (MS_TOKEN_HERE_DOC == (*redir)->type)
-		errnum = ms_redir_file_here(&fid_in, data);
-	ms_dlstclear(redir);
+	else if (MS_TOKEN_HERE_DOC == (*r)->type)
+		errnum = ms_redir_file_here(&fid_in, data, pathname);
+	ms_dlstclear(r);
 	if (MS_EREDIR == errnum)
 		return (ms_redir_error((void *)__FILE__, MS_EREDIR, 2, NULL), 1);
 	return (0);
@@ -80,6 +81,8 @@ int	ms_redir_save(t_dlist **list, void *data)
 		if (ms_dlist_istype_redir(curr))
 		{
 			if (ms_dlist_sep_redir(list, &curr, &redir))
+				return (1);
+			if (ms_exp(&redir, data))
 				return (1);
 			if (ms_redir_dlist_open(&redir, data))
 				return (1);

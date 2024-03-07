@@ -6,14 +6,15 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:37:44 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 14:31:33 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 15:16:56 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/msh_utils.h"
+#include "../includes/node_type.h"
 #include "../includes/token.h"
 #include "../includes/parser_error.h"
-#include "../includes/node_type.h"
+#include "../includes/minishell.h"
 
 static t_dlist	*ms_interpreter_loop(t_dlist *list, int status)
 {
@@ -37,7 +38,7 @@ static t_dlist	*ms_interpreter_loop(t_dlist *list, int status)
 	return (list);
 }
 
-t_dlist	*ms_interpreter(char *input, const char **data)
+t_dlist	*ms_interpreter(char *input, void *data)
 {
 	t_dlist		*list;
 	int			status;

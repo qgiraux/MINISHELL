@@ -15,6 +15,7 @@
 		"exec_utils.h": "c",
 		"bltin.h": "c",
 		"redir.h": "c",
-		"redir_utils.h": "c"
+		"redir_utils.h": "c",
+		"msh_utils.h": "c"
 	}
 }

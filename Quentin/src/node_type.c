@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:04:13 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/06 11:54:46 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 14:45:57 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../includes/parser.h"
 #include "../includes/exec.h"
 
-int	node_type(t_dlist *node, int status, const char **data)
+int	node_type(t_dlist *node, int status, void*data)
 {
 	void	*data_exec;
 

@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:53:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/06 12:06:56 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 14:45:50 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_pipe	init_pipe(int nb_pipe)
 	return (p);
 }
 
-int	pipe_fork(t_pipe p, t_dlist *list, int nb_pipe, const char **data)
+int	pipe_fork(t_pipe p, t_dlist *list, int nb_pipe, void *data)
 {
 	if (p.count > 0)
 	{
@@ -70,7 +70,7 @@ int	pipe_fork(t_pipe p, t_dlist *list, int nb_pipe, const char **data)
 	exit (p.status[p.count] = node_type(list, 0, data));
 }
 
-int	pipe_loop(t_pipe p, int nb_pipe, t_dlist *list, const char **data)
+int	pipe_loop(t_pipe p, int nb_pipe, t_dlist *list, void *data)
 {
 	p.count = 0;
 	while (p.count < nb_pipe)
@@ -97,7 +97,7 @@ int	pipe_loop(t_pipe p, int nb_pipe, t_dlist *list, const char **data)
 	return (WEXITSTATUS(p.status[--p.count]));
 }
 
-int	node_type_pipe(t_dlist *node, int status, const char **data)
+int	node_type_pipe(t_dlist *node, int status, void *data)
 {
 	t_dlist	*list;
 	int		nb_pipe;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/29 14:02:00 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:16:02 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_redir
 void	ms_redir_error(void *arg, int errnum, int fd_error, void *data);
 int		ms_redir_file_out(int *fid, void *data, char *path, int append_mode);
 int		ms_redir_file_in(int *fid, void *data, char *pathname);
-int		ms_redir_file_here(int *fid, void *data);
+int		ms_redir_file_here(int *fid, void *data, char *pathname);
 int		ms_redir_file_close_all(void *data);
 
 #endif

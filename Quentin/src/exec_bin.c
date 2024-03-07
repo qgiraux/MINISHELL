@@ -6,12 +6,13 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/07 13:15:22 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:10:41 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/redir.h"
-#include "../includes/exec_utils.h"
+#include "redir.h"
+#include "exec_utils.h"
+#include "env.h"
 
 static char	*ms_get_next_row(char *line, size_t *line_index, char sep)
 {
@@ -58,15 +59,14 @@ static char	*ms_exec_bin_path_join(const char *path, const char *bin_name)
 	return (abs_path);
 }
 
-static char	*ms_exec_bin_path(const char *bin_name, const char **env)
+char	*ms_exec_bin_path(const char *bin_name, const char **env)
 {
 	char	*path_line;
 	size_t	line_index;
 	char	*path;
 	char	*abs_path;
 
-	path_line = ms_exec_env_get_str(env, ENV_PATH);
-	if (NULL == path_line)
+	if (ms_env_get_str(env, ENV_PATH, &path_line))
 		return (NULL);
 	line_index = 0;
 	while ('\0' != path_line[line_index])
@@ -84,35 +84,4 @@ static char	*ms_exec_bin_path(const char *bin_name, const char **env)
 	}
 	free(path_line);
 	return (NULL);
-}
-
-int	ms_exec_bin(char **av, char **env, void *data)
-{
-	char	*abs_path;
-	int		status;
-	pid_t	pid;
-
-	//(void)data;
-	//printf("\n%s\n", av[0]);
-	abs_path = ms_exec_bin_path(av[0], (const char **)env);
-	if (NULL == abs_path)
-		return (1); //
-	// if (-1 == ms_redir_dup2(data))
-	// 	return(1);
-	pid = fork();
-	if (0 == pid)
-	{
-		//debug_data_read(data); //
-		if (-1 == ms_redir_dup2(data))
-			return (1); //
-		if (-1 == execve(abs_path, av, env))
-			exit(1); //errno
-		exit(1);
-	}
-	else
-	{
-		waitpid(pid, &status, 1); //
-	}
-	free(abs_path);
-	return (0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_ok.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 13:43:15 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:41:50 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 #include "../includes/token.h"
 #include "../includes/dlist.h"
 #include "../includes/node_type.h"
+#include "../includes/msh_utils.h"
 
 int	main(void)
 {
-	const char	*data[10] = {\
+	void 		*data;
+	char		*input;
+	t_dlist		*list;
+	char *ret[10] = {\
 	MS_CONTROL_PIPE, MS_CONTROL_AND, MS_CONTROL_OR, \
 	MS_CONTROL_OPEN, MS_CONTROL_CLOSE, MS_REDIR_INTPUT, \
 	MS_REDIR_OUTPUT, MS_REDIR_APPEND, MS_REDIR_HERE_DOC, \
 	NULL};
-	char		*input;
-	t_dlist		*list;
 
+	data = ret;
 	input = "";
 	while (1)
 	{
@@ -42,6 +45,7 @@ int	main(void)
 			free_input(list);
 		}
 		free(input);
+		input = "";
 	}
 	rl_clear_history();
 	return (0);

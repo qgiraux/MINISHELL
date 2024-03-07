@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:28:06 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 13:11:52 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 15:10:07 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@
 # define MS_PARSE_LIST 104
 # define MS_PARSE_CMP 105
 
-t_dlist	*ms_interpreter(char *input, const char **data);
+t_dlist	*ms_interpreter(char *input, void *data);
 int		ms_cmd(t_dlist *token);
 int		ms_pipeline(t_dlist *cmd);
 int		ms_list(t_dlist *cmd);
-void	print_input(t_dlist *list, const char **data);
 int		ms_compound(t_dlist *pipe);
 
 #endif

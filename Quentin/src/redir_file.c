@@ -6,11 +6,12 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:15 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/02 14:37:32 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:15:00 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/redir_utils.h"
+#include "here.h"
+#include "redir_utils.h"
 
 static int	ms_redir_file_close(int *fid)
 {
@@ -46,6 +47,8 @@ int	ms_redir_file_out(int *fid, void *data, char *pathname, int append_mode)
 		return (1);
 	if (append_mode)
 		append_mode = O_APPEND;
+	else
+		append_mode = O_TRUNC;
 	*fid = open(pathname, \
 		O_RDWR | O_CREAT | append_mode, \
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -66,10 +69,18 @@ int	ms_redir_file_in(int *fid, void *data, char *pathname)
 	return (0);
 }
 
-int	ms_redir_file_here(int *fid, void *data)
+int	ms_redir_file_here(int *fid, void *data, char *delimiter)
 {
-	(void)data;
-	if (ms_redir_file_close(fid))
-		return (1);
+	*fid = open(MS_HERE_PATH, \
+		O_WRONLY | O_CREAT | O_TRUNC, \
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (-1 == *fid)
+		return (ms_redir_error(NULL, errno, 2, NULL), 1);
+	if (ms_here(*fid, delimiter))
+		return (1); //
+	if (close(*fid))
+		return (1); //
+	*fid = open(MS_HERE_PATH, O_RDONLY, S_IRUSR);
+	ms_redir_data_set(*fid, -1, data);
 	return (0);
 }

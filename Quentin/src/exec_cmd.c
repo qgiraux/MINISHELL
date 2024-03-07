@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:58:56 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/06 11:13:04 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 13:12:39 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ms_exec_expand(t_dlist *token)
 	return (0);
 }
 
-int	ms_exec_locate()//char **av, char **env)
+int	ms_exec_locate(void)//char **av, char **env)
 {
 	return (0);
 }
@@ -37,7 +37,7 @@ int	ms_exec_av(char **av, char **env, void *data)
 
 	if (NULL != ft_strchr(av[0], MS_EXEC_BACKSLASH))
 		return (ms_exec_locate());//av, env)); //
-	builtin_id =  ms_exec_builtin_id(av[0]);
+	builtin_id = ms_exec_builtin_id(av[0]);
 	if (MS_N_BUILTIN != builtin_id)
 		return (ms_exec_builtin(builtin_id, av, env, data)); //
 	return (ms_exec_bin(av, env, data));
@@ -63,7 +63,6 @@ int	ms_exec_cmd(t_dlist *cmd, void *data)
 	av = ms_exec_dlist_to_av(cmd);
 	if (NULL == av)
 		return (1); //
-
 	//ms_exec_redir(redir);
 	//free redir
 	//printf("%s:%d:%p\n", __FILE__, __LINE__, redir_out);

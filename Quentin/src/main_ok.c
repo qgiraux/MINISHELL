@@ -6,21 +6,14 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/06 13:49:28 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 13:43:15 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "../includes/minishell.h"
 #include "../includes/token.h"
 #include "../includes/dlist.h"
 #include "../includes/node_type.h"
-
-char	*ms_main_prompt(void)
-{
-	return ("MSH > ");
-}
 
 int	main(void)
 {
@@ -35,7 +28,7 @@ int	main(void)
 	input = "";
 	while (1)
 	{
-		input = readline(NULL);
+		input = readline("Minishell >");
 		add_history(input);
 		if (NULL == input || ft_strncmp(input, "exit", 4) == 0)
 		{
@@ -43,29 +36,15 @@ int	main(void)
 			break ;
 		}
 		list = ms_interpreter(input, data);
-		node_type(list, 0, data);
-		free_input(list);
+		if (NULL != list)
+		{
+			node_type(list, 0, data);
+			free_input(list);
+		}
 		free(input);
 	}
 	rl_clear_history();
 	return (0);
-}
-
-void	print_input(t_dlist *list, const char **data)
-{
-	const char		**operator_arr = ms_token_get_operator_arr(data);
-
-	while (list != NULL)
-	{
-		if (list->type == -1)
-			ft_putstr_fd((char *)(list->content), 1);
-		else if (list->content == NULL)
-			ft_putstr_fd((char *)operator_arr[list->type], 1);
-		else
-			print_input(list->content, data);
-		ft_putstr_fd("", 1);
-		list = list->next;
-	}
 }
 
 void	free_input(t_dlist *list)

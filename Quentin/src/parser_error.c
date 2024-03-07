@@ -6,51 +6,33 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:29:30 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/29 11:06:23 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 12:56:39 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/dlist.h"
-#include "../includes/parser.h"
+#include "../includes/parser_error.h"
 #include "../includes/token.h"
+#include "../includes/token_utils.h"
 
 static int	ms_error_start(t_dlist *list, const char **data)
 {
-	const char		**operator_arr = ms_token_get_operator_arr(data);
-
 	if (list == NULL)
 		return (1);
 	if (1 == ms_dlist_istype_not_first(list))
-	{
-		ft_putstr_fd("MSH: parse error near '", 2);
-		ft_putstr_fd((char *)operator_arr[list->type], 2);
-		ft_putstr_fd("'\n", 2);
-		return (1);
-	}
+		return (ms_error_write(list->type, data), 1);
 	return (0);
 }
 
 static int	ms_error_pipe(t_dlist *list, const char **data)
 {
-	const char		**operator_arr = ms_token_get_operator_arr(data);
-
 	if (MS_TOKEN_PIPE == list->type \
 	&& (1 == ms_dlist_istype_parenthesis(list->prev) || NULL == list->next))
-	{
-		ft_putstr_fd("MSH: syntax error near unexpected token '", 2);
-		ft_putstr_fd((char *)operator_arr[list->type], 2);
-		ft_putstr_fd("'\n", 2);
-		return (1);
-	}
+		return (ms_error_write(list->type, data), 1);
 	if (MS_TOKEN_PIPE == list->type \
 	&& 1 == ms_dlist_istype_parenthesis(list->next))
-	{
-		ft_putstr_fd("MSH: syntax error near unexpected token '", 2);
-		ft_putstr_fd((char *)operator_arr[list->next->type], 2);
-		ft_putstr_fd("'\n", 2);
-		return (1);
-	}
+		return (ms_error_write(list->next->type, data), 1);
 	return (0);
 }
 
@@ -74,9 +56,7 @@ static int	ms_error_parenthesis(t_dlist *list, const char **data)
 		if (1 == ms_dlist_istype_pipe_and_or(list->next) \
 		|| MS_TOKEN_CLOSE == list->next->type)
 		{
-			ft_putstr_fd("MSH: syntax error near unexpected token '", 2);
-			ft_putstr_fd((char *)operator_arr[list->next->type], 2);
-			ft_putstr_fd("'\n", 2);
+			ms_error_write(list->next->type, data);
 			return (1);
 		}
 	}
@@ -94,20 +74,18 @@ static int	ms_error_nb_parenthesis(t_dlist *list)
 			i++;
 		if (MS_TOKEN_CLOSE == list->type)
 			i--;
+		if (0 > i)
+			(ft_putstr_fd(MS_CLOSE_PARENTH_MSG, 2));
 		list = list->next;
 	}
-	if (0 > i)
-		return (ft_putstr_fd("MSH: parse error near ')'\n", 2), 1);
 	if (0 < i)
 		return \
-		(ft_putstr_fd("MSH: syntax error unclosed parenthesis:(\n", 2), 1);
+		(ft_putstr_fd(MS_OPEN_PARENTH_MSG, 2), 1);
 	return (0);
 }
 
 int	ms_parser_error(t_dlist *list, const char **data)
 {
-	const char		**operator_arr = ms_token_get_operator_arr(data);
-
 	if (0 != ms_error_start(list, data) \
 	|| 0 != ms_error_nb_parenthesis(list))
 		return (1);
@@ -116,9 +94,7 @@ int	ms_parser_error(t_dlist *list, const char **data)
 		if (1 == ms_dlist_istype_redir(list) \
 		&& 0 == ms_dlist_istype_word(list->next))
 		{
-			ft_putstr_fd("MSH: syntax error near unexpected token '", 2);
-			ft_putstr_fd((char *)operator_arr[list->next->type], 2);
-			ft_putstr_fd("'\n", 2);
+			ms_error_write(list->next->type, data);
 			return (1);
 		}
 		if (0 != ms_error_pipe(list, data) \

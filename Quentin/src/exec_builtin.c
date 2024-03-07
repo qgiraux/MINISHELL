@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:00:24 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/02 14:36:39 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/07 13:08:55 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	ms_exec_builtin_id(char *cmd_name)
 	int			i;
 
 	i = 0;
-	while (builtin_name[i] && 0 != ft_strncmp(builtin_name[i], cmd_name, ft_strlen(cmd_name) + 1))
+	while (builtin_name[i] && 0 != ft_strncmp(builtin_name[i], \
+		cmd_name, ft_strlen(cmd_name) + 1))
 		i++;
 	return (i);
 }
@@ -58,4 +59,3 @@ int	ms_exec_builtin(int builtin_id, char **av, char **env, void *data)
 	f(av, env, data);
 	return (0);
 }
-

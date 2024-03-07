@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   parser_error.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 13:28:06 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 13:11:52 by qgiraux          ###   ########.fr       */
+/*   Created: 2024/03/07 12:54:40 by qgiraux           #+#    #+#             */
+/*   Updated: 2024/03/07 13:12:01 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef PARSER_ERROR_H
+# define PARSER_ERROR_H
 
 # include "token.h"
 # include "dlist.h"
@@ -21,11 +21,10 @@
 # define MS_PARSE_LIST 104
 # define MS_PARSE_CMP 105
 
-t_dlist	*ms_interpreter(char *input, const char **data);
-int		ms_cmd(t_dlist *token);
-int		ms_pipeline(t_dlist *cmd);
-int		ms_list(t_dlist *cmd);
-void	print_input(t_dlist *list, const char **data);
-int		ms_compound(t_dlist *pipe);
+# define MS_OPEN_PARENTH_MSG "syntax error near unexpected token '('\n"
+# define MS_CLOSE_PARENTH_MSG "syntax error near unexpected token ')'\n"
+
+int		ms_parser_error(t_dlist *list, const char **data);
+void	ms_error_write(int type, const char **data);
 
 #endif

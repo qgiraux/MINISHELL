@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:37:44 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 15:16:56 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 15:55:47 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "../includes/parser_error.h"
 #include "../includes/minishell.h"
 
+/*continue l'arbre en listes puis compounds, et recommence 
+*jusqu'a ce qu'il n'y ait qu'une liste*/
 static t_dlist	*ms_interpreter_loop(t_dlist *list, int status)
 {
 	while (NULL != list->next || 0 != status)
@@ -38,6 +40,7 @@ static t_dlist	*ms_interpreter_loop(t_dlist *list, int status)
 	return (list);
 }
 
+/*cree l'arbre logique en token, puis commandes simples, puis pipelines*/
 t_dlist	*ms_interpreter(char *input, void *data)
 {
 	t_dlist		*list;

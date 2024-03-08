@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:09:41 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 14:45:24 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 14:17:59 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../includes/parser.h"
 #include "../includes/token.h"
 
+/*determine si on execute la commande suivante, selon && ou ||*/
 static t_dlist	*list_and_or(t_dlist *list, int status)
 {
 	if (MS_TOKEN_AND == list->type)
@@ -30,7 +31,7 @@ static t_dlist	*list_and_or(t_dlist *list, int status)
 	}
 	return (list);
 }
-
+/*si le noeud est une liste, fait ce qu'il faut*/
 int	node_type_list(t_dlist *node, int status, void *data)
 {
 	t_dlist	*list;

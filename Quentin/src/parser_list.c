@@ -6,14 +6,13 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:00:24 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/02/29 11:06:02 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 14:29:18 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*liste est une serie de PIPES separes de ET ou OU*/
-/* les ET et OU qui ne separent pas 2 PIPES ne font pas partie de LISTE*/
+/*determine si on est a la fin d'une liste*/
 static int	ms_end(t_dlist *cmd)
 {
 	int		op;
@@ -27,7 +26,7 @@ static int	ms_end(t_dlist *cmd)
 		return (2);
 	return (0);
 }
-
+/*determine si on doit decouper une liste, ou sielle est deja isolee*/
 static int	check_if_cut(t_dlist *cmd, t_dlist *list, int check)
 {
 	if (0 == ms_end(cmd) && NULL != cmd->prev)
@@ -50,7 +49,7 @@ static int	check_if_cut(t_dlist *cmd, t_dlist *list, int check)
 	}
 	return (check);
 }
-
+/*regroupe en un noeud LIST les listes*/
 int	ms_list(t_dlist *list)
 {
 	t_dlist	*cmd;

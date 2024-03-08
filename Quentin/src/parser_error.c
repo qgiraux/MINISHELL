@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:29:30 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 15:24:52 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 14:27:23 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../includes/parser_error.h"
 #include "../includes/token.h"
 #include "../includes/token_utils.h"
-
+/*verifie que on ne commence pas sur un symbole interdit*/
 static int	ms_error_start(t_dlist *list, void *data)
 {
 	if (list == NULL)
@@ -24,7 +24,7 @@ static int	ms_error_start(t_dlist *list, void *data)
 		return (ms_error_write(list->type, data), 1);
 	return (0);
 }
-
+/*verifie que l'emplacement des pipes par rapport aux parentheses est ok*/
 static int	ms_error_pipe(t_dlist *list, void *data)
 {
 	if (MS_TOKEN_PIPE == list->type \
@@ -35,7 +35,7 @@ static int	ms_error_pipe(t_dlist *list, void *data)
 		return (ms_error_write(list->next->type, data), 1);
 	return (0);
 }
-
+/*verifie que l'ordre des parentheses est coherent*/
 static int	ms_error_parenthesis(t_dlist *list, void *data)
 {
 	if (1 == ms_dlist_istype_operator(list) && MS_TOKEN_CLOSE != list->type)
@@ -58,7 +58,7 @@ static int	ms_error_parenthesis(t_dlist *list, void *data)
 	}
 	return (0);
 }
-
+/*verifie que le nombre de parentheses est coherent */
 static int	ms_error_nb_parenthesis(t_dlist *list)
 {
 	int	i;
@@ -79,7 +79,7 @@ static int	ms_error_nb_parenthesis(t_dlist *list)
 		(ft_putstr_fd(MS_OPEN_PARENTH_MSG, 2), 1);
 	return (0);
 }
-
+/*verifie les erreurs de parse*/
 int	ms_parser_error(t_dlist *list, void *data)
 {
 	if (0 != ms_error_start(list, data) \

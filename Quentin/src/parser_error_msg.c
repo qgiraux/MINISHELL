@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 12:56:12 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 15:24:13 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 14:27:56 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../includes/parser_error.h"
 #include "../includes/token.h"
 #include "../includes/token_utils.h"
-
+/*si erreur de parse, affiche le message necessaire*/
 void	ms_error_write(int type, void *data)
 {
 	const char		**operator_arr = ms_token_get_operator_arr((const char **)data);

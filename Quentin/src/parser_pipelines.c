@@ -6,12 +6,13 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:33:47 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 14:33:25 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 14:29:53 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/*verifie si on est ala fin d'un pipeline*/
 static int	ms_end(t_dlist *cmd)
 {
 	int		op;
@@ -25,7 +26,7 @@ static int	ms_end(t_dlist *cmd)
 		return (2);
 	return (0);
 }
-
+/*regroupe en un noeud PIPE les pipelines*/
 int	ms_pipeline(t_dlist *pipes_list)
 {
 	t_dlist	*cmd;

@@ -6,13 +6,14 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:21:52 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 14:45:12 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 15:56:17 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/node_type.h"
 #include "../includes/parser.h"
 
+/*si le noeud est un compound, fait ce qu'il faut*/
 int	node_type_compound(t_dlist *node, int status, void *data)
 {
 	t_dlist	*list;

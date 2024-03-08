@@ -6,51 +6,39 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 16:41:50 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 15:59:15 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "../includes/token.h"
-#include "../includes/dlist.h"
-#include "../includes/node_type.h"
 #include "../includes/msh_utils.h"
+
 
 int	main(void)
 {
-	void 		*data;
-	char		*input;
-	t_dlist		*list;
-	char *ret[10] = {\
-	MS_CONTROL_PIPE, MS_CONTROL_AND, MS_CONTROL_OR, \
-	MS_CONTROL_OPEN, MS_CONTROL_CLOSE, MS_REDIR_INTPUT, \
-	MS_REDIR_OUTPUT, MS_REDIR_APPEND, MS_REDIR_HERE_DOC, \
-	NULL};
-
-	data = ret;
-	input = "";
-	while (1)
+	char		*data[10];
+	int			result;
+	
+	result = 0;
+	data[0] = MS_CONTROL_PIPE;
+	data[1] = MS_CONTROL_AND;
+	data[2] = MS_CONTROL_OR;
+	data[3] = MS_CONTROL_OPEN;
+	data[4] = MS_CONTROL_CLOSE;
+	data[5] = MS_REDIR_INTPUT;
+	data[6] = MS_REDIR_OUTPUT;
+	data[7] = MS_REDIR_APPEND;
+	data[8] = MS_REDIR_HERE_DOC;
+	data[9] = NULL;
+	while (0 == result)
 	{
-		input = readline("Minishell >");
-		add_history(input);
-		if (NULL == input || ft_strncmp(input, "exit", 4) == 0)
-		{
-			free(input);
-			break ;
-		}
-		list = ms_interpreter(input, data);
-		if (NULL != list)
-		{
-			node_type(list, 0, data);
-			free_input(list);
-		}
-		free(input);
-		input = "";
+		result = msh_start(data, "");
 	}
 	rl_clear_history();
 	return (0);
 }
 
+/*free le memoire attribuee a l'arbre logique*/
 void	free_input(t_dlist *list)
 {
 	t_dlist	*tmp;

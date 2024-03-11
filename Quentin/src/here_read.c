@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:15 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/07 15:25:22 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:17:27 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	ms_here_read_end(\
 		if ('\n' == c)
 		{
 			(*len)++;
-			return (-1); //
+			return (-1);
 		}
 		*len = -1;
 		return (n);
@@ -59,7 +59,7 @@ static int	ms_here_read_len(\
 	return (n);
 }
 
-static int	ms_here_read_add(t_dlist **doc, char *buff, ssize_t n)
+static int	ms_here_read_madd(t_dlist **doc, char *buff, ssize_t n)
 {
 	char			*str;
 	t_dlist			*new;
@@ -69,15 +69,15 @@ static int	ms_here_read_add(t_dlist **doc, char *buff, ssize_t n)
 	else
 		str = (char *)malloc(sizeof(char) * (n + 1));
 	if (NULL == str)
-		return (1);
+		return (ms_perror(MS_E), 1);
 	if (READ_BUFF_LEN != n)
 		str[n] = '\0';
 	ft_memcpy(str, buff, n);
 	new = ms_dlstnew(str, -1);
 	if (NULL == new)
-		return (1);
+		return (ms_perror(MS_E), free(str), 1);
 	ms_dlstadd_back(doc, new);
-	return (0);
+	return (MS_SUCCESS);
 }
 
 static void	ms_here_read_prompt(ssize_t *len, int *put_line)
@@ -105,16 +105,16 @@ int	ms_here_read(char *delimiter, t_dlist **doc)
 		ms_here_read_prompt(&len, &put_line);
 		bread = read(STDIN_FILENO, buff, READ_BUFF_LEN);
 		if (-1 == bread)
-			return (1); //
+			return (ms_perror(MS_E), 1);
 		if (0 == len && 0 == bread)
 		{
 			ft_putchar_fd('\n', STDOUT_FILENO);
-			return (MS_WEOF); // warning !!
+			return (ms_e(__FILE__, __LINE__, 0), MS_WEOF); // warning !!
 		}
 		put_line = ('\n' == buff[bread - 1]);
 		bread = ms_here_read_len(&len, delimiter, buff, bread);
-		if (ms_here_read_add(doc, buff, bread))
-			return (1);
+		if (ms_here_read_madd(doc, buff, bread))
+			return (ms_e(__FILE__, __LINE__, 0), 1);
 	}
-	return (0);
+	return (MS_SUCCESS);
 }

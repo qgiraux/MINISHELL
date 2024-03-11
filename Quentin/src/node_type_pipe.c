@@ -6,13 +6,11 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:53:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 14:19:25 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 17:04:41 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/node_type.h"
-#include "../includes/parser.h"
-#include "../includes/token.h"
+#include "node_type.h"
 
 void	free_p(t_pipe p, int nb_pipe)
 {

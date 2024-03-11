@@ -6,19 +6,19 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 15:40:55 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/02 14:35:33 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 11:50:14 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/bltin_utils.h"
+#include "bltin_utils.h"
+#include "env.h"
 
-int	ms_bltin_echo(char **av, char **env, void *data)
+int	ms_bltin_echo(char **av, void *data)
 {
-	int	i;
-	int	f_out;
-	int	opt_n;
+	int		i;
+	int		f_out;
+	int		opt_n;
 
-	(void)env;
 	i = 1;
 	if (NULL == av[i])
 		return (0);

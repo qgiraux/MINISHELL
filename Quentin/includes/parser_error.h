@@ -6,20 +6,14 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 12:54:40 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 15:02:40 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 17:00:33 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_ERROR_H
 # define PARSER_ERROR_H
 
-# include "token.h"
-# include "dlist.h"
-
-# define MS_PARSE_CMD 101
-# define MS_PARSE_PIPE 102
-# define MS_PARSE_LIST 104
-# define MS_PARSE_CMP 105
+# include "parser.h"
 
 # define MS_OPEN_PARENTH_MSG "syntax error near unexpected token '('\n"
 # define MS_CLOSE_PARENTH_MSG "syntax error near unexpected token ')'\n"

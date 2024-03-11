@@ -6,15 +6,16 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:29:30 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 14:27:23 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 16:59:27 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "../includes/dlist.h"
-#include "../includes/parser_error.h"
-#include "../includes/token.h"
-#include "../includes/token_utils.h"
+
+#include "parser.h"
+#include "parser_error.h"
+#include "token.h"
+#include "token_utils.h"
+
 /*verifie que on ne commence pas sur un symbole interdit*/
 static int	ms_error_start(t_dlist *list, void *data)
 {

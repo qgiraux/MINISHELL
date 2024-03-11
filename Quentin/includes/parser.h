@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:28:06 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 15:10:07 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 16:52:12 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int		ms_cmd(t_dlist *token);
 int		ms_pipeline(t_dlist *cmd);
 int		ms_list(t_dlist *cmd);
 int		ms_compound(t_dlist *pipe);
+int		ms_parse_here(t_dlist *token);
 
 #endif

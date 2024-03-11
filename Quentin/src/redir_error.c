@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bltin_utils.h                                      :+:      :+:    :+:   */
+/*   redir_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/29 14:13:32 by jerperez         ###   ########.fr       */
+/*   Created: 2024/02/21 13:58:56 by jerperez          #+#    #+#             */
+/*   Updated: 2024/03/09 14:17:27 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BLTIN_UTILS_H
-# define BLTIN_UTILS_H
+#include "redir_utils.h"
 
-# include "redir.h"
-# include "libft.h"
-
-# define BLTIN_BUFF_LEN 100
-# define BLTIN_BUFF_GROW 2
-# define BLTIN_SEP " "
-# define BLTIN_NEWLINE "\n"
-# define BLTIN_OPTN "-n"
-
-#endif
+void	ms_redir_error(void *arg, int errnum)
+{
+	if (errnum == EREDIR_BADWORD && arg)
+	{
+		ft_putstr_fd(MS_E, STDERR_FILENO);
+		ft_putstr_fd(ESEP, STDERR_FILENO);
+		ft_putstr_fd((char *)arg, STDERR_FILENO);
+		ft_putstr_fd(ESEP, STDERR_FILENO);
+		ft_putstr_fd(EREDIR_BADWORD_MSG, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+	}
+	else
+		ms_e(__FILE__, __LINE__, 1); //
+}

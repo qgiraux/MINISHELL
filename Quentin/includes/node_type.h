@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:04:57 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 15:01:38 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 17:04:01 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,11 @@
 # define NODE_TYPE_H
 
 # include "dlist.h"
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <stdio.h>
-# include <errno.h>
-# include <string.h>
+# include "parser.h"
+# include "token.h"
+
 
 typedef struct s_pipe
 {

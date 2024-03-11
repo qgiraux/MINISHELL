@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 14:48:23 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/05 13:54:43 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/08 11:43:18 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 
 # include <stdlib.h>
 # include "libft.h"
+# include <errno.h>
 
 #endif

@@ -6,13 +6,11 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:40:30 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 14:21:23 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 16:57:12 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "../includes/dlist.h"
-#include "../includes/parser.h"
+#include "parser.h"
 /*determine l'operateur signifiant l fin d'une commande simple*/
 static int	ms_end_command(t_dlist *token)
 {

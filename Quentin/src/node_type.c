@@ -6,13 +6,12 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:04:13 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 14:20:19 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 17:04:08 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/node_type.h"
-#include "../includes/parser.h"
-#include "../includes/exec.h"
+#include "node_type.h"
+#include "exec.h"
 /*dispatch dansles fonctions appropriees 
 *selon le type de noeud sur lequel on est actuellement*/
 int	node_type(t_dlist *node, int status, void*data)

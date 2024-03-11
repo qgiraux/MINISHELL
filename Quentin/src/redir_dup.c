@@ -3,32 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   redir_dup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:15 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/02 14:37:27 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/09 14:17:27 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/redir_utils.h"
+#include "redir_utils.h"
 
 static int	ms_redir_dup2_new(int fid_old, int fid_new)
 {
-	int	err;
-
 	if (fid_old == STDIN_FILENO \
 		|| fid_old == STDOUT_FILENO \
 		|| fid_old == STDERR_FILENO \
 		|| fid_old <= -1)
-		return (0);
-	err = dup2(fid_old, fid_new);
-	if (-1 == err)
-		return (ms_redir_error(NULL, errno, 2, NULL), 1);
-	else if (err)
-		return (1);
+		return (MS_SUCCESS);
+	if (-1 == dup2(fid_old, fid_new))
+		return (perror(MS_E), 1);
 	close(fid_old);
-	return (0);
+	return (MS_SUCCESS);
 }
+
+/* ms_redir_dup2:
+ * Redirect std input and output according to <data>
+ * Does nothing is fid is invalid (STDOUT_FILENO, STDIN_FILENO, or neg)
+ * Returns an error if dup2 fails
+ */
 
 int	ms_redir_dup2(void *data)
 {
@@ -37,8 +38,8 @@ int	ms_redir_dup2(void *data)
 
 	ms_redir_data_get(&fid_in, &fid_out, data);
 	if (ms_redir_dup2_new(fid_in, STDIN_FILENO))
-		return (1);
+		return (ms_e(__FILE__, __LINE__, 0), 1);
 	if (ms_redir_dup2_new(fid_out, STDOUT_FILENO))
-		return (1);
-	return (0);
+		return (ms_e(__FILE__, __LINE__, 0), 1);
+	return (MS_SUCCESS);
 }

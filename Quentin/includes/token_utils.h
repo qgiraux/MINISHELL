@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/06 11:19:32 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 11:49:03 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include "../Libft/libft.h"
 # include "errno.h"
+# include "error.h"
 # include "token.h"
 
 # define MS_METACHAR " \t\n|&()<>"

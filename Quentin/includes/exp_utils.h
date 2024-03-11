@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/05 16:36:33 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:53:24 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ms_exp_escape(char *str, char *list);
 char	*ms_exp_escape_removal(char *str, char *lst);
 int		ms_exp_parameter_replace(t_dlist *curr, char **env, void *data);
 char	*ms_exp_parameter(char *input, char **env, void *data);
-int		ms_exp_filename(t_dlist **escaped_tokens, void *data);
+int		ms_exp_filename(t_dlist **escaped_tokens, t_dlist **next, void *data);
 int		ms_exp_filename_list_cwd(t_dlist **files, void *data);
 
 t_dlist	*ms_data_cwd_list_get(void *data);

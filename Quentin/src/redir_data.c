@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redir_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:15 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/02 14:37:24 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/02/29 14:09:02 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/redir_utils.h"
+#include "redir_utils.h"
 
 // void	debug_data_read(void *data)
 // {

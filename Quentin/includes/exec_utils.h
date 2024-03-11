@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/07 16:31:10 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/09 13:56:33 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include <sys/wait.h>
+# include "error.h"
 
 # define ENV_PATH "PATH"
 # define ENV_PATH_SEP ':'
@@ -36,19 +37,20 @@
 # define MS_EXEC_MSG "unnamed error in:"
 # define MS_EUNKNWN 256
 
+# define EEXEC_NOCMD 256
+# define EEXEC_NOCMD_MSG ": command not found\n"
+
 //
 int		ms_exec_bin(char **av, char **env, void *data);
 //
-int		ms_exec_builtin(int builtin_id, char **av, char **env, void *data);
+int		ms_exec_builtin(int builtin_id, char **av, void *data);
 int		ms_exec_builtin_id(char *cmd_name);
 //
 char	**ms_exec_dlist_to_av(t_dlist *list);
 //
-void	ms_exec_error(void *arg, int errnum, int fd_error);
-//
-int		ms_exec_av(char **av, char **env, void *data);
-//
 int		ms_exec_file(char *path, char **av, char **env, void *data);
-char	*ms_exec_bin_path(const char *bin_name, const char **env);
+int		ms_exec_bin_mget_path(char **path, const char *name, const char **env);
+//
+void	ms_exec_error(void *arg, int errnum);
 
 #endif

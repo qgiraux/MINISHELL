@@ -6,13 +6,13 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/02 16:03:44 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:52:19 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exp_utils.h"
 
-static void	ms_exp_escape_write(char *str, char *new, char *list)
+static char	*ms_exp_escape_replace(char *str, char *new, char *list)
 {
 	size_t	i_str;
 	size_t	i_new;
@@ -31,6 +31,8 @@ static void	ms_exp_escape_write(char *str, char *new, char *list)
 		i_str++;
 	}
 	new[i_new] = '\0';
+	free(str);
+	return (new);
 }
 
 static void	ms_exp_escape_removal_write(char *str, char *new, char *list)
@@ -53,9 +55,9 @@ static void	ms_exp_escape_removal_write(char *str, char *new, char *list)
 	new[i_new] = '\0';
 }
 
-char	*ms_exp_escape(char *str, char *list)
+char	*ms_exp_escape(char *str, char *to_escape)
 {
-	char	*new;
+	char	*str_esc;
 	size_t	n_esc;
 	size_t	len_str;
 
@@ -63,17 +65,16 @@ char	*ms_exp_escape(char *str, char *list)
 	len_str = 0;
 	while ('\0' != str[len_str])
 	{
-		if (NULL != ft_strchr(list, str[len_str]))
+		if (NULL != ft_strchr(to_escape, str[len_str]))
 			n_esc++;
 		len_str++;
 	}
 	if (0 == n_esc)
 		return (str);
-	new = (char *)malloc(sizeof(char) * (len_str + n_esc + 1));
-	if (NULL == new)
-		return (NULL); //
-	ms_exp_escape_write(str, new, list);
-	return (free(str), new);
+	str_esc = (char *)malloc(sizeof(char) * (len_str + n_esc + 1));
+	if (NULL == str_esc)
+		return (ms_perror(MS_E), NULL);
+	return (ms_exp_escape_replace(str, str_esc, to_escape));
 }
 
 char	*ms_exp_escape_removal(char *str, char *lst)
@@ -99,7 +100,7 @@ char	*ms_exp_escape_removal(char *str, char *lst)
 		return (str);
 	new = (char *)malloc(sizeof(char) * (len_str - n_rem + 1));
 	if (NULL == new)
-		return (NULL); //
+		return (perror(MS_E), NULL);
 	ms_exp_escape_removal_write(str, new, lst);
 	return (free(str), new);
 }

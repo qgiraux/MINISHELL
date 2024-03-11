@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/23 11:18:18 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 11:52:54 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "../Libft/libft.h"
 # include "dlist.h"
 # include "errno.h"
+#include "token_utils.h"
 
 # define MS_TOKEN_WORD -1
 # define MS_TOKEN_PIPE 0

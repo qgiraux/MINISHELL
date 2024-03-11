@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:37:44 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 15:55:47 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 11:57:54 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ t_dlist	*ms_interpreter(char *input, void *data)
 
 	status = 0;
 	list = ms_token_list(input, data);
+	//status = ms_parse_here(list);
+	//	if (0 != status)
+	//		return (list);
 	if (0 == ms_parser_error(list, data))
 	{
 		list = ms_dlstnew(list, MS_PARSE_CMD);

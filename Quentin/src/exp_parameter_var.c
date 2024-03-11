@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/06 11:25:31 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:27:31 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ static void	ms_exp_var_len_name(char *s, size_t *len, int *type)
 
 static void	ms_exp_var_type_spe(char *s, size_t *len, int *type)
 {
-	(void)len;
 	if (EXP_SPE0 == *s)
+	{
+		*len = 2;
 		*type = MS_PARA_SPE0;
+	}
 	else
 		*type = MS_PARA_STR;
 }
@@ -52,5 +54,7 @@ int	ms_parameter_var(char *s, size_t *len, int *type)
 	ms_exp_var_type_spe(s + 1, len, type);
 	if (MS_PARA_STR != *type)
 		return (0);
-	return (1);
+	*len = 1;
+	*type = MS_PARA_STR;
+	return (0);
 }

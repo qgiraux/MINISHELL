@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/07 16:16:02 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 15:45:04 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@
 # include "dlist.h"
 # include "token.h"
 # include "redir.h"
+# include "error.h"
 
 # define MS_EREDIR 256
 # define MS_REDIR_ESOURCE "bash"
+# define EREDIR_BADWORD 257
+# define EREDIR_BADWORD_MSG "ambiguous redirect"
 
 typedef struct s_redir
 {
@@ -30,10 +33,10 @@ typedef struct s_redir
 	int	fid_out;
 }		t_redir;
 
-void	ms_redir_error(void *arg, int errnum, int fd_error, void *data);
 int		ms_redir_file_out(int *fid, void *data, char *path, int append_mode);
 int		ms_redir_file_in(int *fid, void *data, char *pathname);
 int		ms_redir_file_here(int *fid, void *data, char *pathname);
 int		ms_redir_file_close_all(void *data);
+void	ms_redir_error(void *arg, int errnum);
 
 #endif

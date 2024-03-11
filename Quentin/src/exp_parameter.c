@@ -6,13 +6,13 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/06 11:31:32 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:39:25 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exp_utils.h"
 
-static int	ms_exp_parameter_list_add(\
+static int	ms_exp_parameter_list_madd(\
 	t_dlist **values, char *big, size_t len_str, int type)
 {
 	char	*str;
@@ -24,7 +24,7 @@ static int	ms_exp_parameter_list_add(\
 	{
 		str = (char *)malloc(sizeof(char) * (len_str + 1));
 		if (NULL == str)
-			return (1);
+			return (ms_perror(MS_E), 1);
 		ft_strlcpy(str, big, len_str + 1);
 	}
 	new = ms_dlstnew(str, type);
@@ -32,7 +32,7 @@ static int	ms_exp_parameter_list_add(\
 	{
 		if (NULL != str)
 			free(str);
-		return (1);
+		return (ms_perror(MS_E), 1);
 	}
 	ms_dlstadd_back(values, new);
 	return (0);
@@ -52,7 +52,7 @@ static void	ms_exp_parameter_listtostr_write(t_dlist *values, char *str)
 	*str = '\0';
 }
 
-static char	*ms_exp_parameter_listtostr(t_dlist *values)
+static char	*ms_exp_parameter_listtomstr(t_dlist *values)
 {
 	size_t	len;
 	t_dlist	*curr;
@@ -67,21 +67,21 @@ static char	*ms_exp_parameter_listtostr(t_dlist *values)
 	}
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (NULL == str)
-		return (NULL);
+		return (ms_perror(MS_E), NULL);
 	ms_exp_parameter_listtostr_write(values, str);
 	return (str);
 }
 
-t_dlist	*ms_exp_parameter_list(char *input, char **env, void *data)
+static int	ms_exp_parameter_mlist(\
+	t_dlist **values, char *input, char **env, void *data)
 {
-	t_dlist	*values;
 	size_t	i_in;
 	size_t	len;
 	int		type;
 
 	(void)env;
 	(void)data;
-	values = NULL;
+	*values = NULL;
 	i_in = 0;
 	while ('\0' != input[i_in])
 	{
@@ -90,29 +90,41 @@ t_dlist	*ms_exp_parameter_list(char *input, char **env, void *data)
 		if (0 == len)
 			ms_parameter_var(input + i_in, &len, &type);
 		if ('\0' != input[i_in] && 0 == len)
-			return (NULL); //
-		if (ms_exp_parameter_list_add(&values, input + i_in, len, type))
-			return (NULL); //
+			return (ms_e(__FILE__, __LINE__, 1), 1);
+		if (ms_exp_parameter_list_madd(values, input + i_in, len, type))
+			return (ms_e(__FILE__, __LINE__, 0), 1);
 		i_in += len;
 	}
-	return (values);
+	return (MS_SUCCESS);
 }
+
+/* ms_exp_parameter:
+ * Expands <input>
+ * <$var> are replaced by <value> from environment
+ * $? are replaced by exit code of previous pipe
+ * Returns a malloc'ed escaped string that needs to be unescaped and free'd
+ * Returns NULL if error
+ */
 
 char	*ms_exp_parameter(char *input, char **env, void *data)
 {
 	t_dlist	*values;
 	t_dlist	*curr;
 
-	values = ms_exp_parameter_list(input, env, data);
-	if (NULL == values)
+	values = NULL;
+	if (ms_exp_parameter_mlist(&values, input, env, data))
+	{
+		ms_e(__FILE__, __LINE__, 0);
+		ms_dlstclear(&values);
 		return (NULL);
+	}
 	curr = values;
 	while (curr)
 	{
 		ms_exp_parameter_replace(curr, env, data);
 		curr = curr->next;
 	}
-	return (ms_exp_parameter_listtostr(values));
+	return (ms_exp_parameter_listtomstr(values));
 }
 
 // #include "env.h"

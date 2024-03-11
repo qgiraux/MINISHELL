@@ -3,26 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exec_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/17 10:16:17 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/07 16:30:54 by qgiraux          ###   ########.fr       */
+/*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
+/*   Updated: 2024/03/09 14:30:27 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/exec_utils.h"
+#include "exec_utils.h"
 
-void	ms_exec_error(void *arg, int errnum, int fd_error)
+void	ms_exec_error(void *arg, int errnum)
 {
-	if (errno == errnum)
-		return (perror(MS_EXEC_ESOURCE));
-	ft_putstr_fd(MS_EXEC_ESOURCE, fd_error);
-	ft_putstr_fd(": ", fd_error);
-	if (MS_EUNKNWN == errnum)
+	if (errnum == EEXEC_NOCMD && arg)
 	{
-		ft_putstr_fd(MS_EXEC_MSG, fd_error);
-		ft_putstr_fd(":", fd_error);
-		ft_putstr_fd((char *)arg, fd_error);
+		ft_putstr_fd((char *)arg, STDERR_FILENO);
+		ft_putstr_fd(EEXEC_NOCMD_MSG, STDERR_FILENO);
 	}
-	ft_putstr_fd("\n", fd_error);
+	else
+		ms_e(__FILE__, __LINE__, 1);
 }

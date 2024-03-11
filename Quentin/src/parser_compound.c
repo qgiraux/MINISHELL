@@ -6,13 +6,12 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:48:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 14:28:18 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 16:57:23 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "../includes/dlist.h"
-#include "../includes/parser.h"
+
+#include "parser.h"
 /*determine si il y a une autre parenthese imbriquee*/
 static int	check_next_parenth(t_dlist *list)
 {

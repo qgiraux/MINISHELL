@@ -6,11 +6,11 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:00:24 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 14:29:18 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/08 16:59:53 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "parser.h"
 
 /*determine si on est a la fin d'une liste*/
 static int	ms_end(t_dlist *cmd)

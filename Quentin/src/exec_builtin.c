@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:00:24 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/07 16:11:13 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/09 13:58:42 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/bltin.h"
-#include "../includes/exec_utils.h"
+#include "bltin.h"
+#include "exec_utils.h"
+#include "error.h"
 
-static int	debug_builtin(char **av, char **env, void *data)
+static int	debug_builtin(char **av, void *data)
 {
 	int	i;
 
 	(void)data;
-	(void)env;
 	ft_putstr_fd("debug_builtin:\n", 1);
 	i = 0;
 	while (av[i])
@@ -44,7 +44,7 @@ int	ms_exec_builtin_id(char *cmd_name)
 	return (i);
 }
 
-int	ms_exec_builtin(int builtin_id, char **av, char **env, void *data)
+int	ms_exec_builtin(int builtin_id, char **av, void *data)
 {
 	const t_builtin	builtin_fun[MS_N_BUILTIN + 1] = {\
 		&ms_bltin_echo, &debug_builtin, &ms_bltin_pwd, \
@@ -55,6 +55,7 @@ int	ms_exec_builtin(int builtin_id, char **av, char **env, void *data)
 	f = builtin_fun[builtin_id];
 	if (NULL == f)
 		return (1); //
-	f(av, env, data);
+	f(av, data);
 	return (0);
 }
+

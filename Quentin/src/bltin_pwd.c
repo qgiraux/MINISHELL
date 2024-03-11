@@ -6,11 +6,12 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:36:21 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/02 14:46:06 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 11:50:46 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/bltin_utils.h"
+#include "env.h"
+#include "bltin_utils.h"
 
 static char	*ms_getcwd(size_t buff_len)
 {
@@ -40,13 +41,13 @@ static char	*ms_getcwd(size_t buff_len)
 	return (cwd);
 }
 
-int	ms_bltin_pwd(char **av, char **env, void *data)
+int	ms_bltin_pwd(char **av, void *data)
 {
 	char		*cwd;
 	int			f_out;
 
 	(void)av;
-	(void)env;
+
 	cwd = ms_getcwd(BLTIN_BUFF_LEN);
 	if (NULL == cwd)
 		return (1);

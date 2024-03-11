@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:15 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/07 13:14:05 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:32:51 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,14 @@ static void	ms_here_tostr_cpy(char *str, t_dlist *doc, size_t len)
 	str[i_str] = '\0';
 }
 
-int	ms_here_tostr(char **str, size_t len_rem, t_dlist *doc)
+int	ms_here_tomstr(char **str, size_t len_rem, t_dlist *doc)
 {
 	size_t	len;
 
 	len = ms_here_tostr_len(doc) - len_rem;
 	*str = (char *)malloc(sizeof(char) * (len + 1));
 	if (NULL == *str)
-		return (1);
+		return (ms_perror(MS_E), 1);
 	ms_here_tostr_cpy(*str, doc, len);
-	return (0);
-
+	return (MS_SUCCESS);
 }

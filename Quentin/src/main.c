@@ -6,12 +6,13 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 15:59:15 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 16:21:13 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "../includes/msh_utils.h"
+#include "minishell.h"
+#include "msh_utils.h"
+#include "dlist.h"
 
 
 int	main(void)
@@ -32,27 +33,27 @@ int	main(void)
 	data[9] = NULL;
 	while (0 == result)
 	{
-		result = msh_start(data, "");
+		result = ms_start_loop(data, "");
 	}
 	rl_clear_history();
 	return (0);
 }
 
 /*free le memoire attribuee a l'arbre logique*/
-void	free_input(t_dlist *list)
+void	ms_free_input(t_dlist *list)
 {
 	t_dlist	*tmp;
 
 	while (NULL != list)
 	{
 		tmp = list->next;
-		if (NULL == list->content || MS_TOKEN_WORD == list->type)
+		if (NULL == list->content || 0 == ms_dlist_istype_parse(list))
 		{
 			if (MS_TOKEN_WORD == list->type)
 				free(list->content);
 		}
 		else
-			free_input(list->content);
+			ms_free_input(list->content);
 		free(list);
 		list = tmp;
 	}

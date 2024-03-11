@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:37:44 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/11 11:57:54 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 15:27:08 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_dlist	*ms_interpreter_loop(t_dlist *list, int status)
 			return (NULL);
 		status += ms_list(list);
 		if (0 != status)
-			return (free_input(list), NULL);
+			return (ms_free_input(list), NULL);
 		if (NULL == list->next || 0 != status)
 			return (list);
 		list = ms_dlstnew(list, MS_PARSE_CMP);
@@ -35,7 +35,7 @@ static t_dlist	*ms_interpreter_loop(t_dlist *list, int status)
 			return (NULL);
 		status += ms_compound(list);
 		if (0 != status)
-			return (free_input(list), NULL);
+			return (ms_free_input(list), NULL);
 	}
 	return (list);
 }
@@ -48,25 +48,22 @@ t_dlist	*ms_interpreter(char *input, void *data)
 
 	status = 0;
 	list = ms_token_list(input, data);
-	//status = ms_parse_here(list);
-	//	if (0 != status)
-	//		return (list);
-	if (0 == ms_parser_error(list, data))
+	if (0 == ms_parser_error(list, data) && 0 == ms_parse_here(list))
 	{
 		list = ms_dlstnew(list, MS_PARSE_CMD);
 		if (NULL == list)
 			return (NULL);
 		status = ms_cmd(list);
 		if (0 != status)
-			return (free_input(list), NULL);
+			return (ms_free_input(list), NULL);
 		list = ms_dlstnew(list, MS_PARSE_PIPE);
 		if (NULL == list)
 			return (NULL);
 		status = ms_pipeline(list);
 		if (0 != status)
-			return (free_input(list), NULL);
+			return (ms_free_input(list), NULL);
 	}
 	else
-		return (free_input(list), NULL);
+		return (ms_free_input(list), NULL);
 	return (ms_interpreter_loop(list, status));
 }

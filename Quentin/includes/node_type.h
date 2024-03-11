@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:04:57 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 17:04:01 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 13:05:14 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ typedef struct s_pipe
 	int		*status;
 }			t_pipe;
 
-int	node_type_list(t_dlist *node, int status, void *data);
-int	node_type(t_dlist *node, int status, void *data);
-int	node_type_compound(t_dlist *node, int status, void *data);
-int	node_type_pipe(t_dlist *node, int status, void *data);
+int	ms_node_type_list(t_dlist *node, int status, void *data);
+int	ms_node_type(t_dlist *node, int status, void *data);
+int	ms_node_type_compound(t_dlist *node, int status, void *data);
+int	ms_node_type_pipe(t_dlist *node, int status, void *data);
 
 #endif

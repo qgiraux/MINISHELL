@@ -6,14 +6,14 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:09:41 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/11 12:33:58 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 13:05:55 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "node_type.h"
 
 /*determine si on execute la commande suivante, selon && ou ||*/
-static t_dlist	*list_and_or(t_dlist *list, int status)
+static t_dlist	*ms_list_and_or(t_dlist *list, int status)
 {
 	if (NULL == list)//
 		return (list);//
@@ -32,7 +32,7 @@ static t_dlist	*list_and_or(t_dlist *list, int status)
 	return (list);
 }
 /*si le noeud est une liste, fait ce qu'il faut*/
-int	node_type_list(t_dlist *node, int status, void *data)
+int	ms_node_type_list(t_dlist *node, int status, void *data)
 {
 	t_dlist	*list;
 
@@ -43,10 +43,10 @@ int	node_type_list(t_dlist *node, int status, void *data)
 	while (NULL != list)
 	{
 		if (1 == ms_dlist_istype_pipe_and_or(list))
-			list = list_and_or(list, status);
+			list = ms_list_and_or(list, status);
 		else
 		{
-			status = node_type(list, status, data);
+			status = ms_node_type(list, status, data);
 			list = list->next;
 		}
 	}

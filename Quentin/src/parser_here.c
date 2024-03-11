@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_here.c                                       :+:      :+:    :+:   */
+/*   parser_here.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:00:54 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 17:07:26 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:15:52 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,53 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+char	*ms_xtoa(long long int num)
+{
+	int		n;
+	int		m;
+	char 	*base;
+	char	*dest;
+	
+	base = "0123456789abcdef";	
+	n = num;
+	m = 0;
+	while (n > 0)
+	{
+		n = n / 16;
+		m++;
+	}
+	dest = malloc((m + 1) * sizeof(char));
+	dest[m] = '\0';
+	while (m > 0)
+	{
+		dest[--m] = base[(num % 16)];
+		num = num / 16;
+	}
+	return (dest);
+}
+
 /*replaces << with < and delimiterwith tmp file location*/
 static t_dlist	*ms_parse_here_replace(t_dlist *token)
 {
 	int 	here_fd;
 	t_dlist	*list;
-
+	char	*tmp;
+	char	*tmp2;
+	
+	tmp = NULL;
 	list = token;
-	list->type = MS_TOKEN_INTPUT;
 	list = list->next;
-	here_fd = open(MS_HERE_PATH, O_CREAT | O_TRUNC | O_RDWR, O_WRONLY);
+	tmp2 = ms_xtoa((long long int)&list);
+	tmp = ft_strjoin(MS_HERE_PATH, tmp2);
+	here_fd = open(tmp, O_CREAT | O_RDWR | O_TRUNC, 0600);
 	if (-1== here_fd)
 		return (perror("here_doc"), errno = 0, token);
-	ms_here(here_fd, list->content);
+	if (0 != ms_here(here_fd, list->content))
+		return (free(tmp), token);
 	free(list->content);
-	list->content = malloc(ft_strlen(MS_HERE_PATH) * sizeof(char));
-	ft_strlcpy(list->content, MS_HERE_PATH, ft_strlen(MS_HERE_PATH));
+	list->content = ft_strdup(tmp);
 	close (here_fd);
+	free(tmp);
 	return (token);	
 }
 /*check if there is a here_doc, and deals with it*/
@@ -45,9 +75,8 @@ int	ms_parse_here(t_dlist *token)
 	{
 		if (MS_TOKEN_HERE_DOC == list->type)
 		{
+			list->type = MS_TOKEN_INTPUT;
 			list = ms_parse_here_replace(list);
-			if (ft_strlen(MS_HERE_PATH) != ft_strlen(list->content))
-				return (write(2, "error when handling here_doc\n", 29), -1);
 		}
 		list = list->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:27:04 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/11 11:44:15 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 15:06:02 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	ms_dlstclear(t_dlist **lst)
 	{
 		tmp = *lst;
 		*lst = (*lst)->next;
-		if (0) //(ms_dlist_istype_parser(tmp))
+		if (1 == ms_dlist_istype_parse(tmp))
 			ms_dlstclear(&tmp);
 		else if (NULL != tmp->content)
 			free(tmp->content);

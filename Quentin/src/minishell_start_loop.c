@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:58:35 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 14:34:00 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 16:21:31 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "../includes/msh_utils.h"
 
 /*donne un prompt, lance le parse, puis execute l'arbre logique */
-int	msh_start(char **data, char *input)
+int	ms_start_loop(char **data, char *input)
 {
 	t_dlist *list;
 
@@ -31,8 +31,9 @@ int	msh_start(char **data, char *input)
 		list = ms_interpreter(input, data);
 		if (NULL != list)
 		{
-			node_type(list, 0, data);
+			ms_node_type(list, 0, data);
 		}
 		free(input);
+		//ms_free_input(list);
 		return (0);
 }

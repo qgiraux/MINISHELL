@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 14:48:23 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/07 16:23:14 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 13:35:02 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int			ms_dlist_istype_operator(t_dlist *list);
 int			ms_dlist_istype_pipe_and_or(t_dlist *list);
 int			ms_dlist_istype_parenthesis(t_dlist *list);
 int			ms_dlist_istype_not_first(t_dlist *list);
+int			ms_dlist_istype_parse(t_dlist *list);
 //
 int			ms_dlist_istype_redir_out(t_dlist *list);
 int			ms_dlist_istype_redir_in(t_dlist *list);

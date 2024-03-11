@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:39:43 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 15:59:24 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 13:10:59 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 # include "token.h"
 #define MSH "Minishell> "
-int	msh_start(char **data, char *input);
-void	free_input(t_dlist *list);
-
+int		ms_start_loop(char **data, char *input);
+void	ms_free_input(t_dlist *list);
 
 #endif

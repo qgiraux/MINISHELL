@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:00:24 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 16:59:53 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 13:23:53 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	ms_end(t_dlist *cmd)
 /*determine si on doit decouper une liste, ou sielle est deja isolee*/
 static int	check_if_cut(t_dlist *cmd, t_dlist *list, int check)
 {
+	check = 0;
 	if (0 == ms_end(cmd) && NULL != cmd->prev)
 		ms_dlst_break_chain(list, cmd, cmd->type);
 	if (1 == ms_end(cmd))

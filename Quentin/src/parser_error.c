@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:29:30 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 16:59:27 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 16:06:38 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static int	ms_error_pipe(t_dlist *list, void *data)
 		return (ms_error_write(list->next->type, data), 1);
 	return (0);
 }
+
 /*verifie que l'ordre des parentheses est coherent*/
 static int	ms_error_parenthesis(t_dlist *list, void *data)
 {
@@ -57,6 +58,8 @@ static int	ms_error_parenthesis(t_dlist *list, void *data)
 			return (1);
 		}
 	}
+	if (1 == ms_dlist_istype_redir(list) && 0 == ms_dlist_istype_word(list->next))
+		return (ms_error_write(list->next->type, data), 1);
 	return (0);
 }
 /*verifie que le nombre de parentheses est coherent */

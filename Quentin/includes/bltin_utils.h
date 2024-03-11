@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bltin_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/29 14:13:32 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:51:04 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 # define BLTIN_SEP " "
 # define BLTIN_NEWLINE "\n"
 # define BLTIN_OPTN "-n"
+# define BLTIN_ABS_PATH '/'
 
 #endif

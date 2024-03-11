@@ -6,13 +6,13 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:53:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/08 17:04:41 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/11 13:07:46 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "node_type.h"
 
-void	free_p(t_pipe p, int nb_pipe)
+static void	ms_free_p(t_pipe p, int nb_pipe)
 {
 	int	count;
 
@@ -27,7 +27,7 @@ void	free_p(t_pipe p, int nb_pipe)
 	free (p.pipefd);
 }
 /*attribue les memoires necessaires pour les pid, pipes, et return values*/
-t_pipe	init_pipe(int nb_pipe)
+t_pipe	ms_init_pipe(int nb_pipe)
 {
 	t_pipe	p;
 	int		count;
@@ -47,13 +47,13 @@ t_pipe	init_pipe(int nb_pipe)
 	{
 		p.pipefd[count] = malloc(2 * sizeof(int));
 		if (!p.pipefd[count])
-			return (free_p(p, nb_pipe), p);
+			return (ms_free_p(p, nb_pipe), p);
 		count++;
 	}
 	return (p);
 }
 /*ce qui est execute dans chaque pipe*/
-int	pipe_fork(t_pipe p, t_dlist *list, int nb_pipe, void *data)
+static int	ms_pipe_fork(t_pipe p, t_dlist *list, int nb_pipe, void *data)
 {
 	if (p.count > 0)
 	{
@@ -65,10 +65,10 @@ int	pipe_fork(t_pipe p, t_dlist *list, int nb_pipe, void *data)
 		close (p.pipefd[p.count][0]);
 		dup2 (p.pipefd[p.count][1], 1);
 	}
-	exit (p.status[p.count] = node_type(list, 0, data));
+	exit (p.status[p.count] = ms_node_type(list, 0, data));
 }
 /*execute un fork et pipespour chaque pipe*/
-int	pipe_loop(t_pipe p, int nb_pipe, t_dlist *list, void *data)
+static int	ms_pipe_loop(t_pipe p, int nb_pipe, t_dlist *list, void *data)
 {
 	p.count = 0;
 	while (p.count < nb_pipe)
@@ -79,7 +79,7 @@ int	pipe_loop(t_pipe p, int nb_pipe, t_dlist *list, void *data)
 		if (-1 == p.pid[p.count])
 			p.status[p.count] = 28;
 		if (p.pid[p.count] == 0)
-			p.status[p.count] = pipe_fork(p, list, nb_pipe, data);
+			p.status[p.count] = ms_pipe_fork(p, list, nb_pipe, data);
 		list = list->next;
 		while (list != NULL && list->type == MS_TOKEN_PIPE)
 			list = list->next;
@@ -95,7 +95,7 @@ int	pipe_loop(t_pipe p, int nb_pipe, t_dlist *list, void *data)
 	return (WEXITSTATUS(p.status[--p.count]));
 }
 /*si le noeud est un pipe, fait ce qu'il faut*/
-int	node_type_pipe(t_dlist *node, int status, void *data)
+int	ms_node_type_pipe(t_dlist *node, int status, void *data)
 {
 	t_dlist	*list;
 	int		nb_pipe;
@@ -103,7 +103,7 @@ int	node_type_pipe(t_dlist *node, int status, void *data)
 
 	list = node->content;
 	if (NULL == list->next)
-		return (node_type(list, status, data));
+		return (ms_node_type(list, status, data));
 	nb_pipe = 0;
 	while (NULL != list)
 	{
@@ -111,10 +111,10 @@ int	node_type_pipe(t_dlist *node, int status, void *data)
 			nb_pipe++;
 		list = list->next;
 	}
-	p = init_pipe(nb_pipe);
+	p = ms_init_pipe(nb_pipe);
 	if (p.pipefd == NULL)
 		return (1);
-	status = pipe_loop(p, nb_pipe, node->content, data);
-	free_p(p, nb_pipe);
+	status = ms_pipe_loop(p, nb_pipe, node->content, data);
+	ms_free_p(p, nb_pipe);
 	return (status);
 }

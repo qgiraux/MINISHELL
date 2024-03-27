@@ -78,6 +78,8 @@ echo ok & & echo ok
 >ok1 >ok2 >ok3 echo patate && cat ok1 && echo "ok" && cat ok2 && echo "ok" && cat ok3 && rm ok1 && rm ok2 && rm ok3
 <
 >>
+<cmd_line.sh cat >>tmp1 && rm tmp1
+<cmd_line.sh cat >>tmp1 && echo 1 >>tmp1 && cat tmp1 && rm tmp1
 <<
 
 cd

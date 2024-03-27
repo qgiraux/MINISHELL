@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_save.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:58:56 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/25 14:33:32 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:39:03 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	_open(int type, char *pathname, void *data)
 	else if (MS_TOKEN_OUTPUT == type)
 		return (ms_redir_file_out(&fid_out, data, pathname, 0));
 	else if (MS_TOKEN_APPEND == type)
-		return (ms_redir_file_out(&fid_in, data, pathname, 1));
+		return (ms_redir_file_out(&fid_out, data, pathname, 1));
 	else if (MS_TOKEN_HERE_DOC == type)
 		return (ms_redir_file_here(&fid_in, data, pathname));
 	else

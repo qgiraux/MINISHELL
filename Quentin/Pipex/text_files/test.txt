@@ -1,4 +1,0 @@
-267404 qgiraux   20   0  232268   6400   5396 S   0.0   0.0   0:00.00 gsd-disk-utilit
- 267408 qgiraux   20   0  583704  10188   8820 S   0.0   0.1   0:00.00 gsd-sharing
- 267412 qgiraux   20   0  430192   8216   7348 S   0.0   0.1   0:00.00 gsd-smartcard
-

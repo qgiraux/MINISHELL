@@ -1,0 +1,6 @@
+sleep 5 OK
+sleep 5 | sleep 5 avec ctrl C (stderr incorrect)
+echo lol | cat.... | cat avec ctrl c et crtl \ (leak)
+sleep 5 && sleep 5 OK
+sleep 5 && echo lol OK
+sleep 5 | ls avec crtl \ OK

@@ -31,6 +31,13 @@ echo lol | exit "" && echo $?
 echo patate | cat | cat | cat | cat
 echo patate | cat | echo lol
 
+echo 'lol"'
+echo "idk
+echo idk"
+echo "'"
+./patate || echo $?
+rm -f patate && cat <patate || echo $?
+
 echo "*"
 echo "*$A"
 export A=* && echo $A

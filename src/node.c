@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:04:13 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/28 11:34:57 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/28 14:59:45 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ int	ms_node(t_dlist *node, int status, void *data)
 		status = ms_node_pipe(node, status, data);
 	else if (NULL != node && MS_PARSE_CMD == node->type)
 		status = ms_exec_cmd((t_dlist **)&node->content, data);
-	return (status);
+	return (ms_data_exit_pipe_set(status, data), status);
 }

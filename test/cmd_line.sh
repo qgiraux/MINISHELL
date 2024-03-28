@@ -31,6 +31,12 @@ echo lol | exit "" && echo $?
 echo patate | cat | cat | cat | cat
 echo patate | cat | echo lol
 
+echo ""
+echo ''
+echo lol
+echo "lol"
+echo 'lol'
+echo 'lol'lol"l'o'l"""''""
 echo 'lol"'
 echo "idk
 echo idk"
@@ -226,6 +232,7 @@ echo "OK"'lol'*"$HOME"'$HOME'
 echo $HOME$HOME$HOME
 echo $HOME'$HOME'"$HOME"
 
+touch '*1' '*2' && echo '*'* && rm -f '*1' '*2'
 export A="*" && echo $A
 echo *
 echo *.c

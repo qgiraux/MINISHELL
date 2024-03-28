@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/25 14:24:21 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:20:57 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,21 @@
 #include "token.h"
 #include "exp_utils.h"
 
-static int	_match_nowild(\
-	char *name, char *ptrn, size_t *i_n, size_t *i_p)
+static int	_match_nowild(char *name, char *ptrn, size_t *i_n, size_t *i_p)
 {
 	int	quote;
 	int	esc;
 
 	quote = 0;
 	esc = 0;
-	while (ptrn[*i_p] && (esc || EXP_WILD != ptrn[*i_p]))
+	while (ptrn[*i_p] && (quote || esc || EXP_WILD != ptrn[*i_p]))
 	{
-		if (ptrn[*i_p] == EXP_ESC)
+		if (EXP_ESC == ptrn[*i_p])
 			esc = 1;
-		else if (!esc && (MS_QUOTE_1 == ptrn[*i_p] || MS_QUOTE_2 == ptrn[*i_p]))
-			quote = ptrn[*i_p];
 		else if (quote && quote == ptrn[(*i_p)])
 			return ((*i_p)++, 0);
+		else if (!esc && (MS_QUOTE_1 == ptrn[*i_p] || MS_QUOTE_2 == ptrn[*i_p]))
+			quote = ptrn[*i_p];
 		else if (ptrn[(*i_p)] == name[(*i_n)])
 		{
 			(*i_n)++;

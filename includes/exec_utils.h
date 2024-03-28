@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/22 17:21:25 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:27:08 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@
 # define MS_EXEC_QUITMSG "Quit (core dumped)\n"
 
 //
-int		ms_exec_bin(char **av, char **env, void *data);
-//
 int		ms_exec_builtin(int builtin_id, char **av, void *data);
 int		ms_exec_builtin_id(char *cmd_name);
 //
@@ -53,8 +51,6 @@ int		ms_exec_dlist_to_av(t_dlist **list, char ***av);
 //
 int		ms_exec_file(char *path, char **av, char **env, void *data);
 int		ms_exec_bin_mget_path(char **path, const char *name, const char **env);
-//
-//void	ms_exec_error(void *arg, int errnum);
 //
 void	ms_exec_free_av(char **av);
 

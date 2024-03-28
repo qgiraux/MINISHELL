@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 14:48:23 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/27 13:46:39 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:25:42 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # endif
 
 void	ms_e(char *file, int line, int first_error);
-void	ms_error_str(char *str, int errnum);
 void	ms_perror(char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:27:04 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/25 12:46:52 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:32:17 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,6 @@ void	ms_e(char *file, int line, int first_error)
 		ms_fprintf_args(NULL, s, d, &args);
 		ms_fprintf(STDERR_FILENO, MS_EUNK, &args);
 	}
-}
-
-/* Prints error in bash format using errnum
- * <str>: <strerror(<errnum>)>
- * to be used when errno has been changed or perror can't be used
- */
-void	ms_error_str(char *str, int errnum)
-{
-	t_csd		args;
-	const char	*s[3] = {str, strerror(errnum), NULL};
-
-	ms_fprintf_args(NULL, s, NULL, &args);
-	ms_fprintf(STDERR_FILENO, "%s:%s\n", &args);
 }
 
 /*Prints error in bash format using global var errno

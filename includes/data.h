@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 12:53:13 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/15 17:35:30 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/28 10:20:50 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,5 @@ const char	**ms_data_operator_get(void *ptr_data);
 void		ms_data_files_set(t_dlist *list, void *ptr_data);
 t_dlist		*ms_data_files_get(void *ptr_data);
 void		ms_data_list_set(t_dlist *list, void *ptr_data);
-t_dlist		*ms_data_list_get(void *ptr_data);
 
 #endif

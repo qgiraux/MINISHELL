@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:51:44 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/25 14:11:45 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:24:36 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,6 @@ int	ms_env_mget_str(const char **env, const char *var, char **value)
 	if (NULL == *value)
 		return (ms_perror(MS_E), 1);
 	return (MS_SUCCESS);
-}
-
-/* ms_env:
- * TO REPLACE
- */
-char	**ms_env(void *data)
-{
-	return (ms_data_env_get(data));
 }
 
 //Malloc proofread

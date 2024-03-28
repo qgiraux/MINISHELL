@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 14:48:23 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/13 12:04:40 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:23:07 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,10 @@ t_dlist		*ms_dlstreplace(t_dlist **head, t_dlist **curr, t_dlist *new);
 t_dlist		*ms_dlstremove(t_dlist **head, t_dlist *curr);
 t_dlist		*ms_dlstfirst(t_dlist *lst);
 t_dlist		*ms_dlstlast(t_dlist *lst);
-t_dlist		*ms_dlst_free_link(t_dlist *lst);
 int			ms_dlst_break_chain(t_dlist *list, t_dlist *arg_list, int type);
 //
 int			ms_dlist_istype_word(t_dlist *list);
-int			ms_dlist_istype_word_only(t_dlist *list);
 int			ms_dlist_istype_redir(t_dlist *list);
-int			ms_dlist_istype_token(t_dlist *list);
 int			ms_dlist_istype_operator(t_dlist *list);
 int			ms_dlist_istype_pipe_list(t_dlist *list);
 int			ms_dlist_istype_cmpd(t_dlist *list);

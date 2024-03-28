@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/25 14:27:50 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:24:23 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ char	*ms_exp_parameter(char *input, char **env, void *data)
 
 // 	(void)ac;
 // 	(void)av;
-// 	env = ms_env(NULL);
+// 	env = ms_data_env_get(NULL);
 // 	printf("input:%s\n", input);
 // 	exp = ms_exp_parameter(input, env, NULL);
 // 	printf("exp:%s\n", exp);

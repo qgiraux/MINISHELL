@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:15 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/25 14:32:09 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:31:06 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,6 @@ static int	_close(int fid)
 			return (perror(MS_E), 1);
 	}
 	return (MS_SUCCESS);
-}
-
-int	_close_all(void *data)
-{
-	int	fid_in;
-	int	fid_out;
-	int	is_err;
-
-	is_err = 0;
-	ms_data_redir_get(&fid_in, &fid_out, data);
-	is_err = is_err | _close(fid_in);
-	is_err = is_err | _close(fid_out);
-	return (is_err);
 }
 
 int	ms_redir_file_out(int *fid, void *data, char *pathname, int append_mode)

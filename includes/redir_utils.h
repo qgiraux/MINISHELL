@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/25 14:32:09 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:31:16 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_redir
 int		ms_redir_file_out(int *fid, void *data, char *path, int append_mode);
 int		ms_redir_file_in(int *fid, void *data, char *pathname);
 int		ms_redir_file_here(int *fid, void *data, char *pathname);
-int		_close_all(void *data);
 void	ms_redir_error(char *arg);
 
 #endif

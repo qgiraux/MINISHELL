@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:58:56 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/26 10:40:18 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/28 10:24:23 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	_exec_av(char **av, void *data)
 	int		return_code;
 	int		has_slash;
 
-	env = ms_env(data);
+	env = ms_data_env_get(data);
 	has_slash = (NULL != ft_strchr(av[0], PATH_SEP));
 	return_code = _exec_builtin(av, data, has_slash);
 	if (-1 != return_code)

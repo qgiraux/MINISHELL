@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/25 14:18:32 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:27:51 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@
 # define EXP_DOT '.'
 
 int		ms_parameter_var(char *s, size_t *len, int *type);
-int		ms_parameter_str_add(\
-	t_dlist **values, char *big, size_t len_str, int type);
 int		ms_parameter_quote(char *s, size_t *len, int *type);
 char	*ms_exp_escape(char *str, char *list);
 char	*ms_exp_escape_removal(char *str, char *lst);

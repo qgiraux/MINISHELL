@@ -1,11 +1,8 @@
 FILE=cmd_line.sh
 TMP=script_tmp
 EXE=../minishell
-SUP_FILE=readline.sup
-SUP_PATH=../$SUP_FILE
-VALGRIND=$(echo valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes)
-#VALGRIND=$(echo valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes --suppressions=$SUP_PATH)
-make $SUP_FILE test_debug -sC ../
+#VALGRIND=$(echo valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes)
+make test_debug -sC ../
 
 _COLOR_END=$(tput sgr0)
 _COLOR_BOLD=$(tput bold)

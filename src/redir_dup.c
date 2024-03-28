@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:15 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/25 14:31:53 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 11:27:31 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	_dup2_new(int fid_old, int fid_new)
 		|| fid_old <= -1)
 		return (MS_SUCCESS);
 	if (-1 == dup2(fid_old, fid_new))
-		return (perror(MS_E), 1);
+		return (ms_perror(MS_E), 1);
 	close(fid_old);
 	return (MS_SUCCESS);
 }

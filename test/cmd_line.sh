@@ -74,6 +74,18 @@ echo ok & & echo ok
 (true && true) && echo patate
 (true && false) || echo patate
 
+rm -f tmp && touch tmp && chmod 000 tmp && echo lol >tmp && echo lol && rm -f tmp || rm -f tmp
+rm -f tmp
+rm -f tmp && touch tmp && chmod 000 tmp && echo lol >tmp || echo lol && rm -f tmp
+rm -f tmp
+rm -f tmp && touch tmp && chmod 000 tmp && echo lol >tmp >lol || echo lol && rm -f tmp
+rm -f tmp
+rm -f tmp && touch tmp && chmod 000 tmp && echo lol >>tmp >lol || echo lol && rm -f tmp
+rm -f tmp
+rm -f tmp && echo ok > tmp && chmod 000 tmp && <tmp cat || echo lol && rm -f tmp
+rm -f tmp
+rm -f tmp && echo ok > tmp && chmod 000 tmp && <tmp <cmd_line.sh cat || echo lol && rm -f tmp
+rm -f tmp
 >
 >ok1 >ok2 >ok3 echo patate && cat ok1 && echo "ok" && cat ok2 && echo "ok" && cat ok3 && rm ok1 && rm ok2 && rm ok3
 <

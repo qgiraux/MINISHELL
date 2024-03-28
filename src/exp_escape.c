@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/25 14:22:49 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 11:27:47 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*ms_exp_escape_removal(char *str, char *lst)
 		return (str);
 	new = (char *)malloc(sizeof(char) * (len_str - n_rem + 1));
 	if (NULL == new)
-		return (perror(MS_E), NULL);
+		return (ms_perror(MS_E), NULL);
 	_removal_write(str, new, lst);
 	return (free(str), new);
 }

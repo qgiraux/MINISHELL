@@ -6,20 +6,21 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:04:13 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/26 11:01:54 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/28 11:34:57 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "node.h"
 #include "exec.h"
 #include "data.h"
+#include "sig.h"
 
 /*dispatch dansles fonctions appropriees 
 *selon le type de noeud sur lequel on est actuellement*/
 int	ms_node(t_dlist *node, int status, void *data)
 {
-	if (0 != errno)
-		return (errno);
+	if (SIGINT == g_signum || SIGQUIT == g_signum)
+		return (g_signum + MS_EXIT_FATAL_SIG);
 	if (NULL != node && MS_PARSE_LIST == node->type)
 		status = ms_node_list(node, status, data);
 	else if (NULL != node && MS_PARSE_CMP == node->type)

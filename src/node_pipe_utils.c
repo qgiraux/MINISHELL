@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_pipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:12:16 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/26 16:33:50 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 11:27:22 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ms_pipe_loop_close(pid_t pid, void *data, int status)
 void	ms_exit_pipe(char *error, void *data, int exit_code)
 {
 	if (NULL != error)
-		perror(error);
+		ms_perror(error);
 	ms_data_destroy_main(data);
 	exit (exit_code);
 }

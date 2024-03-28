@@ -31,6 +31,14 @@ echo lol | exit "" && echo $?
 echo patate | cat | cat | cat | cat
 echo patate | cat | echo lol
 
+echo "*"
+echo "*$A"
+export A=* && echo $A
+export A=.sh && echo *$A
+export A=.sh && echo "*$A"
+export A=*.sh && echo $A
+export A=*.sh && echo "$A"
+export A=.sh && echo *$A && echo "*$A" && echo '*$A' && echo '*'$A && echo *'$A' && echo '*'$A && echo '*'"$A"
 echo
 echo a
 echo hello world

@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/28 17:23:45 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:47:41 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*_escape(char *s)
 	char	*quote1;
 	size_t	len;
 
-	esc = ms_exp_escape_dup(s, EXP_ESC_LIST);
+	esc = ms_exp_escape(s, EXP_ESC_LIST);
 	if (NULL == esc)
 		return (ms_e(__FILE__, __LINE__, 0), NULL);
 	len = ft_strlen(esc);

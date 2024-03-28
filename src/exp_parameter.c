@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/28 10:24:23 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:26:58 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ static int	_list_madd(t_dlist **values, char *big, size_t len_str, int type)
 		str = NULL;
 	else
 	{
-		str = (char *)malloc(sizeof(char) * (len_str + 1));
+		str = exp_parameter_escape(big, len_str, type);
 		if (NULL == str)
-			return (ms_perror(MS_E), 1);
-		ft_strlcpy(str, big, len_str + 1);
+			return (ms_e(__FILE__, __LINE__, 0), 1);
 	}
 	new = ms_dlstnew(str, type);
 	if (NULL == new)
@@ -77,17 +76,22 @@ static int	_mlist(t_dlist **values, char *input)
 	size_t	i_in;
 	size_t	len;
 	int		type;
+	char	quote;
 
 	*values = NULL;
+	quote = '\0';
 	i_in = 0;
 	while ('\0' != input[i_in])
 	{
 		len = 0;
-		ms_parameter_quote(input + i_in, &len, &type);
+		ms_parameter_quote(input + i_in, &len, &type, &quote);
 		if (0 == len)
 			ms_parameter_var(input + i_in, &len, &type);
 		if ('\0' != input[i_in] && 0 == len)
-			return (ms_e(__FILE__, __LINE__, 1), 1);
+		{
+			len = 1;
+			type = MS_PARA_ESC_ME;
+		}
 		if (_list_madd(values, input + i_in, len, type))
 			return (ms_e(__FILE__, __LINE__, 0), 1);
 		i_in += len;

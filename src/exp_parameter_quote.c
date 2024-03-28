@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/25 14:25:33 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:41:30 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ static void	_var_len_none(char *s, size_t *len, int *type)
 	*len = i;
 }
 
-static void	_var_len_quote1(char *s, size_t *len, int *type)
+static void	_var_len_quote1(char *s, size_t *len, int *type, char *quote)
 {
 	size_t	i;
 
-	if (NULL == s || '\0' == *s)
+	if (NULL == s || '\0' == *s || MS_QUOTE_2 == *quote)
 		return ;
 	i = 0;
 	if (MS_QUOTE_1 == s[0])
@@ -51,7 +51,7 @@ static void	_var_len_quote1(char *s, size_t *len, int *type)
 		*type = MS_PARA_ERROR;
 }
 
-static void	_var_len_quote2(char *s, size_t *len, int *type)
+static void	_var_len_quote2(char *s, size_t *len, int *type, char *quote)
 {
 	size_t	i;
 
@@ -62,7 +62,16 @@ static void	_var_len_quote2(char *s, size_t *len, int *type)
 		i++;
 	else
 		return ;
-	*type = MS_PARA_QUOTE2;
+	if ('\0' == *quote)
+	{
+		*type = MS_PARA_QUOTE2_OPEN;
+		*quote = MS_QUOTE_2;
+	}
+	else
+	{
+		*type = MS_PARA_QUOTE2_CLOSE;
+		*quote = 0;
+	}
 	*len = i;
 }
 
@@ -81,17 +90,17 @@ static void	_var_len_esc(char *s, size_t *len, int *type)
 	*len = i;
 }
 
-int	ms_parameter_quote(char *s, size_t *len, int *type)
+int	ms_parameter_quote(char *s, size_t *len, int *type, char *quote)
 {
 	if (NULL == s || '\0' == *s)
 		return (1);
 	*len = 0;
 	if (EXP_VAR == s[0])
 		return (0);
-	_var_len_quote1(s, len, type);
+	_var_len_quote1(s, len, type, quote);
 	if (0 != *len)
 		return (0);
-	_var_len_quote2(s, len, type);
+	_var_len_quote2(s, len, type, quote);
 	if (0 != *len)
 		return (0);
 	_var_len_esc(s, len, type);

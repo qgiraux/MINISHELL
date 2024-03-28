@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+         #
+#    By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/18 11:51:58 by qgiraux           #+#    #+#              #
-#    Updated: 2024/03/27 13:30:22 by qgiraux          ###   ########.fr        #
+#    Updated: 2024/03/28 15:49:16 by jerperez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -176,6 +176,7 @@ SRCS_EXP =		exp_escape.c\
 				exp_parameter_quote.c\
 				exp_parameter_replace.c\
 				exp_parameter_var.c\
+				exp_parameter_escape.c\
 				exp_parameter.c\
 				exp.c\
 
@@ -215,26 +216,7 @@ SRCS_SIGNAL =	sig.c\
 SRCS_TOKEN =	token_utils.c\
 				token.c\
 
-# SRCS = 	$(SRCS_BLTIN)\
-# 		$(SRCS_DATA)\
-# 		$(SRCS_BLTIN)\
-# 		$(SRCS_DLIST)\
-# 		$(SRCS_ENV)\
-# 		$(SRCS_ERROR)\
-# 		$(SRCS_EXEC)\
-# 		$(SRCS_EXP)\
-# 		$(SRCS_FPRINTF)\
-# 		$(SRCS_HERE)\
-# 		$(SRCS_QUENTIN)\
-# 		$(SRCS_NODE)\
-# 		$(SRCS_PARSER)\
-# 		$(SRCS_REDIR)\
-# 		$(SRCS_READLINE)\
-# 		$(SRCS_TOKEN)\
-# 		$(SRCS_SIGNAL)\
-
-SRCS = 	main.c\
-		$(SRCS_BLTIN)\
+SRCS = 	$(SRCS_BLTIN)\
 		$(SRCS_DATA)\
 		$(SRCS_BLTIN)\
 		$(SRCS_DLIST)\
@@ -252,10 +234,30 @@ SRCS = 	main.c\
 		$(SRCS_TOKEN)\
 		$(SRCS_SIGNAL)\
 
+# SRCS = 	main.c\
+# 		$(SRCS_BLTIN)\
+# 		$(SRCS_DATA)\
+# 		$(SRCS_BLTIN)\
+# 		$(SRCS_DLIST)\
+# 		$(SRCS_ENV)\
+# 		$(SRCS_ERROR)\
+# 		$(SRCS_EXEC)\
+# 		$(SRCS_EXP)\
+# 		$(SRCS_FPRINTF)\
+# 		$(SRCS_HERE)\
+# 		$(SRCS_QUENTIN)\
+# 		$(SRCS_NODE)\
+# 		$(SRCS_PARSER)\
+# 		$(SRCS_REDIR)\
+# 		$(SRCS_READLINE)\
+# 		$(SRCS_TOKEN)\
+# 		$(SRCS_SIGNAL)\
+
 SRC		=	$(addprefix $(SRCDIR)/, $(SRCS))
 
 OBJS	= 	$(SRCS:.c=.o)
-OBJ		= 	$(addprefix $(OBJDIR)/, $(OBJS))
+#OBJ		= 	$(addprefix $(OBJDIR)/, $(OBJS))
+OBJ		= 	$(OBJDIR)/main.o $(addprefix $(OBJDIR)/, $(OBJS))
 
 ###############################################
 
@@ -271,7 +273,7 @@ _COLOR_YELLOW=\033[33m
 all: $(LIBFT) $(NAME)
 
 # Rule to build the executable
-$(NAME): $(OBJDIR)/main.o $(OBJ)
+$(NAME): $(OBJ)
 	@echo "$(_COLOR_YELLOW)Linking $<$(_COLOR_END)"
 	@$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 	@echo "$(_COLOR_GREEN)Ready to use $(_COLOR_BOLD)$@ !$(_COLOR_END)"

@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/22 17:19:29 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:22:38 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define MS_TOKEN_ESOURCE "MSH"
 
 # define MS_EQUOTE 256
-# define MS_EQUOTE_MSG "%s: syntax error unclosed quote: %s\n"
+# define MS_EQUOTE_MSG "%s: syntax error unclosed quote: %c\n"
 
 # define MS_ETOKEN 257
 # define MS_ETOKEN_MSGC "%s: syntax error near unexpected token `%c'\n"

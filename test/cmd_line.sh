@@ -249,6 +249,11 @@ echo *""*
 echo ""*
 echo *""
 echo *.sh
+echo *sh
+echo *h
+echo *".sh"
+echo *"sh"
+echo *"h"
 echo *.shpatate
 echo *".sh"
 echo *'.sh'

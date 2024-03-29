@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/28 18:20:57 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:36:44 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,6 @@ static int	_match_nowild(char *name, char *ptrn, size_t *i_n, size_t *i_p)
 	return (0);
 }
 
-static int	_match_wild(char *name, char *ptrn, size_t *i_n, size_t *i_p)
-{
-	while (EXP_WILD == ptrn[*i_p] && EXP_WILD == ptrn[*i_p + 1])
-		(*i_p)++;
-	if (EXP_WILD == ptrn[*i_p])
-	{
-		if ('\0' == ptrn[*i_p + 1])
-			return (*i_n = ft_strlen(name), *i_p = ft_strlen(ptrn), 0);
-		else
-		{
-			(*i_p)++;
-			if (EXP_ESC == ptrn[*i_p])
-				(*i_p)++;
-			while (name[*i_n] && name[*i_n] != ptrn[*i_p])
-				(*i_n)++;
-			if ('\0' == name[(*i_n)++])
-				return (1);
-			(*i_p)++;
-		}
-	}
-	return (0);
-}
-
 static int	_match_madd(char *unescd_name, char *escd_ptrn, t_dlist **match)
 {
 	char	*escd_name;
@@ -77,7 +54,7 @@ static int	_match_madd(char *unescd_name, char *escd_ptrn, t_dlist **match)
 	{
 		if (_match_nowild(unescd_name, escd_ptrn, &i_n, &i_p))
 			return (MS_SUCCESS);
-		if (_match_wild(unescd_name, escd_ptrn, &i_n, &i_p))
+		if (exp_filename_wild(unescd_name, escd_ptrn, &i_n, &i_p))
 			return (MS_SUCCESS);
 	}
 	if ('\0' == unescd_name[i_n] && '\0' == escd_ptrn[i_p])

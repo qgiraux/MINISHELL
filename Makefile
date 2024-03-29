@@ -6,7 +6,7 @@
 #    By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/18 11:51:58 by qgiraux           #+#    #+#              #
-#    Updated: 2024/03/28 15:49:16 by jerperez         ###   ########.fr        #
+#    Updated: 2024/03/29 12:24:51 by jerperez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -172,6 +172,7 @@ SRCS_EXEC =		exec_bin.c\
 
 SRCS_EXP =		exp_escape.c\
 				exp_filename_list.c\
+				exp_filename_wild.c\
 				exp_filename.c\
 				exp_parameter_quote.c\
 				exp_parameter_replace.c\

@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/29 10:00:13 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:26:43 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ int		ms_exp_filename(t_dlist **escaped_tokens, t_dlist **next, void *data);
 int		ms_exp_filename_list_cwd(void *data);
 char	*ms_exp_escape_dup(char *str, char *to_escape);
 char	*exp_parameter_escape(char *big, size_t len_str, int type);
+int		exp_filename_wild(char *name, char *ptrn, size_t *i_n, size_t *i_p);
 
 #endif

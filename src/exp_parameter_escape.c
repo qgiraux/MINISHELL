@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/29 10:01:03 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:38:17 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,3 @@ char	*exp_parameter_escape(char *big, size_t len_str, int type)
 		return (_escape_quote1(str));
 	return (str);
 }
-
-// static int	_list_madd(t_dlist **values, char *big, size_t len_str, int type)

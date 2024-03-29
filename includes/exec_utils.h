@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/28 10:27:08 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:48:47 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # define ENV_PATH "PATH"
 # define ENV_PATH_SEP ':'
 # define PATH_SEP '/'
-# define MS_EXEC_BACKSLASH '\\'
 # define MS_N_BUILTIN 7
 # define MS_BUILTIN_ECHO "echo"
 # define MS_BUILTIN_CD "cd"
@@ -34,10 +33,7 @@
 # define MS_BUILTIN_ENV "env"
 # define MS_BUILTIN_EXIT "exit"
 # define MS_EXEC_ESOURCE "bash"
-# define MS_EXEC_MSG "unnamed error in:"
-# define MS_EUNKNWN 256
 
-# define EEXEC_NOCMD 256
 # define EEXEC_NOCMD_MSG "%s: command not found\n"
 
 # define MS_EXEC_INTMSG "\n"

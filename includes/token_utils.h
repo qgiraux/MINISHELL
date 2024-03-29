@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/28 17:22:38 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:50:41 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 # define MS_METACHAR " \t\n|&()<>"
 # define MS_BLANK " \t"
 # define MS_METACHAR_NOT_BLANK "|&()<>"
-
-# define MS_TOKEN_ESOURCE "MSH"
 
 # define MS_EQUOTE 256
 # define MS_EQUOTE_MSG "%s: syntax error unclosed quote: %c\n"

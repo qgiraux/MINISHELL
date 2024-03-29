@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/28 10:31:16 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:50:28 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@
 # include "redir.h"
 # include "error.h"
 
-# define MS_EREDIR 256
-# define MS_REDIR_ESOURCE "bash"
-# define EREDIR_BADWORD 257
 # define EREDIR_BADWORD_MSG "%s: %s: ambiguous redirect\n"
 
 typedef struct s_redir

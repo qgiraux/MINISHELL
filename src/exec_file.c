@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/27 13:04:23 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/03/29 10:04:12 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ int	ms_exec_file(char *path, char **av, char **env, void *data)
 		if (-1 == execve(path, av, env))
 		{
 			_error(path, errno);
-			_exit_child(MS_EXIT_NOT_EXE, path, av, data);
+			if (ENOENT == errno)
+				_exit_child(MS_EXIT_NOT_FOUND, path, av, data);
+			else
+				_exit_child(MS_EXIT_NOT_EXE, path, av, data);
 		}
 		_exit_child(1, path, av, data);
 	}

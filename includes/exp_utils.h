@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 10:16:43 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/28 16:04:29 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/29 10:00:13 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@
 # define MS_PARA_QUOTE1 1003
 # define MS_PARA_QUOTE2_OPEN 1004
 # define MS_PARA_QUOTE2_CLOSE 1005
-# define MS_PARA_ESC 1006
-# define MS_PARA_ESC_ME 1007
-# define MS_PARA_CONST_STR 1008
-# define MS_PARA_ERROR 1009
+# define MS_PARA_ESC_ME 1006
+# define MS_PARA_CONST_STR 1007
+# define MS_PARA_ERROR 1008
 
 # define EXP_WILD '*'
 # define EXP_CWD "."

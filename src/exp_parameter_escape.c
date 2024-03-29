@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/28 17:47:41 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/29 10:01:03 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 #include "token.h"
 
 static char	*_escape(char *s)
+{
+	char	*esc;
+
+	esc = ms_exp_escape(s, EXP_ESC_LIST);
+	if (NULL == esc)
+		return (ms_e(__FILE__, __LINE__, 0), NULL);
+	return (esc);
+}
+
+static char	*_escape_quote1(char *s)
 {
 	char	*esc;
 	char	*quote1;
@@ -51,7 +61,7 @@ char	*exp_parameter_escape(char *big, size_t len_str, int type)
 	if (MS_PARA_ESC_ME == type)
 		return (_escape(str));
 	else if (MS_PARA_QUOTE1 == type)
-		return (_escape(str));
+		return (_escape_quote1(str));
 	return (str);
 }
 

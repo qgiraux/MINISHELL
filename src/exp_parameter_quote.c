@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/28 15:41:30 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/03/29 09:59:58 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	_var_len_esc(char *s, size_t *len, int *type)
 		i++;
 	else
 		return ;
-	*type = MS_PARA_ESC;
+	*type = MS_PARA_ESC_ME;
 	*len = i;
 }
 

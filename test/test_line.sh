@@ -1,7 +1,7 @@
 FILE=cmd_line.sh
 TMP=script_tmp
 EXE=../minishell
-VALGRIND=$(echo valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes)
+#VALGRIND=$(echo valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes)
 make test_debug -sC ../
 
 _COLOR_END=$(tput sgr0)

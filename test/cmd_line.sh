@@ -94,6 +94,12 @@ echo ok & & echo ok
 (true && false) && echo patate
 (true && true) && echo patate
 (true && false) || echo patate
+(true) && echo $? || echo $?
+(false) && echo $? || echo $?
+false && echo $? || echo $?
+(true) && true || true && echo $? || echo $?
+(false) && true || true && echo $? || echo $?
+(true) && true && true || true && echo $? || echo $?
 
 rm -f tmp && touch tmp && chmod 000 tmp && echo lol >tmp && echo lol && rm -f tmp || rm -f tmp
 rm -f tmp
@@ -203,12 +209,15 @@ echo ok | | echo ok
 
 echo
 echo ""
+echo """"""
+echo ''''idk''lol
 echo "ok"
 echo "ok" "lol" ""
 echo -n ""
 echo -n "ok"
 echo -n "ok" "lol" ""
 echo "ok" >tmp && cat tmp && rm tmp
+export A='"' && echo $A'lol'$A
 
 pwd
 pwd ""
@@ -235,14 +244,28 @@ echo $HOME'$HOME'"$HOME"
 touch '*1' '*2' && echo '*'* && rm -f '*1' '*2'
 export A="*" && echo $A
 echo *
-echo *.c
-echo *".c"
-echo *'.c'
-echo **.c
-echo *.c*
-echo .c*
+echo **
+echo *""*
+echo ""*
+echo *""
+echo *.sh
+echo *.shpatate
+echo *".sh"
+echo *'.sh'
+echo *.*
+echo *''*
+echo *'.'*
+echo *"."*
+echo *"'.'"*
+echo *""''"".sh
+echo *""''""'.sh'
+echo *""''""'.sh'**
+echo *""''""'.sh'**""
+echo **.sh
+echo *.sh*
+echo .sh*
 echo .*
-echo \*
+#echo \*
 echo "*"
 echo *
 

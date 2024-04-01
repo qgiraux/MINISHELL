@@ -6,40 +6,13 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/03/29 14:36:44 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:15:43 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "data.h"
 #include "token.h"
 #include "exp_utils.h"
-
-static int	_match_nowild(char *name, char *ptrn, size_t *i_n, size_t *i_p)
-{
-	int	quote;
-	int	esc;
-
-	quote = 0;
-	esc = 0;
-	while (ptrn[*i_p] && (quote || esc || EXP_WILD != ptrn[*i_p]))
-	{
-		if (EXP_ESC == ptrn[*i_p])
-			esc = 1;
-		else if (quote && quote == ptrn[(*i_p)])
-			return ((*i_p)++, 0);
-		else if (!esc && (MS_QUOTE_1 == ptrn[*i_p] || MS_QUOTE_2 == ptrn[*i_p]))
-			quote = ptrn[*i_p];
-		else if (ptrn[(*i_p)] == name[(*i_n)])
-		{
-			(*i_n)++;
-			esc = 0;
-		}
-		else if (ptrn[(*i_p)] != name[(*i_n)])
-			return (1);
-		(*i_p)++;
-	}
-	return (0);
-}
 
 static int	_match_madd(char *unescd_name, char *escd_ptrn, t_dlist **match)
 {
@@ -50,12 +23,12 @@ static int	_match_madd(char *unescd_name, char *escd_ptrn, t_dlist **match)
 
 	i_p = 0;
 	i_n = 0;
-	while (unescd_name[i_n] && escd_ptrn[i_p])
+	while (unescd_name[i_n] || escd_ptrn[i_p])
 	{
-		if (_match_nowild(unescd_name, escd_ptrn, &i_n, &i_p))
+		if (0 == exp_filename_wild_match(unescd_name, escd_ptrn, &i_n, &i_p))
 			return (MS_SUCCESS);
-		if (exp_filename_wild(unescd_name, escd_ptrn, &i_n, &i_p))
-			return (MS_SUCCESS);
+		else if (0 == i_p && 0 == i_n)
+			return (ms_e(__FILE__, __LINE__, 1), 1);
 	}
 	if ('\0' == unescd_name[i_n] && '\0' == escd_ptrn[i_p])
 	{
@@ -149,4 +122,26 @@ int	ms_exp_filename(t_dlist **escpd_token, t_dlist **next, void *data)
 // 		}
 // 	}
 // 	return (0);
+// }
+
+// int	main(int ac, char **av)
+// {
+// 	size_t	i_n;
+// 	size_t	i_p;
+
+// 	if (3 > ac)
+// 		return (1);
+// 	printf("name=%s\tpattern=%s\n", av[1], av[2]);
+// 	if (3 < ac)
+// 		i_n = ft_atoi(av[3]);
+// 	else
+// 		i_n = 0;
+// 	if (4 < ac)
+// 		i_p = ft_atoi(av[4]);
+// 	else
+// 		i_p = 0;
+// 	if (exp_filename_wild_match(av[1], av[2], &i_n, &i_p))
+// 		printf("Match i_n=%zu(%c) i_p=%zu(%c)\n", i_n, av[1][i_n], i_p, av[2][i_p]);
+// 	else
+// 		printf("No match! i_n=%zu i_p=%zu\n", i_n, i_p);
 // }

@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:09:41 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/04/01 15:18:11 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/04/01 15:26:28 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,14 @@ int	ms_node_list(t_dlist *node, int status, void *data, int compare)
 {
 	t_dlist	*list;
 
-	//printf("got in\n");
-	if (NULL == node)
-		return (status);
 	list = node->content;
 	if (MS_PARSE_LIST == list->type)
 	{
 		status = ms_node(list, status, data, compare);
 		list = list->next;
 	}
-	else if ((compare == MS_TOKEN_AND && status != 0) ||(compare == MS_TOKEN_OR && status == 0))
+	else if ((compare == MS_TOKEN_AND && status != 0) \
+	|| (compare == MS_TOKEN_OR && status == 0))
 		list = list->next;
 	compare = 0;
 	while (NULL != list)
@@ -52,16 +50,12 @@ int	ms_node_list(t_dlist *node, int status, void *data, int compare)
 		if (1 == ms_dlist_istype_pipe_list(list))
 		{
 			compare = list->type;
-			if (MS_PARSE_LIST !=  list->next->type)
+			if (MS_PARSE_LIST != list->next->type)
 				list = ms_list_and_or(list, status);
-			list = list->next;
 		}
 		else
-		{
 			status = ms_node(list, status, data, compare);
-			if (NULL != list)
-				list = list->next;
-		}
+		list = list->next;
 	}
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/04/01 16:15:43 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:25:20 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,53 +95,3 @@ int	ms_exp_filename(t_dlist **escpd_token, t_dlist **next, void *data)
 	*next = curr->next;
 	return (MS_SUCCESS);
 }
-
-// int main(int ac, char **av)
-// {
-// 	char	*pattern;
-// 	char	*filename;
-// 	t_dlist	*match;
-
-// 	match = NULL;
-// 	if (3 == ac)
-// 	{
-// 		filename = ft_strdup(av[1]);
-// 		pattern = ft_strdup(av[2]);
-// 		printf("filename:%s\tpattern:%s\n", filename, pattern);
-// 		_match_madd(filename, pattern, &match);
-// 	}
-// 	if (2 == ac)
-// 	{
-// 		pattern = ft_strdup(av[1]);
-// 		printf("pattern:%s\n",  pattern);
-// 		_match_madd_cwd(pattern, &match, NULL);
-// 		while (match)
-// 		{
-// 			printf("file:%s\n", (char *)(match->content));
-// 			match = match->next;
-// 		}
-// 	}
-// 	return (0);
-// }
-
-// int	main(int ac, char **av)
-// {
-// 	size_t	i_n;
-// 	size_t	i_p;
-
-// 	if (3 > ac)
-// 		return (1);
-// 	printf("name=%s\tpattern=%s\n", av[1], av[2]);
-// 	if (3 < ac)
-// 		i_n = ft_atoi(av[3]);
-// 	else
-// 		i_n = 0;
-// 	if (4 < ac)
-// 		i_p = ft_atoi(av[4]);
-// 	else
-// 		i_p = 0;
-// 	if (exp_filename_wild_match(av[1], av[2], &i_n, &i_p))
-// 		printf("Match i_n=%zu(%c) i_p=%zu(%c)\n", i_n, av[1][i_n], i_p, av[2][i_p]);
-// 	else
-// 		printf("No match! i_n=%zu i_p=%zu\n", i_n, i_p);
-// }

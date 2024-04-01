@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:55:30 by jerperez          #+#    #+#             */
-/*   Updated: 2024/04/01 15:22:19 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:27:33 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ int	exp_filename_str_match(char *name, char *ptrn, size_t *i_n, size_t *i_p)
 // 	else
 // 		i_p = 0;
 // 	if (exp_filename_str_match(av[1], av[2], &i_n, &i_p))
-// 		printf("Match i_n=%zu(%c) i_p=%zu(%c)\n", i_n, av[1][i_n], i_p, av[2][i_p]);
+// 		printf("Match i_n=%zu(%c) i_p=%zu(%c)\n", NEWLINE
+// i_n, av[1][i_n], i_p, av[2][i_p]);
 // 	else
 // 		printf("No match! i_n=%zu i_p=%zu\n", i_n, i_p);
 // }

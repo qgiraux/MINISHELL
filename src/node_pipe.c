@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:53:01 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/27 13:03:12 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:40:59 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ms_child(t_dlist *list, void *data, int *pipefd, int fd_in)
 	if (fd_in != 0)
 		close(fd_in);
 	close(pipefd[0]);
-	exit_code = ms_node(list, 0, data);
+	exit_code = ms_node(list, 0, data, 0);
 	ms_exit_pipe(NULL, data, exit_code);
 }
 
@@ -44,7 +44,7 @@ static pid_t	ms_last_loop(t_dlist *list, void *data, int *pipefd, pid_t *p0)
 		dup2(pipefd[0], 0);
 		close(pipefd[0]);
 		free (p0);
-		exit_code = ms_node(list, 0, data);
+		exit_code = ms_node(list, 0, data, 0);
 		ms_exit_pipe(NULL, data, exit_code);
 	}
 	else
@@ -109,6 +109,6 @@ int	ms_node_pipe(t_dlist *node, int status, void *data)
 	pid = malloc((nb_pid + 1) * sizeof(pid_t));
 	list = node->content;
 	if (NULL == list->next)
-		return (free(pid), ms_node(list, 0, data));
+		return (free(pid), ms_node(list, 0, data, 0));
 	return (ms_run_pipeline(node->content, data, pid, 0));
 }

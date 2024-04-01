@@ -6,7 +6,7 @@
 /*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 11:09:41 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/26 11:01:30 by qgiraux          ###   ########.fr       */
+/*   Updated: 2024/04/01 15:18:11 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ static t_dlist	*ms_list_and_or(t_dlist *list, int status)
 		return (list);
 	if (MS_TOKEN_AND == list->type)
 	{
-		list = list->next;
 		if (status != 0)
 			list = list->next;
 	}
 	else if (MS_TOKEN_OR == list->type)
 	{
-		list = list->next;
 		if (status == 0)
 			list = list->next;
 	}
@@ -33,21 +31,36 @@ static t_dlist	*ms_list_and_or(t_dlist *list, int status)
 }
 
 /*si le noeud est une liste, fait ce qu'il faut*/
-int	ms_node_list(t_dlist *node, int status, void *data)
+int	ms_node_list(t_dlist *node, int status, void *data, int compare)
 {
 	t_dlist	*list;
 
+	//printf("got in\n");
 	if (NULL == node)
 		return (status);
 	list = node->content;
+	if (MS_PARSE_LIST == list->type)
+	{
+		status = ms_node(list, status, data, compare);
+		list = list->next;
+	}
+	else if ((compare == MS_TOKEN_AND && status != 0) ||(compare == MS_TOKEN_OR && status == 0))
+		list = list->next;
+	compare = 0;
 	while (NULL != list)
 	{
 		if (1 == ms_dlist_istype_pipe_list(list))
-			list = ms_list_and_or(list, status);
+		{
+			compare = list->type;
+			if (MS_PARSE_LIST !=  list->next->type)
+				list = ms_list_and_or(list, status);
+			list = list->next;
+		}
 		else
 		{
-			status = ms_node(list, status, data);
-			list = list->next;
+			status = ms_node(list, status, data, compare);
+			if (NULL != list)
+				list = list->next;
 		}
 	}
 	return (status);

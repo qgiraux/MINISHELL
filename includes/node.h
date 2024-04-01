@@ -34,8 +34,8 @@ typedef struct s_fork
 	int		rpid;
 }			t_fork;
 
-int		ms_node_list(t_dlist *node, int status, void *data);
-int		ms_node(t_dlist *node, int status, void *data);
+int		ms_node_list(t_dlist *node, int status, void *data, int compare);
+int		ms_node(t_dlist *node, int status, void *data, int compare);
 int		ms_node_compound(t_dlist *node, int status, void *data);
 int		ms_node_pipe(t_dlist *node, int status, void *data);
 void	ms_free_p(t_pipe p, int nb_pipe);

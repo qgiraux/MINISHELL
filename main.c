@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qgiraux <qgiraux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:54:20 by qgiraux           #+#    #+#             */
-/*   Updated: 2024/03/27 13:39:39 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/04/01 13:44:56 by qgiraux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	_main_loop(void *data)
 			else
 			{
 				ms_data_list_set(list, data);
-				ms_node(list, 0, data);
+				ms_node(list, 0, data, 0);
 			}
 			ms_data_destroy_line(data);
 			rl_done = 1;
